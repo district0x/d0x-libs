@@ -1,12 +1,12 @@
 # district-sendgrid
 Helper functions for sending emails via Sendgrid API
 
-### Installation
+## Installation
 Add `[district0x/district-sendgrid "1.0.0"]` into your project.clj  
 Include `[district.sendgrid]` in your CLJS file, where you use `mount/start`
 
-### district.sendgrid
-#### `send-email [opts]`
+## district.sendgrid
+### `send-email [opts]`
 Sends request to Sendgrid to construct and send email from pre-defined template
   
 **opts:**  
