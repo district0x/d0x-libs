@@ -3,7 +3,7 @@
 Clojurescript-node.js [mount](https://github.com/tolitius/mount) component for a district server, that watches server connection to a blockchain. 
 
 ## Installation
-Add `[district0x/district-server-web3-watcher "1.0.0"]` into your project.clj
+Add `[district0x/district-server-web3-watcher "1.0.0"]` into your project.clj  
 Include `[district.server.web3-watcher]` in your CLJS file, where you use `mount/start`
 
 **Warning:** district0x components are still in early stages, therefore API can change in a future.
