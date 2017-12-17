@@ -7,7 +7,7 @@ setting up and providing [web3](https://github.com/ethereum/web3.js) instance.
 Add `[district0x/district-server-web3 "1.0.0"]` into your project.clj  
 Include `[district.server.web3]` in your CLJS file, where you use `mount/start`.
 
-**Warning:** district components are still in early stages, therefore API can change in a future.
+**Warning:** district0x components are still in early stages, therefore API can change in a future.
 
 ## Usage
 You can pass following args to web3 component:   
