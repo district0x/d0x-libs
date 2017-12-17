@@ -8,6 +8,10 @@ Include `[district.server.web3-watcher]` in your CLJS file, where you use `mount
 
 **Warning:** district0x components are still in early stages, therefore API can change in a future.
 
+## Real-world example
+To see how district server components play together in real-world app, you can take a look at [NameBazaar server folder](https://github.com/district0x/name-bazaar/tree/master/src/name_bazaar/server), 
+where this is deployed in production.
+
 ## Usage
 You can pass following args to web3-watcher component: 
 * `:interval` Interval at which it should check the connection. Default: 3s
