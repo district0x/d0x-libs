@@ -33,7 +33,7 @@ You can pass following args to web3-watcher component:
 ## Component dependencies
 
 ### [district-server-config](https://github.com/district0x/district-server-config)
-`district-server-web3-watcher` can get initial args from config provided by `district-server-config/config` under the key `:web3-watcher`. These args are then merged together by ones passed to `mount/with-args`.
+`district-server-web3-watcher` gets initial args from config provided by `district-server-config/config` under the key `:web3-watcher`. These args are then merged together with ones passed to `mount/with-args`.
 
 ### [district-server-web3](https://github.com/district0x/district-server-web3)
 `district-server-web3-watcher` relies on getting [web3](https://github.com/ethereum/web3.js) instance from `district-server-web3/web3`. That's why, in example, you need to set up `:web3` in `mount/with-args` as well.
