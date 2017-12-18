@@ -1,5 +1,7 @@
 # district-server-web3-watcher
 
+[![Build Status](https://travis-ci.org/district0x/district-server-web3-watcher.svg?branch=master)](https://travis-ci.org/district0x/district-server-web3-watcher)
+
 Clojurescript-node.js [mount](https://github.com/tolitius/mount) component for a district server, that watches server connection to a blockchain. 
 
 ## Installation
@@ -39,3 +41,15 @@ You can pass following args to web3-watcher component:
 `district-server-web3-watcher` relies on getting [web3](https://github.com/ethereum/web3.js) instance from `district-server-web3/web3`. That's why, in example, you need to set up `:web3` in `mount/with-args` as well.
 
 If you wish to use custom components instead of dependencies above while still using `district-server-web3-watcher`, you can easily do so by [mount's states swapping](https://github.com/tolitius/mount#swapping-states-with-states).
+```bash
+# To start REPL and run tests
+lein deps
+lein repl
+(start-tests!)
+
+# In other terminal
+node tests-compiled/run-tests.js
+
+# To run tests without REPL
+lein doo node "tests" once
+```
