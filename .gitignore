@@ -9,5 +9,8 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
-/district-server-web3.iml
 /.idea/
+/district-server-web3.iml
+/figwheel_server.log
+/tests-compiled/
+/node_modules/
