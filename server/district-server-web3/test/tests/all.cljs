@@ -17,3 +17,9 @@
     (mount/start))
   (is (true? (web3/connected? @web3)))
   (is (web3/address? (first (web3-eth/accounts @web3)))))
+
+(deftest test-config-setup
+  (-> (mount/with-args {:config {:default {:web3 {:port 8794}}}})
+    (mount/start))
+  (is (true? (web3/connected? @web3)))
+  (is (web3/address? (first (web3-eth/accounts @web3)))))
