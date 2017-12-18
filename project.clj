@@ -7,7 +7,8 @@
                  [mount "0.1.11"]
                  [org.clojure/clojurescript "1.9.946"]]
 
-  :npm {:dependencies [[web3 "0.19.0"]]
+  :npm {:dependencies [[web3 "0.19.0"]
+                       [ganache-core "2.0.2"]]
         :devDependencies [[ws "2.0.1"]]}
 
   :figwheel {:server-port 4673}
