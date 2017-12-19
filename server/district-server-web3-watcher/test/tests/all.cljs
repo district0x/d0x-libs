@@ -16,4 +16,7 @@
   ;; https://github.com/trufflesuite/ganache-core/issues/15
   ;; because web3/connected? will otherwise hang
   ;; Write tests once it's supported
-  (is (= 1 1)))
+  #_ (is (= 1 1))
+
+  #_ (-> (mount/with-args {:web3 {:port 8549}})
+    (mount/start)))

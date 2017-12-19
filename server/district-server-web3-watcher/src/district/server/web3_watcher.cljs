@@ -35,10 +35,10 @@
         ((:on-offline @web3-watcher))))))
 
 
-(defn start [{:keys [:interval :on-online :on-offline] :as opts}]
+(defn start [{:keys [:interval :on-online :on-offline] :as opts
+              :or {interval 3000}}]
   (merge {:on-online identity
           :on-offline identity
-          :interval 3000
           :interval-id (js/setInterval check-connection interval)
           :online? (atom (web3/connected? @web3))}
          opts))

@@ -1,4 +1,4 @@
-(defproject district0x/district-server-web3-watcher "1.0.1"
+(defproject district0x/district-server-web3-watcher "1.0.2"
   :description "district0x server component for setting up web3 watcher"
   :url "https://github.com/district0x/district-server-web3-watcher"
   :license {:name "Eclipse Public License"
