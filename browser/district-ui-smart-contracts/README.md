@@ -16,14 +16,14 @@ of loading smart contract files.
 
 You can pass following args to initiate this module: 
 * `:disable-loading-at-start?` Pass true if you don't want load ABIs or BINs at start
-* `:smart-contracts` A map of smart-contracts to load
+* `:contracts` A map of smart-contracts to load
 * `:load-bin?` Pass true if you want to load BIN files as well
 * `:contracts-path` Path where contracts should be loaded from. Default: `"./contracts/build/"`
-* `:contracts-version` Pass some version for bypassing browser's cache, after deploying new contracts to production. 
+* `:contracts-version` Pass some version for bypassing browser's cache after deploying new contracts to production. 
 Pass `:no-cache` if you want to invalidate browser cache on every request (useful for development)
 * `:request-timeout` Request timeout for loading files. Default: 10000 (10s)
 
-Passed `smart-contracts` should have following format:
+Passed `:contracts` should have following format:
 ```clojure
 (ns my-district.smart-contracts)
 
