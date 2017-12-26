@@ -11,13 +11,14 @@
   (get-in (contracts db) [contract-key :address]))
 
 (defn balance-key [db contract]
-  (if contract
+  (if (and contract
+           (not= contract :ETH))
     (let [instance-addr (aget contract "address")]
       (cond
         instance-addr instance-addr
         (web3/address? contract) contract
         :else (contract-address db contract)))
-    :eth))
+    :ETH))
 
 (defn balances [db]
   (-> db :district.ui.web3-balances :balances))

@@ -43,11 +43,12 @@ Returns balance of an address. Optionally, you can pass contract to get balance 
 * Contract key as defined in `:contracts` you passed to the module
 * Contract address
 * Contract instance
+* Additionally, if you use keyword `:ETH`, if will refer to Ether 
 
 ```clojure
 (ns my-district.core
     (:require [mount.core :as mount]
-              [district.ui.web3-balances]
+              [district.ui.web3-balances.subs :as balances-subs]
               [cljs-web3.core :as web3]))
   
   (defn home-page []

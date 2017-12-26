@@ -17,7 +17,8 @@
 
 (def smart-contracts
   {:GNT {:address "0xa74476443119A942dE498590Fe1f2454d7D4aC0d"}
-   :ICN {:address "0x888666CA69E0f178DED6D75b5726Cee99A87D698"}})
+   :ICN {:address "0x888666CA69E0f178DED6D75b5726Cee99A87D698"}
+   :OMG {:address "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"}})
 
 (use-fixtures
   :each
@@ -39,11 +40,12 @@
 (deftest tests
   (run-test-async
     (let [addr1-eth (subscribe [::subs/balance address1])
+          addr1-eth2 (subscribe [::subs/balance address1 :ETH])
           addr2-eth (subscribe [::subs/balance address2])
           addr1-gnt (subscribe [::subs/balance address1 :GNT])
           addr2-gnt (subscribe [::subs/balance address2 (:address (:GNT smart-contracts))])
           addr1-icn (subscribe [::subs/balance address1 :ICN])
-          addr2-icn (subscribe [::subs/balance address2])]
+          addr2-omg (subscribe [::subs/balance address2 (web3-eth/contract-at web3 abi-balance-of (:address (:OMG smart-contracts)))])]
 
       (-> (mount/with-args
             {:web3 {:url "https://mainnet.infura.io/"}
@@ -56,15 +58,16 @@
                                          {:address address1 :contract :GNT :watch? true}
                                          {:address address1 :contract (web3-eth/contract-at web3 abi-balance-of (:address (:ICN smart-contracts))) :watch? true}
                                          {:address address2 :watch? true}
-                                         {:address address2 :contract :ICN :watch? true}
+                                         {:address address2 :contract :OMG :watch? true}
                                          {:address address2 :contract (:address (:GNT smart-contracts)) :watch? true}]])
 
       (wait-for [(all-set-balance-events-pred 6) ::balance-load-failed]
         (is (true? (.gt @addr1-eth 0)))
+        (is (true? (.gt @addr1-eth2 0)))
         (is (true? (.gt @addr2-eth 0)))
         (is (true? (.gt @addr1-gnt 0)))
         (is (true? (.gt @addr2-gnt 0)))
         (is (true? (.gt @addr1-icn 0)))
-        (is (true? (.gt @addr2-icn 0)))
+        (is (true? (.gt @addr2-omg 0)))
 
         (dispatch [::events/stop-watching-all])))))

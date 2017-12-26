@@ -16,7 +16,7 @@
 (s/def ::address web3/address?)
 (s/def ::contract (s/keys :req-un [::address]))
 (s/def ::contracts (s/map-of any? ::contract))
-(s/def ::opts (s/keys :opt-un [::contracts]))
+(s/def ::opts (s/nilable (s/keys :opt-un [::contracts])))
 
 
 (defn start [opts]
