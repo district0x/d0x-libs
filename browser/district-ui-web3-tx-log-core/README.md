@@ -36,7 +36,7 @@ This module does not have any configuration options.
 re-frame subscriptions provided by this module:
 
 #### `::txs [filter-opts]`
-Returns transactions as stored by [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx), ordered chronologically with newest being first. Optionally, you can pass filter opts same
+Returns list of transactions as stored by [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx), ordered chronologically with newest being first. Optionally, you can pass filter opts same
 way as you'd pass to [district-ui-web3-tx ::txs](https://github.com/district0x/district-ui-web3-tx#txs-filter-opts)
 
 ```clojure
