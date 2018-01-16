@@ -14,6 +14,7 @@ Include `[cljs-solidity-sha3.core]` in your CLJS file
 ```clojure
 (ns my.namespace
   (:require
+    [cljsjs.web3]
     [cljs-solidity-sha3.core :refer [solidity-sha3]]))
     
 (solidity-sha3 "0x7d10b16dd1f9e0df45976d402879fb496c114936" 6 "abc")
