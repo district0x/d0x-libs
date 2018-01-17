@@ -8,7 +8,31 @@ Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://gi
 Add `[district0x/district-ui-web3-balances "1.0.0"]` into your project.clj  
 Include `[district.ui.web3-balances]` in your CLJS file, where you use `mount/start`
 
+## API Overview
+
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
+
+- [district.ui.web3-balances](#districtuiweb3-balances)
+- [district.ui.web3-balances.subs](#districtuiweb3-balancessubs)
+  - [::balances](#balances-sub)
+  - [::balance](#balance-sub)
+  - [::contracts](#contracts-sub)
+  - [::contract-address](#contract-address-sub)
+- [district.ui.web3-balances.events](#districtuiweb3-balancesevents)
+  - [::load-balances](#load-balances)
+  - [::set-balance](#set-balance)
+  - [::balance-load-failed](#balance-load-failed)
+  - [::stop-watching](#stop-watching)
+  - [::stop-watching-all](#stop-watching-all)
+- [district.ui.web3-balances.queries](#districtuiweb3-balancesqueries)
+  - [balances](#balances)
+  - [assoc-balance](#assoc-balance)
+  - [contracts](#contracts)
+  - [contract-address](#contract-address)
+  - [merge-contracts](#merge-contracts)
+  - [watch-ids](#watch-ids)
+  - [concat-watch-ids](#concat-watch-ids)
+  - [merge-web3-balances](#merge-web3-balances)
 
 ## district.ui.web3-balances
 This namespace contains web3-balances [mount](https://github.com/tolitius/mount) module.
@@ -35,10 +59,10 @@ so you can conveniently pass the same value to both, if you use both modules.
 ## district.ui.web3-balances.subs
 re-frame subscriptions provided by this module:
 
-#### `::balances`
+#### <a name="balances">`::balances`
 Returns all balances.
 
-#### `::balance [address & [contract]]`
+#### <a name="balance">`::balance [address & [contract]]`
 Returns balance of an address. Optionally, you can pass contract to get balance of an ERC20 token. Contract param can be in 3 different forms:
 * Contract key as defined in `:contracts` you passed to the module
 * Contract address
@@ -65,19 +89,16 @@ Returns balance of an address. Optionally, you can pass contract to get balance 
         [:div (web3/from-wei @balance-dnt :ether) " DNT"])))
 ```
 
-#### `::contracts`
+#### <a name="contracts-sub">`::contracts`
 Returns map of contracts as passed into module at start
 
-#### `::contract-address [contract-key]`
+#### <a name="contract-address-sub">`::contract-address [contract-key]`
 Returns address of a contract by its key
 
 ## district.ui.web3-balances.events
 re-frame events provided by this module:
 
-#### `::start [opts]`
-Event fired at mount start.
-
-#### `::load-balances [items]`
+#### <a name="load-balances">`::load-balances [items]`
 Loads collection of balances. To each item, you can pass `:watch? true` to keep watching balance for changes.
 Also, you can optionally pass `:contract` in same 3 different forms as you'd pass into subscription `::balance`.
 
@@ -90,31 +111,28 @@ Also, you can optionally pass `:contract` in same 3 different forms as you'd pas
                 {:address addr :contract ICNInstance :watch? true}]]))
 ```
 
-#### `::set-balance [item]`
+#### <a name="set-balance">`::set-balance [item]`
 Sets a balance into re-frame db. Format of `item` is same as for `::load-balances`. You can use this event to hook into 
 event flow, to be notified when a balance was loaded. 
 
-#### `::balance-load-failed`
+#### <a name="balance-load-failed">`::balance-load-failed`
 Fired when there was an error loading a balance.
 
-#### `::stop-watching [items]`
+#### <a name="stop-watching">`::stop-watching [items]`
 Use to stop watching balances. Format of `items` is same as for `::load-balances`.
 
-#### `::stop-watching-all`
+#### <a name="stop-watching-all">`::stop-watching-all`
 Stops watching all balances watched by this module. 
-
-#### `::stop`
-Cleanup event fired on mount stop.
 
 ## district.ui.web3-balances.queries
 DB queries provided by this module:  
 *You should use them in your events, instead of trying to get this module's 
 data directly with `get-in` into re-frame db.*
 
-#### `balances [db]`
+#### <a name="balances">`balances [db]`
 Works the same way as sub `::balances`
 
-#### `balances [db address & [contract]]`
+#### <a name="balances">`balances [db address & [contract]]`
 Works the same way as sub `::balance`
 
 ```clojure
@@ -130,33 +148,30 @@ Works the same way as sub `::balance`
       {:dispatch [::has-no-dnt]})))
 ```
 
-#### `assoc-balance [db address balance]`
+#### <a name="assoc-balance">`assoc-balance [db address balance]`
 #### `assoc-balance [db address contract balance]`
 Associates balance and returns new re-frame db.
 
-#### `merge-balances [db balances]`
+#### <a name="merge-balances">`merge-balances [db balances]`
 Merges balances into existing ones and returns new re-frame db.
 
-#### `contracts [db]`
+#### <a name="contracts">`contracts [db]`
 Returns all contracts
 
-#### `contract-address [db contract-key]`
+#### <a name="contract-address">`contract-address [db contract-key]`
 Returns contract address by key.
 
-#### `merge-contracts [db contracts]`
+#### <a name="merge-contracts">`merge-contracts [db contracts]`
 Merges contracts into existing ones and returns new re-frame db.
 
-#### `watch-ids [db]`
+#### <a name="watch-ids">`watch-ids [db]`
 Returns ids of currently watched balances
 
-#### `concat-watch-ids [db watch-ids]`
+#### <a name="concat-watch-ids">`concat-watch-ids [db watch-ids]`
 Concats new watch-ids with existing ones and returns new re-frame db.
 
-#### `merge-web3-balances [db {:keys [:balances :contracts :watch-ids]}]`
+#### <a name="merge-web3-balances">`merge-web3-balances [db {:keys [:balances :contracts :watch-ids]}]`
 Merges balances, contracts and watch-ids into this module. 
-
-#### `dissoc-web3-balances [db]`
-Cleans up this module from re-frame db. 
 
 ## Dependency on other district UI modules
 * [district-ui-web3](https://github.com/district0x/district-ui-web3)
