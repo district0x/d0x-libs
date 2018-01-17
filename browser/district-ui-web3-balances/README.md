@@ -26,6 +26,7 @@ Include `[district.ui.web3-balances]` in your CLJS file, where you use `mount/st
   - [::stop-watching-all](#stop-watching-all)
 - [district.ui.web3-balances.queries](#districtuiweb3-balancesqueries)
   - [balances](#balances)
+  - [balance](#balance)
   - [assoc-balance](#assoc-balance)
   - [contracts](#contracts)
   - [contract-address](#contract-address)
@@ -59,10 +60,10 @@ so you can conveniently pass the same value to both, if you use both modules.
 ## district.ui.web3-balances.subs
 re-frame subscriptions provided by this module:
 
-#### <a name="balances">`::balances`
+#### <a name="balances-sub">`::balances`
 Returns all balances.
 
-#### <a name="balance">`::balance [address & [contract]]`
+#### <a name="balance-sub">`::balance [address & [contract]]`
 Returns balance of an address. Optionally, you can pass contract to get balance of an ERC20 token. Contract param can be in 3 different forms:
 * Contract key as defined in `:contracts` you passed to the module
 * Contract address
