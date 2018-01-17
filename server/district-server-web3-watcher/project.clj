@@ -1,5 +1,5 @@
 (defproject district0x/district-server-web3-watcher "1.0.2"
-  :description "district0x server component for setting up web3 watcher"
+  :description "district0x server module for setting up web3 watcher"
   :url "https://github.com/district0x/district-server-web3-watcher"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
