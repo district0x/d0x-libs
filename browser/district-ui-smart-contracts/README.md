@@ -35,6 +35,10 @@ Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/
   - [contract-bin](#contract-bin)
   - [contract-name](#contract-name)
   - [instance](#instance)
+  - [merge-contracts](#merge-contracts)
+  - [merge-contract](#merge-contract)
+  - [assoc-contract-abi](#assoc-contract-abi)
+  - [assoc-contract-bin](#assoc-contract-bin)
 
 ## district.ui.smart-contracts
 This namespace contains smart-contracts [mount](https://github.com/tolitius/mount) module. Once you start mount it'll take care 
