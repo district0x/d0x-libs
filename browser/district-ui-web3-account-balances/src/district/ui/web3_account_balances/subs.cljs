@@ -12,7 +12,7 @@
   (sub-fn queries/active-account-balance))
 
 (reg-sub
-  ::account-balances
-  (sub-fn queries/account-balances))
+  ::accounts-balances
+  (sub-fn queries/accounts-balances))
 
 

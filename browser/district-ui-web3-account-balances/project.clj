@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-account-balances "1.0.0"
+(defproject district0x/district-ui-web3-account-balances "1.0.1"
   :description "district UI module for handling web3 account balances"
   :url "https://github.com/district0x/district-ui-web3-account-balances"
   :license {:name "Eclipse Public License"

@@ -35,7 +35,7 @@
   (run-test-async
     (let [active-account-balance-eth (subscribe [::subs/active-account-balance])
           active-account-balance-dnt (subscribe [::subs/active-account-balance :DNT])
-          account-balances (subscribe [::subs/account-balances])
+          account-balances (subscribe [::subs/accounts-balances])
           accounts (subscribe [::accounts-subs/accounts])]
       (-> (mount/with-args
             {:web3 {:url "http://localhost:8549"}

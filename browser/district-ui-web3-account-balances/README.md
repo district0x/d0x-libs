@@ -7,10 +7,22 @@ that combines together [district-ui-web3-accounts](https://github.com/district0x
 [district-ui-web3-balances](https://github.com/district0x/district-ui-web3-balances) to provide balances of user's accounts.  
 
 ## Installation
-Add `[district0x/district-ui-web3-account-balances "1.0.0"]` into your project.clj  
+Add `[district0x/district-ui-web3-account-balances "1.0.1"]` into your project.clj  
 Include `[district.ui.web3-account-balances]` in your CLJS file, where you use `mount/start`
 
+## API Overview
+
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
+
+- [district.ui.web3-account-balances](#districtuiweb3-account-balances)
+- [district.ui.web3-account-balances.subs](#districtuiweb3-account-balancessubs)
+  - [::active-account-balance](#active-account-balance-sub)
+  - [::accounts-balances-](#accounts-balances-sub)
+- [district.ui.web3-account-balances.events](#districtuiweb3-account-balancesevents)
+  - [::load-account-balances](#load-account-balances)
+- [district.ui.web3-account-balances.queries](#districtuiweb3-account-balancesqueries)
+  - [active-account-balance](#active-account-balance)
+  - [accounts-balances](#accounts-balances)
 
 ## district.ui.web3-account-balances
 This namespace contains web3-account-balances [mount](https://github.com/tolitius/mount) module.
@@ -42,7 +54,7 @@ Item in `:for-contracts` collection can be either token contract key, address or
 ## district.ui.web3-account-balances.subs
 re-frame subscriptions provided by this module:
 
-#### `::active-account-balance [& [contract]]`
+#### <a name=“active-account-balance-sub">`::active-account-balance [& [contract]]`
 Retunrns balance of an active account. Optionally, you can pass contract to get balance of an ERC20 token.
 See [district-ui-web3-balances balance subscription](https://github.com/district0x/district-ui-web3-balances#balance-address--contract).
 
@@ -61,28 +73,25 @@ See [district-ui-web3-balances balance subscription](https://github.com/district
         [:div (web3/from-wei @balance-dnt :ether) " DNT"])))
 ```
 
+#### <a name="accounts-balances-sub">`::accounts-balances [& [contract]]`
+Returns balances of all accounts. 
+
 ## district.ui.web3-account-balances.events
 re-frame events provided by this module:
 
-#### `::start [opts]`
-Event fired at mount start.
-
-#### `::load-account-balances [opts]`
+#### <a name=“load-account-balances">`::load-account-balances [opts]`
 Loads balances of user's accounts
-
-#### `::stop`
-Cleanup event fired on mount stop.
 
 ## district.ui.web3-account-balances.queries
 DB queries provided by this module:  
 *You should use them in your events, instead of trying to get this module's 
 data directly with `get-in` into re-frame db.*
 
-#### `active-account-balance [db & [contract]]`
+#### <a name="active-account-balance">`active-account-balance [db & [contract]]`
 Works the same way as sub `::active-account-balance`
 
-#### `account-balances [db & [contract]]`
-Works the same way as sub `::account-balances`
+#### <a name="accounts-balances">`accounts-balances [db & [contract]]`
+Works the same way as sub `::accounts-balances`
 
 ## Dependency on other district UI modules
 * [district-ui-web3-accounts](https://github.com/district0x/district-ui-web3-accounts)
