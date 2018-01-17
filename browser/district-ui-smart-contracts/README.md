@@ -84,7 +84,7 @@ Starting the module may look like this:
 ## district.ui.smart-contracts.subs
 re-frame subscriptions provided by this module:
 
-#### <a name="contracts-sub`">`::contracts`
+#### <a name="contracts-sub">`::contracts`
 Returns all contracts.
 
 #### <a name="contract-sub">`::contract [contract-key]`
@@ -168,6 +168,9 @@ Works the same way as sub `::contract-abi`
 
 #### <a name="contract-bin">`contract-bin [db contract-key]`
 Works the same way as sub `::contract-bin`
+
+#### <a name="contract-name">`contract-name [db contract-key]`
+Works the same way as sub `::contract-name`
 
 #### <a name="instance">`instance [db contract-key]`
 Works the same way as sub `::instance`
