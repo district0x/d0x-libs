@@ -11,6 +11,8 @@ including [web3.js](https://github.com/ethereum/web3.js/) on purpose.
 Add `[district0x/cljs-solidity-sha3 "1.0.0"]` into your project.clj  
 Include `[cljs-solidity-sha3.core]` in your CLJS file
 
+## Usage
+
 ```clojure
 (ns my.namespace
   (:require
