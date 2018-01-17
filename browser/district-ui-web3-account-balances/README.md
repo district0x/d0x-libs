@@ -17,7 +17,7 @@ Include `[district.ui.web3-account-balances]` in your CLJS file, where you use `
 - [district.ui.web3-account-balances](#districtuiweb3-account-balances)
 - [district.ui.web3-account-balances.subs](#districtuiweb3-account-balancessubs)
   - [::active-account-balance](#active-account-balance-sub)
-  - [::accounts-balances-](#accounts-balances-sub)
+  - [::accounts-balances](#accounts-balances-sub)
 - [district.ui.web3-account-balances.events](#districtuiweb3-account-balancesevents)
   - [::load-account-balances](#load-account-balances)
 - [district.ui.web3-account-balances.queries](#districtuiweb3-account-balancesqueries)
@@ -73,7 +73,7 @@ See [district-ui-web3-balances balance subscription](https://github.com/district
         [:div (web3/from-wei @balance-dnt :ether) " DNT"])))
 ```
 
-#### <a name="accounts-balances-sub">`::accounts-balances [& [contract]]`
+#### <a name="accounts-balances-sub"> `::accounts-balances [& [contract]]`
 Returns balances of all accounts. 
 
 ## district.ui.web3-account-balances.events
