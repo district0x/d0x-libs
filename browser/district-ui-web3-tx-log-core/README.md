@@ -15,7 +15,23 @@ uses it as well.
 Add `[district0x/district-ui-web3-tx-log-core "1.0.0"]` into your project.clj  
 Include `[district.ui.web3-tx-log-core]` in your CLJS file, where you use `mount/start`
 
+## API Overview
+
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
+
+- [district.ui.web3-tx-log-core](#districtuiweb3-tx-log-core)
+- [district.ui.web3-tx-log-core.subs](#districtuiweb3-tx-log-coresubs)
+  - [::txs](#txs-sub)
+  - [::tx-hashes](#tx-hashes-sub)
+- [district.ui.web3-tx-log-core.events](#districtuiweb3-tx-log-coreevents)
+  - [::add-tx-hash](#add-tx-hash-evt)
+  - [::remove-tx-hash](#remove-tx-hash-evt)
+- [district.ui.web3-tx-log-core.queries](#districtuiweb3-tx-log-corequeries)
+  - [txs](#txs)
+  - [tx-hashes](#tx-hashes)
+  - [add-tx-hash](#add-tx-hash)
+  - [remove-tx-hash](#remove-tx-hash)
+  - [assoc-tx-hashes](#assoc-tx-hashes)
 
 ## district.ui.web3-tx-log-core
 This namespace contains web3-tx-log-core [mount](https://github.com/tolitius/mount) module.
@@ -35,7 +51,7 @@ This module does not have any configuration options.
 ## district.ui.web3-tx-log-core.subs
 re-frame subscriptions provided by this module:
 
-#### `::txs [filter-opts]`
+#### <a name="txs-sub">`::txs [filter-opts]`
 Returns list of transactions as stored by [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx), ordered chronologically with newest being first. Optionally, you can pass filter opts same
 way as you'd pass to [district-ui-web3-tx ::txs](https://github.com/district0x/district-ui-web3-tx#txs-filter-opts)
 
@@ -54,46 +70,37 @@ way as you'd pass to [district-ui-web3-tx ::txs](https://github.com/district0x/d
             transaction-hash " - " created-on " - " gas-used]))))
 ```
 
-#### `::tx-hashes`
+#### <a name="tx-hashes-sub">`::tx-hashes`
 Returns only list of transaction hashes ordered chronologically with newest transactions being first.
 
 ## district.ui.web3-tx-log-core.events
 re-frame events provided by this module:
 
-#### `::start [opts]`
-Event fired at mount start.
-
-#### `::add-tx-hash [tx-hash]`
+#### <a name="add-tx-hash-evt">`::add-tx-hash [tx-hash]`
 Adds transaction hash into transaction log list.
 
-#### `::remove-tx-hash [tx-hash]`
+#### <a name="remove-tx-hash-evt">`::remove-tx-hash [tx-hash]`
 Removes transaction hash from transaction log list.  
-
-#### `::stop`
-Cleanup event fired on mount stop.
 
 ## district.ui.web3-tx-log-core.queries
 DB queries provided by this module:  
 *You should use them in your events, instead of trying to get this module's 
 data directly with `get-in` into re-frame db.*
 
-#### `txs [db]`
+#### <a name="txs">`txs [db]`
 Works the same way as sub `::txs`
 
-#### `tx-hashes [db]`
+#### <a name="tx-hashes">`tx-hashes [db]`
 Works the same way as sub `::tx-hashes`
 
-#### `add-tx-hash [db tx-hash]`
+#### <a name="add-tx-hash">`add-tx-hash [db tx-hash]`
 Adds transaction hash into transaction log list and returns new re-frame db.
 
-#### `remove-tx-hash [db tx-hash]`
+#### <a name="remove-tx-hash">`remove-tx-hash [db tx-hash]`
 Removes transaction hash from transaction log list and returns new re-frame db.
 
-#### `assoc-tx-hashes [db tx-hashes]`
+#### <a name="assoc-tx-hashes">`assoc-tx-hashes [db tx-hashes]`
 Associates list of tx-hashes into this module's state.
-
-#### `dissoc-web3-tx-log-core [db]`
-Cleans up this module from re-frame db. 
 
 ## Dependency on other district UI modules
 * [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx)
