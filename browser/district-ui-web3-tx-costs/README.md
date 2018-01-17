@@ -12,7 +12,14 @@ It uses [district-ui-conversion-rates](https://github.com/district0x/district-ui
 Add `[district0x/district-ui-web3-tx-costs "1.0.0"]` into your project.clj  
 Include `[district.ui.web3-tx-costs]` in your CLJS file, where you use `mount/start`
 
+## API Overview
+
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
+
+- [district.ui.web3-tx-costs](#districtuiweb3-tx-costs)
+- [subscriptions](#subscriptions)
+- [district.ui.web3-tx-costs.events](districtuiweb3-tx-costsevents)
+  - [::add-currencies](#::add-currencies)
 
 ## district.ui.web3-tx-costs
 This namespace contains web3-tx-costs [mount](https://github.com/tolitius/mount) module.
@@ -56,10 +63,7 @@ and transactions will automatically contain entry `:tx-costs` with transaction c
 ## district.ui.web3-tx-costs.events
 re-frame events provided by this module:
 
-#### `::start [opts]`
-Event fired at mount start.
-
-#### `::add-currencies [currencies opts]`
+#### <a name="::add-currencies"></a>`::add-currencies [currencies opts]`
 Adds currencies, that costs will be converted to. Does effectively same thing as if you pass initial `:currencies` on
 mount start. Use this from inside other modules, which build on top of this module.  
 
@@ -69,9 +73,6 @@ mount start. Use this from inside other modules, which build on top of this modu
 
 #### `::tx-loaded`
 Event fired when [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) fires its event. Performs conversion. 
-
-#### `::stop`
-Cleanup event fired on mount stop.
 
 ## district.ui.web3-tx-costs.queries
 DB queries provided by this module:  
@@ -86,9 +87,6 @@ Sets currencies and returns and returns new re-frame db.
 
 #### `add-currencies [db currencies]`
 Adds currencies and returns and returns new re-frame db.
-
-#### `dissoc-web3-tx-costs [db]`
-Cleans up this module from re-frame db. 
 
 ## Dependency on other district UI modules
 * [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx)
