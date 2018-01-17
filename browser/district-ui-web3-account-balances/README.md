@@ -54,7 +54,7 @@ Item in `:for-contracts` collection can be either token contract key, address or
 ## district.ui.web3-account-balances.subs
 re-frame subscriptions provided by this module:
 
-#### <a name=“active-account-balance-sub">`::active-account-balance [& [contract]]`
+#### <a name="active-account-balance-sub">`::active-account-balance [& [contract]]`
 Retunrns balance of an active account. Optionally, you can pass contract to get balance of an ERC20 token.
 See [district-ui-web3-balances balance subscription](https://github.com/district0x/district-ui-web3-balances#balance-address--contract).
 
@@ -73,13 +73,13 @@ See [district-ui-web3-balances balance subscription](https://github.com/district
         [:div (web3/from-wei @balance-dnt :ether) " DNT"])))
 ```
 
-#### <a name="accounts-balances-sub"> `::accounts-balances [& [contract]]`
+#### <a name="accounts-balances-sub">`::accounts-balances [& [contract]]`
 Returns balances of all accounts. 
 
 ## district.ui.web3-account-balances.events
 re-frame events provided by this module:
 
-#### <a name=“load-account-balances">`::load-account-balances [opts]`
+#### <a name="load-account-balances">`::load-account-balances [opts]`
 Loads balances of user's accounts
 
 ## district.ui.web3-account-balances.queries
