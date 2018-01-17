@@ -8,7 +8,33 @@ Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://gi
 Add `[district0x/district-ui-smart-contracts "1.0.0"]` into your project.clj  
 Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/start`
 
+## API Overview
+
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
+
+- [district.ui.smart-contracts](#districtuismart-contracts)
+- [district.ui.smart-contracts.subs](#districtuismart-contractssubs)
+  - [::contracts](#contracts-sub)
+  - [::contract](#contract-sub)
+  - [::contract-address](#contract-address-sub)
+  - [::contract-abi](#contract-abi-sub)
+  - [::contract-bin](#contract-bin-sub)
+  - [::contract-name](#contract-name-sub)
+  - [::instance](#instance-sub)
+- [district.ui.smart-contracts.events](#districtuismart-contractsevents)
+  - [::load-contracts](#load-contracts)
+  - [::contract-loaded](#contract-loaded)
+  - [::contracts-loaded](#contracts-loaded)
+  - [::set-contract](#set-contract)
+  - [::contract-load-failed](#contract-load-failed)
+- [district.ui.smart-contracts.queries](#districtuismart-contractsqueries)
+  - [contracts](#contracts)
+  - [contract](#contract)
+  - [contract-address](#contract-address)
+  - [contract-abi](#contract-abi)
+  - [contract-bin](#contract-bin)
+  - [contract-name](#contract-name)
+  - [instance](#instance)
 
 ## district.ui.smart-contracts
 This namespace contains smart-contracts [mount](https://github.com/tolitius/mount) module. Once you start mount it'll take care 
@@ -58,25 +84,25 @@ Starting the module may look like this:
 ## district.ui.smart-contracts.subs
 re-frame subscriptions provided by this module:
 
-#### `::contracts`
+#### <a name="contracts-sub`">`::contracts`
 Returns all contracts.
 
-#### `::contract [contract-key]`
+#### <a name="contract-sub">`::contract [contract-key]`
 Returns contract by `contract-key`
 
-#### `::contract-address [contract-key]`
+#### <a name="contract-address-sub">`::contract-address [contract-key]`
 Returns address of a contract.
 
-#### `::contract-abi [contract-key]`
+#### <a name="contract-abi-sub">`::contract-abi [contract-key]`
 Returns ABI of a contract.
 
-#### `::contract-bin [contract-key]`
+#### <a name="contract-bin-sub">`::contract-bin [contract-key]`
 Returns BIN of a contract.
 
-#### `::contract-name [contract-key]`
+#### <a name="contract-name-sub">`::contract-name [contract-key]`
 Returns name of a contract.
 
-#### `::instance [contract-key]`
+#### <a name="instance-sub">`::instance [contract-key]`
 Returns web3 instance of a contract.
 
 ```clojure
@@ -93,16 +119,13 @@ Returns web3 instance of a contract.
 ## district.ui.smart-contracts.events
 re-frame events provided by this module:
 
-#### `::start [opts]`
-Event fired at mount start.
-
-#### `::load-contracts [opts]`
+#### <a name="load-contracts">`::load-contracts [opts]`
 Loads smart contracts. Pass same args as to mount start.
 
-#### `::contract-loaded`
+#### <a name="contract-loaded`">`::contract-loaded`
 Event fired when a single file was loaded. Either ABI or BIN. 
 
-#### `::contracts-loaded`
+#### <a name="contracts-loaded`">`::contracts-loaded`
 Event fired when all smart contract files have been loaded. Use this event to hook into event flow from your modules.
 One example using [re-frame-forward-events-fx](https://github.com/Day8/re-frame-forward-events-fx) may look like this:
 
@@ -120,52 +143,46 @@ One example using [re-frame-forward-events-fx](https://github.com/Day8/re-frame-
      :dispatch-to [::do-something]}))
 ```
 
-#### `::set-contract [contract-key contract]`
+#### <a name="set-contract">`::set-contract [contract-key contract]`
 Sets new contract into re-frame db
 
-#### `::contract-load-failed`
+#### <a name="contract-load-failed`">`::contract-load-failed`
 Fired when there was an error loading contract file
-
-#### `::stop`
-Cleanup event fired on mount stop.
 
 ## district.ui.smart-contracts.queries
 DB queries provided by this module:  
 *You should use them in your events, instead of trying to get this module's 
 data directly with `get-in` into re-frame db.*
 
-#### `contracts [db]`
+#### <a name="contracts">`contracts [db]`
 Works the same way as sub `::contracts`
 
-#### `contract [db contract-key]`
+#### <a name="contract">`contract [db contract-key]`
 Works the same way as sub `::contract`
 
-#### `contract-address [db contract-key]`
+#### <a name="contract-address">`contract-address [db contract-key]`
 Works the same way as sub `::contract-address`
 
-#### `contract-abi [db contract-key]`
+#### <a name="contract-abi">`contract-abi [db contract-key]`
 Works the same way as sub `::contract-abi`
 
-#### `contract-bin [db contract-key]`
+#### <a name="contract-bin">`contract-bin [db contract-key]`
 Works the same way as sub `::contract-bin`
 
-#### `instance [db contract-key]`
+#### <a name="instance">`instance [db contract-key]`
 Works the same way as sub `::instance`
 
-#### `merge-contracts [db contracts]`
+#### <a name="merge-contracts">`merge-contracts [db contracts]`
 Merges contracts and returns new re-frame db
 
-#### `merge-contract [db contract-key]`
+#### <a name="merge-contract">`merge-contract [db contract-key]`
 Merges a contract and returns new re-frame db
 
-#### `assoc-contract-abi [db contract-key abi]`
+#### <a name="assoc-contract-abi">`assoc-contract-abi [db contract-key abi]`
 Associates ABI to contract and returns new re-frame db
 
-#### `assoc-contract-bin [db contract-key bin]`
+#### <a name="assoc-contract-bin">`assoc-contract-bin [db contract-key bin]`
 Associates BIN to contract and returns new re-frame db
-
-#### `dissoc-smart-contracts [db]`
-Cleans up this module from re-frame db. 
 
 ## Dependency on other district UI modules
 * [district-ui-web3](https://github.com/district0x/district-ui-web3)
