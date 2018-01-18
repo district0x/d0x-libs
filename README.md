@@ -16,6 +16,7 @@ Include `[district.validation]` in your CLJS file
   - [cljs-time?](#cljs-time?)
   - [length?](#length?)
   - [email?](#email?)
+  - [web3-address?](#web3-address?)
   - [sha3?](#sha3?)
   - [not-neg?](#not-neg?)
   - [not-nil?](#not-nil?)
@@ -58,6 +59,13 @@ True for valid email.
 (valid/email? "some@email.com")
 ;; => true
 (valid/email? "" {:allow-empty? true})
+;; => true
+```
+
+#### <a name="web3-address?">`web3-address? [x]`
+True if given valid web3 address.
+```clojure
+(valid/web3-address? "0x48e69c07bc7b9b953b07c45dc8adbd78e12f10fa")
 ;; => true
 ```
 

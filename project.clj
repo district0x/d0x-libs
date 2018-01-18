@@ -5,10 +5,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojurescript "1.9.946"]
-                 [district0x/bignumber "1.0.3"]
                  [cljs-web3 "0.19.0-0-9"]
-                 [district0x/district-web3-utils "1.0.0"]
-                 [com.andrewmcveigh/cljs-time "0.5.2"]]
+                 [district0x/district-web3-utils "1.0.0"]]
 
   :doo {:paths {:karma "./node_modules/karma/bin/karma"}}
 
@@ -21,7 +19,8 @@
                                   [day8.re-frame/test "0.1.5"]
                                   [org.clojure/clojure "1.8.0"]
                                   [org.clojure/tools.nrepl "0.2.13"]
-                                  [cljsjs/web3 "0.19.0-0"]]
+                                  [cljsjs/web3 "0.19.0-0"]
+                                  [com.andrewmcveigh/cljs-time "0.5.2"]]
                    :plugins [[lein-cljsbuild "1.1.7"]
                              [lein-doo "0.1.8"]
                              [lein-npm "0.6.2"]]}}
