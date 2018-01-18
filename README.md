@@ -25,6 +25,7 @@ Include `[district.parsers]` in your CLJS file
   - [parse-boolean-seq](#parse-boolean-seq)
   - [parse-non-empty-str-seq](#parse-non-empty-str-seq)
   - [parse-web3-address-seq](#parse-web3-address-seq)
+  - [parse-seq-fn](#parse-seq-fn)
   
 
 ## district.parsers
