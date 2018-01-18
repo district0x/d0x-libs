@@ -20,7 +20,7 @@ Include `[district.parsers]` in your CLJS file
   - [parse-non-empty-str](#parse-non-empty-str)
   - [parse-web3-address](#parse-web3-address)
   - [parse-int-seq](#parse-int-seq)
-  - [parse-float-seq](#parse-float-seq-seq)
+  - [parse-float-seq](#parse-float-seq)
   - [parse-keyword-seq](#parse-keyword-seq)
   - [parse-boolean-seq](#parse-boolean-seq)
   - [parse-non-empty-str-seq](#parse-non-empty-str-seq)
