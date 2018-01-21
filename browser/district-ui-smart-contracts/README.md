@@ -27,6 +27,9 @@ Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/
   - [::contracts-loaded](#contracts-loaded)
   - [::set-contract](#set-contract)
   - [::contract-load-failed](#contract-load-failed)
+- [district.ui.smart-contracts.deploy-events](#districtuismart-contractsdeploy-events)
+  - [::deploy-contract](#deploy-contract)
+  - [::contract-deploy-failed](#contract-deploy-failed)
 - [district.ui.smart-contracts.queries](#districtuismart-contractsqueries)
   - [contracts](#contracts)
   - [contract](#contract)
@@ -152,6 +155,45 @@ Sets new contract into re-frame db
 
 #### <a name="contract-load-failed`">`::contract-load-failed`
 Fired when there was an error loading contract file
+
+## district.ui.smart-contracts.deploy-events
+Events useful for deploying contracts. This namespace is meant to be used only in tests or very simple apps.
+Any larger application should be doing smart-contract deployment on server-side via [district-server-smart-contracts](https://github.com/district0x/district-server-smart-contracts).
+
+#### <a name="deploy-contract`">`::deploy-contract [contract-key opts]`
+Deploys a smart-contract of key `contract-key` and saves new address into re-frame db.
+
+```clojure
+  (ns my-district.core
+    (:require [mount.core :as mount]
+              [district.ui.smart-contracts]
+              [district.ui.smart-contracts.deploy-events :as deploy-events]
+              [district.ui.smart-contracts.queries :as queries]))
+
+  (-> (mount/with-args
+        {:web3 {:url "http://localhost:8549"}
+         :smart-contracts 
+          {:disable-loading-at-start? true
+           :contracts {:deploy-test-contract {:name "DeployTestContract"
+                                              :abi (clj->js (js/JSON.parse "[{\"inputs\":[{\"name\":\"someNumber\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"))
+                                              :bin "0x60606040523415600e57600080fd5b604051602080607183398101604052808051915050801515602e57600080fd5b50603580603c6000396000f3006060604052600080fd00a165627a7a72305820f6c231e485f5b65831c99412cbcad5b4e41a4b69d40f3d4db8de3a38137701fb0029"}}}})
+    (mount/start))
+    
+(dispatch [::deploy-events/deploy-contract :deploy-test-contract {:gas 4500000
+                                                                  :arguments [1]
+                                                                  :from "0xb2930b35844a230f00e51431acae96fe543a0347"
+                                                                  :on-success [::optional-callback]
+                                                                  :on-error [::optional-error-callback]}])
+```
+When successfully deployed, you'll be able to access contract instance and address same way as other contracts
+
+```clojure
+(queries/contract-address db :deploy-test-contract)
+(queries/instance db :deploy-test-contract)
+```
+
+#### <a name="contract-deploy-failed`">`::contract-deploy-failed`
+Event fired when deploying a contract failed. 
 
 ## district.ui.smart-contracts.queries
 DB queries provided by this module:  

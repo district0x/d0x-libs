@@ -1,4 +1,4 @@
-(defproject district-ui-smart-contracts "1.0.0"
+(defproject district0x/district-ui-smart-contracts "1.0.1"
   :description "district UI module for loading smart contract files"
   :url "https://github.com/district0x/district-ui-smart-contracts"
   :license {:name "Eclipse Public License"
@@ -9,6 +9,7 @@
                  [day8.re-frame/async-flow-fx "0.0.8"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
                  [day8.re-frame/http-fx "0.1.4"]
+                 [district0x.re-frame/web3-fx "1.0.3"]
                  [district0x/district-ui-web3 "1.0.1"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [mount "0.1.11"]
@@ -25,7 +26,8 @@
   :profiles {:dev {:dependencies [[org.clojure/clojure "1.8.0"]
                                   [com.cemerick/piggieback "0.2.2"]
                                   [org.clojure/tools.nrepl "0.2.13"]
-                                  [day8.re-frame/test "0.1.5"]]
+                                  [day8.re-frame/test "0.1.5"]
+                                  [district0x/district-ui-web3-accounts "1.0.3"]]
                    :plugins [[lein-cljsbuild "1.1.7"]
                              [lein-doo "0.1.8"]
                              [lein-npm "0.6.2"]]}}

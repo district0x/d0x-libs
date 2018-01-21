@@ -26,13 +26,12 @@
 (s/def ::bin string?)
 (s/def ::path string?)
 (s/def ::version any?)
-(s/def ::contract (s/keys :req-un [::name]
-                          :opt-un [::address ::abi ::bin ::path ::version]))
+(s/def ::contract (s/keys :opt-un [::name ::address ::abi ::bin ::path ::version]))
 (s/def ::contracts (s/map-of ::contract-key ::contract))
 
-(s/def ::opts (s/keys :req-un [::contracts]
-                      :opt-un [::load-bin? ::contracts-path ::disable-loading-at-start?
-                               ::request-timeout ::contracts-version]))
+(s/def ::opts (s/nilable (s/keys :req-un [::contracts]
+                                 :opt-un [::load-bin? ::contracts-path ::disable-loading-at-start?
+                                          ::request-timeout ::contracts-version])))
 
 
 (defn start [opts]

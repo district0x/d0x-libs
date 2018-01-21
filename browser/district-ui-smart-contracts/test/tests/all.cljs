@@ -2,11 +2,16 @@
   (:require
     [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
     [day8.re-frame.test :refer [run-test-async wait-for run-test-sync]]
+    [district.ui.smart-contracts.deploy-events :as deploy-events]
     [district.ui.smart-contracts.events :as events]
     [district.ui.smart-contracts.subs :as subs]
     [district.ui.smart-contracts]
+    [district.ui.web3-accounts.events :as accounts-events]
+    [district.ui.web3-accounts.subs :as accounts-subs]
+    [district.ui.web3-accounts]
     [mount.core :as mount]
-    [re-frame.core :refer [reg-event-fx dispatch-sync subscribe reg-cofx reg-fx dispatch]]))
+    [re-frame.core :refer [reg-event-fx dispatch-sync subscribe reg-cofx reg-fx dispatch]]
+    [cljs-web3.core :as web3]))
 
 (def responses
   {"./Contract1.abi" "[{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"
@@ -16,7 +21,10 @@
 
 (def smart-contracts
   {:contract1 {:name "Contract1" :address "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"}
-   :contract2 {:name "Contract2" :address "0x38cefd943120474e031b72a841e4a891f1ba3648"}})
+   :contract2 {:name "Contract2" :address "0x38cefd943120474e031b72a841e4a891f1ba3648"}
+   :deploy-test-contract {:name "DeployTestContract"
+                          :abi (clj->js (js/JSON.parse "[{\"inputs\":[{\"name\":\"someNumber\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"))
+                          :bin "0x60606040523415600e57600080fd5b604051602080607183398101604052808051915050801515602e57600080fd5b50603580603c6000396000f3006060604052600080fd00a165627a7a72305820f6c231e485f5b65831c99412cbcad5b4e41a4b69d40f3d4db8de3a38137701fb0029"}})
 
 
 (reg-fx
@@ -56,6 +64,7 @@
 
       (-> (mount/with-args
             {:web3 {:url "https://mainnet.infura.io/ "}
+             :web3-accounts {:disable-loading-at-start? true}
              :smart-contracts {:contracts smart-contracts
                                :load-bin? true
                                :contracts-path "./"}})
@@ -113,6 +122,7 @@
           contract1-abi (subscribe [::subs/contract-abi :contract1])]
       (-> (mount/with-args
             {:web3 {:url "https://mainnet.infura.io/ "}
+             :web3-accounts {:disable-loading-at-start? true}
              :smart-contracts {:contracts {}
                                :contracts-path "./"
                                :disable-loading-at-start? true}})
@@ -121,7 +131,7 @@
       (is (= {} @contracts))
 
       (dispatch [::events/load-contracts {:contracts (select-keys smart-contracts [:contract1])
-                                                :contracts-path "./"}])
+                                          :contracts-path "./"}])
 
       (is (= (js/JSON.stringify (-> @contracts :contract1 :abi))
              (responses "./Contract1.abi")
@@ -129,4 +139,31 @@
 
       (testing "Doesn't load bin unless explicitly told"
         (is (nil? @contract1-bin))))))
+
+
+(deftest deploy-tests
+  (run-test-async
+    (let [contract-address (subscribe [::subs/contract-address :deploy-test-contract])
+          contract-instance (subscribe [::subs/instance :deploy-test-contract])
+          active-account (subscribe [::accounts-subs/active-account])]
+
+      (-> (mount/with-args
+            {:web3 {:url "http://localhost:8549"}
+             :smart-contracts {:contracts smart-contracts
+                               :disable-loading-at-start? true}})
+        (mount/start))
+
+
+      (is (nil? @contract-address))
+      (is (nil? @contract-instance))
+
+      (wait-for [::accounts-events/active-account-changed ::accounts-events/accounts-load-failed]
+        (dispatch [::deploy-events/deploy-contract :deploy-test-contract {:gas 4500000
+                                                                          :arguments [1]
+                                                                          :from @active-account}])
+
+        (wait-for [::events/set-contract ::deploy-events/contract-deploy-failed]
+          (is (web3/address? @contract-address))
+          (is (not (nil? @contract-instance))))))))
+
 
