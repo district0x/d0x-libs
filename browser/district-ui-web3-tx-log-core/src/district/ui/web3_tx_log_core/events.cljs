@@ -19,21 +19,31 @@
     {:db (queries/assoc-tx-hashes db (if (tx-queries/localstorage-disabled? db)
                                        '()
                                        (or (queries/tx-hashes web3-tx-log-core-localstorage) '())))
-     :forward-events [{:register ::tx-event
+     :forward-events [{:register ::add-remove-tx
                        :events #{::tx-events/add-tx ::tx-events/remove-tx}
-                       :dispatch-to [::tx-event-fired]}
+                       :dispatch-to [::add-remove-tx-fired]}
                       {:register ::clear-localstorage
                        :events #{::tx-events/clear-localstorage}
-                       :dispatch-to [::clear-localstorage]}]}))
+                       :dispatch-to [::clear-localstorage]}
+                      {:register ::tx-hash
+                       :events #{::tx-events/tx-hash}
+                       :dispatch-to [::tx-hash-fired]}]}))
 
 
 (reg-event-fx
-  ::tx-event-fired
-  [interceptors]
+  ::add-remove-tx-fired
+  interceptors
   (fn [{:keys [:db]} [[event tx-hash]]]
     {:dispatch (if (= event ::tx-events/add-tx)
                  [::add-tx-hash tx-hash]
                  [::remove-tx-hash tx-hash])}))
+
+
+(reg-event-fx
+  ::tx-hash-fired
+  interceptors
+  (fn [{:keys [:db]} [[_ {:keys [:tx-log]} tx-hash]]]
+    {:dispatch [::tx-events/set-tx tx-hash {:tx-log tx-log}]}))
 
 
 (defn- tx-event-fn [action-fn]
@@ -68,6 +78,7 @@
   interceptors
   (fn [{:keys [:db]}]
     {:db (queries/dissoc-web3-tx-log-core db)
-     :forward-events [{:unregister ::tx-event}
-                      {:unregister ::clear-localstorage}]}))
+     :forward-events [{:unregister ::add-remove-tx}
+                      {:unregister ::clear-localstorage}
+                      {:unregister ::tx-hash}]}))
 

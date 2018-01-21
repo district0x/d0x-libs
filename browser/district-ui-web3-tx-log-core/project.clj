@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-log-core "1.0.0"
+(defproject district0x/district-ui-web3-tx-log-core "1.0.1"
   :description "district UI module providing core logic for web3 transaction log components"
   :url "https://github.com/district0x/district-ui-web3-tx-log-core"
   :license {:name "Eclipse Public License"
@@ -6,7 +6,7 @@
 
   :dependencies [[akiroz.re-frame/storage "0.1.2"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
-                 [district0x/district-ui-web3-tx "1.0.4"]
+                 [district0x/district-ui-web3-tx "1.0.7"]
                  [mount "0.1.11"]
                  [org.clojure/clojurescript "1.9.946"]
                  [re-frame "0.10.2"]]

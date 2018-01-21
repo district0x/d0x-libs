@@ -3,16 +3,19 @@
 [![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-log-core.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-log-core)
 
 Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI,
-that provides core logic for transaction log components. This module does not provide [reagent](https://github.com/reagent-project/reagent) component for a transaction log, only
+that provides core logic for transaction log components. This module does not provide [reagent](https://github.com/reagent-project/reagent) UI component for a transaction log, only
 logic to build the component upon. This way many different reagent components can be build on top of this module.
 
-This module automatically listens to [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) events to
-build up chronological list of transactions. It means you don't need to add/remove transactions manually to this module
-unless doing something very specific. It also uses localstorage to store data between sessions, but only if [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx)
-uses it as well.  
+This module automatically listens to [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) events and
+based on that performs 2 things:
+1. Builds up chronological list of transactions. Also stores it in localstorage, but only if
+[district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) uses localstorage as well.
+
+2. Extends [send-tx](https://github.com/district0x/district-ui-web3-tx#send-tx), so you can pass it key `:tx-log` with
+any data you want associate together with a transaction. Then these data can be displayed in transaction log UI component. 
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-log-core "1.0.0"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-log-core "1.0.1"]` into your project.clj  
 Include `[district.ui.web3-tx-log-core]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -46,6 +49,19 @@ This module does not have any configuration options.
   (-> (mount/with-args
         {:web3 {:url "https://mainnet.infura.io/"}})
     (mount/start))
+```
+
+#### Using send-tx extension
+```clojure
+(ns my-district.events
+    (:require [district.ui.web3-tx.events :as tx-events]))
+(dispatch [::tx-events/send-tx {:instance MyContract
+                                :fn :my-function
+                                :args [1]
+                                :tx-opts {:from my-account :gas 4500000}
+                                ;; Any data can be passed to :tx-log, depending on what your tx-log component
+                                ;; is displaying for each transaction
+                                :tx-log {:name "Nice Transaction"}}])
 ```
 
 ## district.ui.web3-tx-log-core.subs

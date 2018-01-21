@@ -39,14 +39,15 @@
             {:web3 {:url "https://mainnet.infura.io/"}})
         (mount/start))
 
-      (dispatch [::tx-events/add-tx tx-hash])
+      (dispatch [::tx-events/tx-hash {:tx-log {:a 1 :b 2}} tx-hash])
 
       (wait-for [::events/add-tx-hash]
         (is (= @tx-hashes (list tx-hash)))
         (is (empty? @(subscribe [::subs/txs {:status :tx.status/success}])))
-        (let [{:keys [:transaction-hash :status]} (first @txs)]
+        (let [{:keys [:transaction-hash :status :tx-log]} (first @txs)]
           (is (= tx-hash transaction-hash))
-          (is (= status :tx.status/pending)))
+          (is (= status :tx.status/pending))
+          (is (= tx-log {:a 1 :b 2})))
 
         (dispatch [::tx-events/add-tx tx-hash2])
 
