@@ -15,8 +15,7 @@
 
 
 (defn start [opts]
-  (when-not (:disable-using-localstorage? @district.ui.web3-tx/web3-tx)
-    (re-frame-storage/reg-co-fx! :district.ui.web3-tx-log-core {:fx :web3-tx-log-core-localstorage :cofx :web3-tx-log-core-localstorage}))
+  (re-frame-storage/reg-co-fx! :district.ui.web3-tx-log-core {:fx :web3-tx-log-core-localstorage :cofx :web3-tx-log-core-localstorage})
   (dispatch-sync [::events/start opts])
   opts)
 

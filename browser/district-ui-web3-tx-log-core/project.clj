@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-log-core "1.0.1"
+(defproject district0x/district-ui-web3-tx-log-core "1.0.2"
   :description "district UI module providing core logic for web3 transaction log components"
   :url "https://github.com/district0x/district-ui-web3-tx-log-core"
   :license {:name "Eclipse Public License"
