@@ -14,7 +14,7 @@
           :start (start (:web3-tx-costs (mount/args)))
           :stop (stop))
 
-(s/def ::currencies (s/coll-of keyword?))
+(s/def ::currencies (s/nilable (s/coll-of keyword?)))
 (s/def ::opts (s/nilable (s/keys :opt-un [::currencies])))
 
 (defn start [opts]

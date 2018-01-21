@@ -2,6 +2,7 @@
   (:require
     [bignumber.core :as bn]
     [cljs-web3.core :as web3]
+    [cljs.spec.alpha :as s]
     [day8.re-frame.forward-events-fx]
     [district.ui.conversion-rates.events :as rates-events]
     [district.ui.conversion-rates.queries :as rates-queries]
@@ -27,11 +28,12 @@
   ::add-currencies
   [interceptors (validate-first-arg :district.ui.web3-tx-costs/currencies)]
   (fn [{:keys [:db]} [currencies {:keys [:request-interval-ms]}]]
-    {:db (queries/add-currencies db currencies)
-     :dispatch [::rates-events/watch-conversion-rates (merge {:from-currencies [:ETH]
-                                                              :to-currencies currencies}
-                                                             (when request-interval-ms
-                                                               {:request-interval-ms request-interval-ms}))]}))
+    (when currencies
+      {:db (queries/add-currencies db currencies)
+       :dispatch [::rates-events/watch-conversion-rates (merge {:from-currencies [:ETH]
+                                                                :to-currencies currencies}
+                                                               (when request-interval-ms
+                                                                 {:request-interval-ms request-interval-ms}))]})))
 
 
 (reg-event-fx
