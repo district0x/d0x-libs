@@ -5,7 +5,7 @@
 Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI, that takes care of loading Ethereum smart-contract files.
 
 ## Installation
-Add `[district0x/district-ui-smart-contracts "1.0.1"]` into your project.clj  
+Add `[district0x/district-ui-smart-contracts "1.0.2"]` into your project.clj  
 Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/start`
 
 ## API Overview

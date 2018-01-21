@@ -158,8 +158,7 @@
       (is (nil? @contract-instance))
 
       (wait-for [::accounts-events/active-account-changed ::accounts-events/accounts-load-failed]
-        (dispatch [::deploy-events/deploy-contract :deploy-test-contract {:gas 4500000
-                                                                          :arguments [1]
+        (dispatch [::deploy-events/deploy-contract :deploy-test-contract {:arguments [1]
                                                                           :from @active-account}])
 
         (wait-for [::events/set-contract ::deploy-events/contract-deploy-failed]

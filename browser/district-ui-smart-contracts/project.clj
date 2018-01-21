@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-smart-contracts "1.0.1"
+(defproject district0x/district-ui-smart-contracts "1.0.2"
   :description "district UI module for loading smart contract files"
   :url "https://github.com/district0x/district-ui-smart-contracts"
   :license {:name "Eclipse Public License"

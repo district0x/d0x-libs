@@ -26,7 +26,9 @@
     (let [{:keys [:abi :bin]} (queries/contract db contract-key)]
       {:web3/call {:web3 (web3-queries/web3 db)
                    :fns [{:fn web3-eth/contract-new
-                          :args (concat [abi] arguments [(assoc opts :data bin)])
+                          :args (concat [abi] arguments [(merge {:data bin
+                                                                 :gas 5000000}
+                                                                opts)])
                           :on-success [::contract-deployed* contract-key opts]
                           :on-error [::contract-deploy-failed contract-key opts]}]}})))
 
