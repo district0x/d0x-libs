@@ -23,7 +23,7 @@
   {:contract1 {:name "Contract1" :address "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"}
    :contract2 {:name "Contract2" :address "0x38cefd943120474e031b72a841e4a891f1ba3648"}
    :deploy-test-contract {:name "DeployTestContract"
-                          :abi (clj->js (js/JSON.parse "[{\"inputs\":[{\"name\":\"someNumber\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"))
+                          :abi (js/JSON.parse "[{\"inputs\":[{\"name\":\"someNumber\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]")
                           :bin "0x60606040523415600e57600080fd5b604051602080607183398101604052808051915050801515602e57600080fd5b50603580603c6000396000f3006060604052600080fd00a165627a7a72305820f6c231e485f5b65831c99412cbcad5b4e41a4b69d40f3d4db8de3a38137701fb0029"}})
 
 

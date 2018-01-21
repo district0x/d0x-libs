@@ -5,7 +5,7 @@
 Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI, that takes care of loading Ethereum smart-contract files.
 
 ## Installation
-Add `[district0x/district-ui-smart-contracts "1.0.0"]` into your project.clj  
+Add `[district0x/district-ui-smart-contracts "1.0.1"]` into your project.clj  
 Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -175,7 +175,7 @@ Deploys a smart-contract of key `contract-key` and saves new address into re-fra
          :smart-contracts 
           {:disable-loading-at-start? true
            :contracts {:deploy-test-contract {:name "DeployTestContract"
-                                              :abi (clj->js (js/JSON.parse "[{\"inputs\":[{\"name\":\"someNumber\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"))
+                                              :abi (js/JSON.parse "[{\"inputs\":[{\"name\":\"someNumber\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]")
                                               :bin "0x60606040523415600e57600080fd5b604051602080607183398101604052808051915050801515602e57600080fd5b50603580603c6000396000f3006060604052600080fd00a165627a7a72305820f6c231e485f5b65831c99412cbcad5b4e41a4b69d40f3d4db8de3a38137701fb0029"}}}})
     (mount/start))
     
