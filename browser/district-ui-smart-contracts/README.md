@@ -160,7 +160,7 @@ Fired when there was an error loading contract file
 Events useful for deploying contracts. This namespace is meant to be used only in tests or very simple apps.
 Any larger application should be doing smart-contract deployment on server-side via [district-server-smart-contracts](https://github.com/district0x/district-server-smart-contracts).
 
-#### <a name="deploy-contract`">`::deploy-contract [contract-key opts]`
+#### <a name="deploy-contract">`::deploy-contract [contract-key opts]`
 Deploys a smart-contract of key `contract-key` and saves new address into re-frame db.
 
 ```clojure
