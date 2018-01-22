@@ -40,7 +40,7 @@ Include `[district.ui.web3-tx-log]` in your CLJS file, where you use `mount/star
   - [::set-settings](#set-settings)
   - [::clear-localstorage](#clear-localstorage)
 - [district.ui.web3-tx-log.queries](#districtuiweb3-tx-logqueries)
-  - [settings](#settings)
+  - [settings](#settings-q)
   - [from-active-address-only?](#from-active-address-only?)
   - [localstorage-disabled?](#localstorage-disabled?)
   - [txs](#txs)
@@ -243,7 +243,7 @@ DB queries provided by this module:
 *You should use them in your events, instead of trying to get this module's 
 data directly with `get-in` into re-frame db.*
 
-#### <a name="settings">`settings [db]`
+#### <a name="settings-q">`settings [db]`
 Works the same way as sub `::settings`
 
 #### <a name="from-active-address-only?">`from-active-address-only? [db]`
