@@ -217,25 +217,25 @@ Component props:
 ## district.ui.web3-tx-log.subs
 re-frame subscriptions provided by this module:
 
-#### `::txs`
+#### <a name="txs-sub">`::txs`
 Returns list of transactions in for transaction log.
 
-#### `::settings`
+#### <a name="settings-sub">`::settings`
 Returns current transaction log settings.
 
-#### `::open?`
+#### <a name="open?-sub">`::open?`
 True if transaction log is currently open
 
 ## district.ui.web3-tx-log.events
 re-frame events provided by this module:
 
-#### `::set-open [open?]`
+#### <a name="set-open">`::set-open [open?]`
 Sets whether transaction log should open or not. 
 
-#### `::set-settings [settings]`
+#### <a name="set-settings">`::set-settings [settings]`
 Sets settings for transaction log.
 
-#### `::clear-localstorage`
+#### <a name="clear-localstorage">`::clear-localstorage`
 Clears transaction log settings from localstorage.
 
 ## district.ui.web3-tx-log.queries
@@ -243,22 +243,22 @@ DB queries provided by this module:
 *You should use them in your events, instead of trying to get this module's 
 data directly with `get-in` into re-frame db.*
 
-#### `settings [db]`
+#### <a name="settings">`settings [db]`
 Works the same way as sub `::settings`
 
-#### `from-active-address-only? [db]`
+#### <a name="from-active-address-only?">`from-active-address-only? [db]`
 True if setting `:from-active-address-only?` is on, to show transactions only from active address. 
 
-#### `open? [db]`
+#### <a name="open?">`open? [db]`
 Works the same way as sub `::open?`
 
-#### `txs [db]`
+#### <a name="txs">`txs [db]`
 Works the same way as sub `::txs`
 
-#### `merge-settings [db settings]`
+#### <a name="merge-settings">`merge-settings [db settings]`
 Merges new settings in returns new re-frame db
 
-#### `localstorage-disabled? [db]`
+#### <a name="localstorage-disabled?">`localstorage-disabled? [db]`
 True if localstorage is disabled for this module
 
 ## Dependency on other district UI modules
