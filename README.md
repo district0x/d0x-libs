@@ -30,7 +30,7 @@ Include `[district.validation]` in your CLJS file
 #### <a name="js-date?">`js-date? [x]`
 True if passed instance of `js/Date`.
 ```clojure
-(valid/cljs-time? (js/Date.))
+(valid/js-date? (js/Date.))
 ;; => true
 ```
 
