@@ -6,10 +6,6 @@ Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://gi
 that provides [reagent](https://github.com/reagent-project/reagent) UI component for transaction log, as well as related
 re-frame events and subscriptions.
 
-An example of transaction log UI component might look like this:
-
-![tx-log](https://cdn-images-1.medium.com/max/1600/1*LFKH-q4YTVv_qduka4A5fw.png)
-
 ## Installation
 Add `[district0x/district-ui-web3-tx-log "1.0.1"]` into your project.clj  
 Include `[district.ui.web3-tx-log]` in your CLJS file, where you use `mount/start`
@@ -114,6 +110,10 @@ In order for transaction log to work properly, you need to pass following data a
                                 :tx-log {:name "Called My Function"
                                          :related-href "/some-page"}}])
 ```
+
+An example of transaction log UI component might look like this:
+
+![tx-log](https://cdn-images-1.medium.com/max/1600/1*LFKH-q4YTVv_qduka4A5fw.png)
 
 #### `header`
 Header component of transaction log. 
