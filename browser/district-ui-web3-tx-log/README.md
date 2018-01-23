@@ -3,11 +3,15 @@
 [![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-log.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-log)
 
 Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI,
-that provides [reagent](https://github.com/reagent-project/reagent) component for transaction log, as well as related
-re-frame events and subscriptions.    
+that provides [reagent](https://github.com/reagent-project/reagent) UI component for transaction log, as well as related
+re-frame events and subscriptions.
+
+An example of transaction log UI component might look like this:
+
+![tx-log](https://cdn-images-1.medium.com/max/1600/1*LFKH-q4YTVv_qduka4A5fw.png)
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-log "1.0.0"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-log "1.0.1"]` into your project.clj  
 Include `[district.ui.web3-tx-log]` in your CLJS file, where you use `mount/start`
 
 ## API Overview

@@ -21,7 +21,7 @@
   [ui/Checkbox
    (r/merge-props
      {:toggle true
-      :label "Show txs from active address only."
+      :label "Show transactions from active address only."
       :on-change #(dispatch [::events/set-settings {:from-active-address-only? (aget %2 "checked")}])}
      props)])
 
@@ -174,7 +174,7 @@
 
 
 (defn no-transactions [{:keys [:text]
-                        :or {text "You haven't made any txs yet."}
+                        :or {text "You haven't made any transactions yet."}
                         :as props}]
   [:div.no-transactions
    (dissoc props :text)
