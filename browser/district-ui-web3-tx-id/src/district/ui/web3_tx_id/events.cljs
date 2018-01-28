@@ -49,7 +49,7 @@
                                       :opts (s/nilable ::opts)
                                       :args (s/* any?)))]
   (fn [{:keys [:db]} [tx-id tx-hash opts]]
-    (let [new-db (queries/assoc-tx-hash db tx-id tx-hash opts)]
+    (let [new-db (queries/add-tx-hash db tx-id tx-hash opts)]
       (merge
         {:db new-db}
         (when-not (tx-queries/localstorage-disabled? db)

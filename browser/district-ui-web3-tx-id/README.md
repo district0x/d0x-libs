@@ -23,8 +23,8 @@ Include `[district.ui.web3-tx-id]` in your CLJS file, where you use `mount/start
   - [::tx-success?](#tx-success?-sub)
   - [::tx-error?](#tx-error?-sub)
 - [district.ui.web3-tx-id.events](#districtuiweb3-tx-idevents)
-  - [::add-tx-hash](#add-tx-hash)
-  - [::remove-tx-id](#remove-tx-id)
+  - [::add-tx-hash-evt](#add-tx-hash)
+  - [::remove-tx-id-evt](#remove-tx-id)
   - [::clean-localstorage](#clean-localstorage)
 - [district.ui.web3-tx-id.queries](#districtuiweb3-tx-idqueries)
   - [tx-hash](#tx-hash)
@@ -33,6 +33,7 @@ Include `[district.ui.web3-tx-id]` in your CLJS file, where you use `mount/start
   - [tx-pending?](#tx-pending?)
   - [tx-success?](#tx-success?)
   - [tx-error?](#tx-error?)
+  - [add-tx-hash](#add-tx-hash)
   - [remove-tx-id](#remove-tx-id)
 
 
@@ -102,11 +103,11 @@ Returns true if transaction had an error.
 ## district.ui.web3-tx-id.events
 re-frame events provided by this module:
 
-#### <a name="add-tx-hash">`::add-tx-hash [tx-id tx-hash opts]`
+#### <a name="add-tx-hash-evt">`::add-tx-hash [tx-id tx-hash opts]`
 Associates new tx-id with a tx-hash. You don't need to use this unless doing something specific as this event is fired
 automatically after [district-ui-web3-tx#send-tx](https://github.com/district0x/district-ui-web3-tx#send-tx). 
 
-#### <a name="remove-tx-id">`::remove-tx-id [tx-hash]`
+#### <a name="remove-tx-id-evt">`::remove-tx-id [tx-hash]`
 Removes tx-id association with given tx-hash. You don't need to use this unless doing something specific as this event is fired
 automatically after [district-ui-web3-tx#remove-tx](https://github.com/district0x/district-ui-web3-tx#remove-tx).  
 
@@ -135,6 +136,9 @@ Works same was as sub `::tx-success?`.
 
 #### <a name="tx-error?">`tx-error? [db tx-id & [opts]]`
 Works same was as sub `::tx-error?`.
+
+#### <a name="add-tx-hash">`add-tx-hash [db tx-id tx-hash & [{:keys [:from :fn]}]]`
+Associates new tx-id with a tx-hash and returns new re-frame db.
 
 #### <a name="remove-tx-id">`remove-tx-id [db tx-hash]`
 Removes tx-id association for tx-hash and returns new re-frame db. 

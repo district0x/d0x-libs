@@ -6,7 +6,7 @@
 
 (def db-key :district.ui.web3-tx-id)
 
-(defn assoc-tx-hash [db tx-id tx-hash & [{:keys [:from :fn]}]]
+(defn add-tx-hash [db tx-id tx-hash & [{:keys [:from :fn]}]]
   (-> db
     (update-in [db-key :txs tx-id] conj {:tx-hash tx-hash :from from :fn fn})
     (assoc-in [db-key :tx-hashes tx-hash] {:tx-id tx-id :from from :fn fn})))
