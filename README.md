@@ -7,7 +7,7 @@ Set of extra functions helpful for working with [web3.js](https://github.com/eth
 
 
 ## Installation
-Add `[district0x/district-web3-utils "1.0.0"]` into your project.clj  
+Add `[district0x/district-web3-utils "1.0.1"]` into your project.clj  
 Include `[district.web3-utils]` in your CLJS file  
 
 ## API Overview
@@ -22,6 +22,7 @@ Include `[district.web3-utils]` in your CLJS file
   - [web3-time->date-time](#web3-time-date-time)
   - [web3-time->local-date-time](#web3-time-local-date-time)
   - [prepend-address-zeros](#prepend-address-zeros)
+  - [bytes32->str](#bytes32-str)
   
 
 ## district.web3-utils
@@ -119,6 +120,13 @@ If given address is shorter than it should be, it prepends missing places with z
 ```clojure
 (web3-utils/prepend-address-zeros "0x123")
 ;; => "0x0000000000000000000000000000000000000123"
+```
+
+#### <a name="bytes32-str">`bytes32->str [x]`
+Converts web3 bytes32 encoded string into normal string. 
+```clojure
+(web3-utils/bytes32->str "0x636f6e7374727563746564000000000000000000000000000000000000000000")
+;; => "constructed"
 ```
 
 ## Development

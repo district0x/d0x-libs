@@ -38,5 +38,8 @@
     (is (t/equal? date
                   (web3-utils/web3-time->local-date-time (time-coerce/to-epoch date)))))
 
-  (is (= "0x0000000000000000000000000000000000000123" (web3-utils/prepend-address-zeros "0x123"))))
+  (is (= "0x0000000000000000000000000000000000000123" (web3-utils/prepend-address-zeros "0x123")))
+
+  (is (= (web3-utils/bytes32->str "0x636f6e7374727563746564000000000000000000000000000000000000000000")
+         "constructed")))
 

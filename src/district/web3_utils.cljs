@@ -54,3 +54,8 @@
         (str (string/join (take n (repeat "0"))))
         (str "0x"))
       address)))
+
+(defn remove-zero-chars [s]
+  (string/join (take-while #(< 0 (.charCodeAt % 0)) s)))
+
+(def bytes32->str (comp remove-zero-chars web3/to-ascii))
