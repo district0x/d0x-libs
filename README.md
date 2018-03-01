@@ -7,7 +7,7 @@ Set of extra functions helpful for working with [web3.js](https://github.com/eth
 
 
 ## Installation
-Add `[district0x/district-web3-utils "1.0.1"]` into your project.clj  
+Add `[district0x/district-web3-utils "1.0.2"]` into your project.clj  
 Include `[district.web3-utils]` in your CLJS file  
 
 ## API Overview
@@ -23,6 +23,7 @@ Include `[district.web3-utils]` in your CLJS file
   - [web3-time->local-date-time](#web3-time-local-date-time)
   - [prepend-address-zeros](#prepend-address-zeros)
   - [bytes32->str](#bytes32-str)
+  - [uint->address](#uint-address)
   
 
 ## district.web3-utils
@@ -127,6 +128,13 @@ Converts web3 bytes32 encoded string into normal string.
 ```clojure
 (web3-utils/bytes32->str "0x636f6e7374727563746564000000000000000000000000000000000000000000")
 ;; => "constructed"
+```
+
+#### <a name="uint-address">`uint->address [x]`
+Converts Solidity's uint into web3 address 
+```clojure
+(web3-utils/uint->address (web3/to-big-number 1234))
+;; => "0x00000000000000000000000000000000000004d2"
 ```
 
 ## Development

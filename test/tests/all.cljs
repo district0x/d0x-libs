@@ -41,5 +41,8 @@
   (is (= "0x0000000000000000000000000000000000000123" (web3-utils/prepend-address-zeros "0x123")))
 
   (is (= (web3-utils/bytes32->str "0x636f6e7374727563746564000000000000000000000000000000000000000000")
-         "constructed")))
+         "constructed"))
+
+  (is (= (web3-utils/uint->address (web3/to-big-number 1234))
+         "0x00000000000000000000000000000000000004d2")))
 

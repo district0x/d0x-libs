@@ -59,3 +59,5 @@
   (string/join (take-while #(< 0 (.charCodeAt % 0)) s)))
 
 (def bytes32->str (comp remove-zero-chars web3/to-ascii))
+
+(def uint->address (comp prepend-address-zeros web3/from-decimal))
