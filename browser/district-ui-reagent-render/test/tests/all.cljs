@@ -33,9 +33,7 @@
   :stop (re-frame/dispatch-sync [:mock/stop]))
 
 (defn mock-html []
-  (fn []
-    (let [content @(re-frame/subscribe [:mock/content])]
-      [:div#app content])))
+  [:div#app @(re-frame/subscribe [:mock/content])])
 
 (use-fixtures :each
   {:before #(do
