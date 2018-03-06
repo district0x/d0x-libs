@@ -8,17 +8,17 @@
 (re-frame/reg-event-fx
  ::start
  [interceptors]
- (fn [_ [{:keys [container-id component-ref] :as opts}]]
+ (fn [_ [opts]]
    {:dispatch [::render opts]}))
 
 (re-frame/reg-event-fx
  ::render
  [interceptors]
- (fn [_ [{:keys [container-id component-ref] :as opts}]]
-   {::render-fx [container-id component-ref]}))
+ (fn [_ [{:keys [target component-ref] :as opts}]]
+   {::render-fx [target component-ref]}))
 
 (re-frame/reg-fx
  ::render-fx
- (fn [[container-id component-ref]]
+ (fn [[target component-ref]]
    (re-frame/clear-subscription-cache!)
-   (r/render [component-ref] (.getElementById js/document container-id))))
+   (r/render [component-ref] target)))

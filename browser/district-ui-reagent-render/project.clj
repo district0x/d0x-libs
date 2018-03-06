@@ -4,11 +4,17 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[mount "0.1.11"]
+  :dependencies [[cljsjs/react-with-addons "15.2.0-0"]
+                 [cljsjs/react-dom "15.2.0-0"]
+                 [cljs-react-test "0.1.4-SNAPSHOT"]
+                 [mount "0.1.11"]
                  [org.clojure/clojurescript "1.9.946"]
                  [re-frame "0.10.5"]]
 
-  :clean-targets ^{:protect false} ["test-output"]
+  :exclusions [[cljsjs/react] 
+               [org.clojure/clojurescript]]
+
+  :clean-targets ^{:protect false} ["tests-output"]
 
   :doo {:paths {:karma "./node_modules/karma/bin/karma"}}
 

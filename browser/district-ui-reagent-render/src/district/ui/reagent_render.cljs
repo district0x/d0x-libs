@@ -11,6 +11,6 @@
   {:pre [(s/assert ::spec/opts opts)]}
   (re-frame/dispatch-sync [::events/start opts]))
 
-(defstate district-ui-notification
+(defstate district-ui-reagent-render
   :start (start (:reagent-render (mount/args)))
   :stop :stopped)

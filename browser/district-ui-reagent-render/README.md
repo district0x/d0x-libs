@@ -1,5 +1,7 @@
 # district-ui-reagent-render
 
+[![Build Status](https://travis-ci.org/district0x/district-ui-reagent-render.svg?branch=master)](https://travis-ci.org/district0x/district-ui-reagent-render)
+
 Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) component for a district UI, that facilitates root [reagent](https://github.com/reagent-project/reagent) UI component mounting.
 
 ## Installation
@@ -22,7 +24,7 @@ Include `[district.ui.reagent-render]` in your CLJS file, where you use `mount/s
 
 This namespace contains district-ui-reagent-render [mount](https://github.com/tolitius/mount) module.x
 It takes a map of [opts](#opts-spec) as an argument:
-* `:container-id` The id of the html element where the root component of you app will be injected.
+* `:target` The html element where the root component of you app will be injected.
 * `:component-ref` The reference (a [Var](https://clojuredocs.org/clojure.core/var)) to the function which returns the root component.
 
 The validity of the args passed to the module will be checked at runtime if you have set the `clojure.spec.check-asserts` system property to `true`.
@@ -40,7 +42,7 @@ The validity of the args passed to the module will be checked at runtime if you 
 
 (defn ^:export init []
   (s/check-asserts true)
-  (-> (mount/with-args {:reagent-render {:container-id "app"
+  (-> (mount/with-args {:reagent-render {:target (.getElementById js/document "app")
                                          :component-ref #'main-panel}
                         :other-component {:fu "bar"}})
       (mount/start)))
@@ -75,16 +77,16 @@ This namespace contains re-frame events provided by this module.
 **Note:** In typical applications you won't be needing to use the provided events, it is enough to just call `mount/start` on the underlying mount module provided by the [district.ui.reagent-render](#district.ui.reagent-render) namespace.
 None of the events below do any sort of input checking.
 
-#### <a name="start"> start
+#### <a name="start"> `::start`
 
 This is the handler for the underlying event dispatched synchronously when `mount/start` is invoked. It takes the same arguments as the [district.ui.reagent-render](#district.ui.reagent-render) mount module and dispatches a [`:render`](#render) event.
 
-#### <a name="render"> render
+#### <a name="render"> `::render`
 
 This is just a book-keeping event to make sure that effectful event handler [`render-fx`](#render-fx) is called only once all other synchronously dispatched events from other modules have already happened.
 It takes the same arguments as the [district.ui.reagent-render](#district.ui.reagent-render) mount module.
 
-#### <a name="render-fx"> render-fx
+#### <a name="render-fx"> `::render-fx`
 
 This event handler performs the actual work of rendering the root component.
 It takes the same arguments as the [district.ui.reagent-render](#district.ui.reagent-render) mount module.
@@ -93,7 +95,7 @@ It takes the same arguments as the [district.ui.reagent-render](#district.ui.rea
 
 specs provided by this module:
 
-#### <a name="opts-spec"> opts
+#### <a name="opts-spec"> `::opts`
 
 Spec for the options passed to the module. You can toggle whether this spec is checked at runtime, see [district.ui.reagent-render](#district.ui.reagent-render).
 

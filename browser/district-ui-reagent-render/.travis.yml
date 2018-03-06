@@ -1,7 +1,7 @@
 sudo: required
 dist: trusty
 language: clojure
-script: lein cljsbuild test
+script: lein doo chrome tests once
 addons:
   chrome: stable
 before_script:
