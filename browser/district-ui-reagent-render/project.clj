@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-reagent-render "1.0.1"
+(defproject district0x/district-ui-reagent-render "1.0.0"
   :description "district UI module for rendering of a root component"
   :url "https://github.com/district0x/district-ui-reagent-render"
   :license {:name "Eclipse Public License"
@@ -6,12 +6,11 @@
 
   :dependencies [[cljsjs/react-with-addons "15.2.0-0"]
                  [cljsjs/react-dom "15.2.0-0"]
-                 [cljs-react-test "0.1.4-SNAPSHOT"]
                  [mount "0.1.11"]
                  [org.clojure/clojurescript "1.9.946"]
                  [re-frame "0.10.5"]]
 
-  :exclusions [[cljsjs/react] 
+  :exclusions [[cljsjs/react]
                [org.clojure/clojurescript]]
 
   :clean-targets ^{:protect false} ["tests-output"]
@@ -23,7 +22,8 @@
                           [karma-cli "1.0.1"]
                           [karma-cljs-test "0.1.0"]]}
 
-  :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.2"]
+  :profiles {:dev {:dependencies [[cljs-react-test "0.1.4-SNAPSHOT"]
+                                  [com.cemerick/piggieback "0.2.2"]
                                   [day8.re-frame/test "0.1.5"]
                                   [lein-doo "0.1.8"]
                                   [org.clojure/clojure "1.8.0"]
