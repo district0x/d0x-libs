@@ -39,7 +39,7 @@
   {:before #(do
               (reset! container (test-utils/new-container!))
               (-> (mount/with-args {:reagent-render {:target @container
-                                                     :component-ref #'mock-html}
+                                                     :component-var #'mock-html}
                                     :mock {:content "MOCK"}})
                   (mount/start)))
    :after #(do
