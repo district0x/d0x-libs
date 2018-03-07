@@ -26,8 +26,8 @@ Include `[district.ui.reagent-render]` in your CLJS file, where you use `mount/s
 This namespace contains district-ui-reagent-render [mount](https://github.com/tolitius/mount) module as well as a special utility function [`rerender`](#rerender).
 
 The **district-ui-reagent-render** module takes a map of [opts](#opts-spec) as an argument:
-* `:target` The html element where the root component of you app will be injected.
-* `:component-ref` The reference (a [Var](https://clojuredocs.org/clojure.core/var)) to the function which returns the root component.
+* `:target` The html element where the root component of you app will be injected or `:id`, a string with the identifier of the root component.
+* `:component-var` The reference (a [Var](https://clojuredocs.org/clojure.core/var)) to the function which returns the root component.
 
 The validity of the args passed to the module will be checked at runtime if you have set the `clojure.spec.check-asserts` system property to `true`.
 
@@ -44,13 +44,20 @@ The validity of the args passed to the module will be checked at runtime if you 
 
 (defn ^:export init []
   (s/check-asserts true)
-  (-> (mount/with-args {:reagent-render {:target (.getElementById js/document "app")
-                                         :component-ref #'main-panel}
+  (-> (mount/with-args {:reagent-render {:id "app"
+                                         :component-var #'main-panel}
                         :other-component {:fu "bar"}})
       (mount/start)))
 ```
 
-Call the resulting JS function in your `index.html` file to bootstrap the application::
+The `:target` argument can be passed like this:
+
+```clojure
+{:reagent-render {:target (.getElementById js/document "app")
+                  :component-var #'main-panel}}
+```
+
+Next call the resulting JS function in your `index.html` file to bootstrap the application::
 
 ```html
 <!doctype html>
