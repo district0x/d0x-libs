@@ -13,6 +13,7 @@ Include `[district.ui.reagent-render]` in your CLJS file, where you use `mount/s
 **Warning:** district0x modules are still in early stages of development, therefore API can change in the future.
 
 - [district.ui.reagent-render](#district.ui.reagent-render)
+  - [rerender](#rerender)
 - [district.ui.reagent-render.events](#district.ui.reagent-render.events)
   - [::start](#start)
   - [::render](#render)
@@ -22,8 +23,9 @@ Include `[district.ui.reagent-render]` in your CLJS file, where you use `mount/s
 
 ## <a name="district.ui.reagent-render"> district.ui.reagent-render
 
-This namespace contains district-ui-reagent-render [mount](https://github.com/tolitius/mount) module.x
-It takes a map of [opts](#opts-spec) as an argument:
+This namespace contains district-ui-reagent-render [mount](https://github.com/tolitius/mount) module as well as a special utility function [`rerender`](#rerender).
+
+The **district-ui-reagent-render** module takes a map of [opts](#opts-spec) as an argument:
 * `:target` The html element where the root component of you app will be injected.
 * `:component-ref` The reference (a [Var](https://clojuredocs.org/clojure.core/var)) to the function which returns the root component.
 
@@ -48,12 +50,6 @@ The validity of the args passed to the module will be checked at runtime if you 
       (mount/start)))
 ```
 
-If you're using [figwheel](https://github.com/bhauman/lein-figwheel) for development, ensure hot-reloading by passing the function which starts all the mount component to the figwheel config:
-
-```clojure
-:figwheel {:on-jsload "my-district/init"}
-```
-
 Call the resulting JS function in your `index.html` file to bootstrap the application::
 
 ```html
@@ -69,6 +65,16 @@ Call the resulting JS function in your `index.html` file to bootstrap the applic
   </body>
 </html>
 ```
+
+#### <a name="rerender"> `rerender`
+
+If you're using [figwheel](https://github.com/bhauman/lein-figwheel) for development, ensure hot-reloading by passing this function to the figwheel config:
+
+```clojure
+:figwheel {:on-jsload "district.ui.reagent-render/rerender"}
+```
+
+It will ensure that the root component (and all it's child ocmponents) is re-rendered when you make code changes.
 
 ## <a name="district.ui.reagent-render.events"> district.ui.reagent-render.events
 
@@ -104,8 +110,9 @@ Spec for the options passed to the module. You can toggle whether this spec is c
 Run test suite:
 
 ```bash
+# install dependencies
 lein deps
-# To run tests and rerun on changes
+# watch tests and rerun on changes
 lein doo chrome tests
 ```
 Install into local repo:

@@ -3,6 +3,9 @@
 
 (s/def ::target #(string? (.-innerHTML %)))
 
-(s/def ::component-ref #(instance? cljs.core/Var %))
+(s/def ::id string?)
 
-(s/def ::opts (s/nilable (s/keys :req-un [::component-ref ::target])))
+(s/def ::component-var #(instance? cljs.core/Var %))
+
+(s/def ::opts (s/or :opts1 (s/nilable (s/keys :req-un [::component-var ::target]))
+                    :opts2 (s/nilable (s/keys :req-un [::component-var ::id]))))
