@@ -41,6 +41,7 @@
             (cond
               (string? abi) (js/JSON.parse (clj->js abi))
               (array? abi) abi
+              (vector? abi) (clj->js abi)
               :else nil)))
 
 (defn assoc-contract-bin [db contract-key bin]
