@@ -73,7 +73,7 @@
        :http-xhrio
        (for [{:keys [:file-path :file-type] :as contract-to-load} to-load]
          {:method :get
-          :url file-path
+          :uri file-path
           :timeout request-timeout
           :response-format (if (= file-type :abi)
                              (ajax/json-response-format)

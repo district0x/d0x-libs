@@ -30,8 +30,8 @@
 (reg-fx
   :http-xhrio
   (fn [requests]
-    (doseq [{:keys [:url :on-success]} requests]
-      (dispatch (vec (concat on-success [(responses url)]))))))
+    (doseq [{:keys [:uri :on-success]} requests]
+      (dispatch (vec (concat on-success [(responses uri)]))))))
 
 
 (use-fixtures
