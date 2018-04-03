@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-reagent-render "1.0.0"
+(defproject district0x/district-ui-reagent-render "1.0.1"
   :description "district UI module for rendering of a root component"
   :url "https://github.com/district0x/district-ui-reagent-render"
   :license {:name "Eclipse Public License"

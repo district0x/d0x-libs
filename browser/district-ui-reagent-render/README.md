@@ -5,7 +5,7 @@
 Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) component for a district UI, that facilitates root [reagent](https://github.com/reagent-project/reagent) UI component mounting.
 
 ## Installation
-Add `[district0x/district-ui-reagent-render "1.0.0"]` into your project.clj.<br/>
+Add `[district0x/district-ui-reagent-render "1.0.1"]` into your project.clj.<br/>
 Include `[district.ui.reagent-render]` in your CLJS file, where you use `mount/start`.
 
 ## Usage
