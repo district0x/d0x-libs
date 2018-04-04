@@ -7,7 +7,7 @@ that combines together [district-ui-web3-accounts](https://github.com/district0x
 [district-ui-web3-balances](https://github.com/district0x/district-ui-web3-balances) to provide balances of user's accounts.  
 
 ## Installation
-Add `[district0x/district-ui-web3-account-balances "1.0.1"]` into your project.clj  
+Add `[district0x/district-ui-web3-account-balances "1.0.2"]` into your project.clj  
 Include `[district.ui.web3-account-balances]` in your CLJS file, where you use `mount/start`
 
 ## API Overview

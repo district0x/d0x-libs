@@ -1,12 +1,12 @@
-(defproject district0x/district-ui-web3-account-balances "1.0.1"
+(defproject district0x/district-ui-web3-account-balances "1.0.2"
   :description "district UI module for handling web3 account balances"
   :url "https://github.com/district0x/district-ui-web3-account-balances"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[day8.re-frame/forward-events-fx "0.0.5"]
-                 [district0x/district-ui-web3-balances "1.0.0"]
-                 [district0x/district-ui-web3-accounts "1.0.3"]
+                 [district0x/district-ui-web3-balances "1.0.1"]
+                 [district0x/district-ui-web3-accounts "1.0.4"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [mount "0.1.11"]
                  [org.clojure/clojurescript "1.9.946"]
