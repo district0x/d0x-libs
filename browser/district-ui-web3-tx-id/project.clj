@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-id "1.0.0"
+(defproject district0x/district-ui-web3-tx-id "1.0.1"
   :description "district UI module for associating arbitrary id with web3 transactions"
   :url "https://github.com/district0x/district-ui-web3-tx-id"
   :license {:name "Eclipse Public License"
@@ -8,7 +8,7 @@
                  [cljs-web3 "0.19.0-0-9"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
                  [district0x/district-ui-web3-accounts "1.0.3"]
-                 [district0x/district-ui-web3-tx "1.0.7"]
+                 [district0x/district-ui-web3-tx "1.0.8"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [medley "1.0.0"]
                  [mount "0.1.11"]

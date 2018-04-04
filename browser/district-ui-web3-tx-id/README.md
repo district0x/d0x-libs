@@ -7,7 +7,7 @@ that extends [district-ui-web3-tx](https://github.com/district0x/district-ui-web
 This is especially useful when in UI we need to display if certain transaction is pending without knowing its transaction hash. 
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-id "1.0.0"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-id "1.0.1"]` into your project.clj  
 Include `[district.ui.web3-tx-id]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -151,7 +151,7 @@ Removes tx-id association for tx-hash and returns new re-frame db.
 ```bash
 lein deps
 # Start ganache blockchain with 1s block time
-ganache-cli -p 8549 -b 1
+ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
 # To run tests and rerun on changes
 lein doo chrome tests
 ```
