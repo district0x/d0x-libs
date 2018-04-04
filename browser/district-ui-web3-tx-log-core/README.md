@@ -15,7 +15,7 @@ based on that performs 2 things:
 any data you want associate together with a transaction. Then these data can be displayed in transaction log UI component. 
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-log-core "1.0.2"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-log-core "1.0.3"]` into your project.clj  
 Include `[district.ui.web3-tx-log-core]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
