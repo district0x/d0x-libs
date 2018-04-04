@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-web3-balances.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-balances)
 
-Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI, that handles [web3](https://github.com/ethereum/web3.js/) balances of Ether or other ERC20 tokens.
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that handles [web3](https://github.com/ethereum/web3.js/) balances of Ether or other ERC20 tokens.
 
 ## Installation
 Add `[district0x/district-ui-web3-balances "1.0.0"]` into your project.clj  
