@@ -7,7 +7,7 @@ that provides [reagent](https://github.com/reagent-project/reagent) UI component
 re-frame events and subscriptions.
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-log "1.0.1"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-log "1.0.2"]` into your project.clj  
 Include `[district.ui.web3-tx-log]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -274,7 +274,7 @@ True if localstorage is disabled for this module
 ```bash
 lein deps
 # Start ganache blockchain with 1s block time
-ganache-cli -p 8549 -b 1
+ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
 # To run tests and rerun on changes
 lein doo chrome tests
 ```

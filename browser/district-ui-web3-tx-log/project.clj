@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-log "1.0.1"
+(defproject district0x/district-ui-web3-tx-log "1.0.2"
   :description "district UI module providing web3 transaction log"
   :url "https://github.com/district0x/district-ui-web3-tx-log"
   :license {:name "Eclipse Public License"
@@ -9,7 +9,7 @@
                  [district0x/district-format "1.0.0"]
                  [district0x/district-ui-web3-accounts "1.0.3"]
                  [district0x/district-ui-web3-tx-costs "1.0.2"]
-                 [district0x/district-ui-web3-tx-log-core "1.0.2"]
+                 [district0x/district-ui-web3-tx-log-core "1.0.3"]
                  [district0x/district-web3-utils "1.0.0"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [mount "0.1.11"]
