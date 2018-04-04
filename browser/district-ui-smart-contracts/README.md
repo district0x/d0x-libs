@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-smart-contracts.svg?branch=master)](https://travis-ci.org/district0x/district-ui-smart-contracts)
 
-Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI, that takes care of loading Ethereum smart-contract files.
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that takes care of loading Ethereum smart-contract files.
 
 ## Installation
 Add `[district0x/district-ui-smart-contracts "1.0.4"]` into your project.clj  
