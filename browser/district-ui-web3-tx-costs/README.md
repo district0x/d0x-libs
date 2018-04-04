@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-costs.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-costs)
 
-Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI.
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module.
 
 This module automatically listens to [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) events and
 when a transaction is processed, it calculates and saves transaction costs in chosen currencies.

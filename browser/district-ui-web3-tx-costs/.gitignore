@@ -13,4 +13,4 @@ pom.xml.asc
 /node_modules/
 /figwheel_server.log
 /tests-output/
-/district-ui-web3-tx-costs.iml.iml
+/district-ui-web3-tx-costs.iml
