@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-reagent-render.svg?branch=master)](https://travis-ci.org/district0x/district-ui-reagent-render)
 
-Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) component for a district UI, that facilitates root [reagent](https://github.com/reagent-project/reagent) UI component mounting.
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that facilitates root [reagent](https://github.com/reagent-project/reagent) UI component mounting.
 
 ## Installation
 Add `[district0x/district-ui-reagent-render "1.0.1"]` into your project.clj.<br/>
