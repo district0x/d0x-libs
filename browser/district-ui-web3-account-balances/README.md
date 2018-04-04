@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-web3-account-balances.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-account-balances)
 
-Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI, 
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, 
 that combines together [district-ui-web3-accounts](https://github.com/district0x/district-ui-web3-accounts) and 
 [district-ui-web3-balances](https://github.com/district0x/district-ui-web3-balances) to provide balances of user's accounts.  
 
