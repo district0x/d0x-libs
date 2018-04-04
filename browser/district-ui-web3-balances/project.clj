@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-balances "1.0.0"
+(defproject district0x/district-ui-web3-balances "1.0.1"
   :description "district UI module for handling web3 balances"
   :url "https://github.com/district0x/district-ui-web3-balances"
   :license {:name "Eclipse Public License"
@@ -6,7 +6,7 @@
 
   :dependencies [[cljs-web3 "0.19.0-0-9"]
                  [day8.re-frame/async-flow-fx "0.0.8"]
-                 [district0x.re-frame/web3-fx "1.0.2"]
+                 [district0x.re-frame/web3-fx "1.0.4"]
                  [district0x/district-ui-web3 "1.0.1"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [mount "0.1.11"]
