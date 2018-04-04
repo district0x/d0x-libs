@@ -7,7 +7,7 @@
   :dependencies [[akiroz.re-frame/storage "0.1.2"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
                  [district0x/district-format "1.0.0"]
-                 [district0x/district-ui-web3-accounts "1.0.3"]
+                 [district0x/district-ui-web3-accounts "1.0.4"]
                  [district0x/district-ui-web3-tx-costs "1.0.2"]
                  [district0x/district-ui-web3-tx-log-core "1.0.3"]
                  [district0x/district-web3-utils "1.0.0"]
