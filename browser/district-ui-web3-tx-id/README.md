@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-id.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-id)
 
-Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI,
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module,
 that extends [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) to provide easy way to associate arbitrary id with a transaction.
 This is especially useful when in UI we need to display if certain transaction is pending without knowing its transaction hash. 
 
