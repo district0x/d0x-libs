@@ -7,7 +7,7 @@
   :dependencies [[akiroz.re-frame/storage "0.1.2"]
                  [cljs-web3 "0.19.0-0-9"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
-                 [district0x/district-ui-web3-accounts "1.0.3"]
+                 [district0x/district-ui-web3-accounts "1.0.4"]
                  [district0x/district-ui-web3-tx "1.0.8"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [medley "1.0.0"]
