@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-log-core.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-log-core)
 
-Clojurescript [mount](https://github.com/tolitius/mount) + [re-frame](https://github.com/Day8/re-frame) module for a district UI,
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module,
 that provides core logic for transaction log components. This module does not provide [reagent](https://github.com/reagent-project/reagent) UI component for a transaction log, only
 logic to build the component upon. This way many different reagent components can be build on top of this module.
 
