@@ -101,7 +101,7 @@ Works the same way as sub `::accounts-balances`
 ```bash
 lein deps
 # Start ganache blockchain
-ganache-cli -p 8549
+ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
 # To run tests and rerun on changes
 lein doo chrome tests
 ```
