@@ -5,7 +5,7 @@
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that takes care of loading Ethereum smart-contract files.
 
 ## Installation
-Add `[district0x/district-ui-smart-contracts "1.0.4"]` into your project.clj  
+Add `[district0x/district-ui-smart-contracts "1.0.5"]` into your project.clj  
 Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -239,7 +239,8 @@ Associates BIN to contract and returns new re-frame db
 ## Development
 ```bash
 lein deps
-
+# Start ganache blockchain with 1s block time
+ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
 # To run tests and rerun on changes
 lein doo chrome tests
 ```

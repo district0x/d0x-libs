@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-smart-contracts "1.0.4"
+(defproject district0x/district-ui-smart-contracts "1.0.5"
   :description "district UI module for loading smart contract files"
   :url "https://github.com/district0x/district-ui-smart-contracts"
   :license {:name "Eclipse Public License"
@@ -9,7 +9,7 @@
                  [day8.re-frame/async-flow-fx "0.0.8"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
                  [day8.re-frame/http-fx "0.1.4"]
-                 [district0x.re-frame/web3-fx "1.0.3"]
+                 [district0x.re-frame/web3-fx "1.0.4"]
                  [district0x/district-ui-web3 "1.0.1"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [mount "0.1.11"]
