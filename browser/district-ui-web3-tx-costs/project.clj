@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-costs "1.0.2"
+(defproject district0x/district-ui-web3-tx-costs "1.0.3"
   :description "district UI module for providing web3 transaction costs"
   :url "https://github.com/district0x/district-ui-web3-tx-costs"
   :license {:name "Eclipse Public License"
@@ -8,7 +8,7 @@
                  [day8.re-frame/forward-events-fx "0.0.5"]
                  [district0x/bignumber "1.0.2"]
                  [district0x/district-ui-conversion-rates "1.0.1"]
-                 [district0x/district-ui-web3-tx "1.0.7"]
+                 [district0x/district-ui-web3-tx "1.0.8"]
                  [mount "0.1.11"]
                  [org.clojure/clojurescript "1.9.946"]
                  [re-frame "0.10.2"]]

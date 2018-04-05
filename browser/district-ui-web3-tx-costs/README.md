@@ -9,7 +9,7 @@ when a transaction is processed, it calculates and saves transaction costs in ch
 It uses [district-ui-conversion-rates](https://github.com/district0x/district-ui-conversion-rates) to obtain conversion rates.  
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-costs "1.0.2"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-costs "1.0.3"]` into your project.clj  
 Include `[district.ui.web3-tx-costs]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
