@@ -28,7 +28,8 @@
 
   :clean-targets ^{:protect false} ["target" "tests-output"]
 
-  :profiles {:dev {:dependencies [[day8.re-frame/test "0.1.5"]
+  :profiles {:dev {:dependencies [[com.andrewmcveigh/cljs-time "0.5.2"]
+                                  [day8.re-frame/test "0.1.5"]
                                   [org.clojure/clojure "1.8.0"]
                                   [lein-doo "0.1.8"]]
                    :plugins [[lein-cljsbuild "1.1.7"]

@@ -1,13 +1,17 @@
 (ns district.ui.web3-sync-now.events
-  (:require [cljs-web3.eth :as web3-eth]
-            [cljs-web3.evm :as web3-evm]
-            [district.ui.now.events :as now-events]
-            [district.ui.web3.events :as web3-events]
-            [district.ui.web3.queries :as web3-queries]
-            [district.ui.web3-sync-now.queries :as web3-sync-now-queries]
-            [district.web3-utils :as web3-utils]
-            [re-frame.core :as re-frame]
-            [day8.re-frame.forward-events-fx]))
+  (:require
+
+   [cljs-web3.evm :as web3-evm]
+   [day8.re-frame.forward-events-fx]
+   [district.ui.now.events :as now-events]
+   [district.ui.web3-sync-now.queries :as web3-sync-now-queries]
+   [district.ui.web3-sync-now.utils :as sync-now-utils]
+   [district.ui.web3.events :as web3-events]
+   [district.ui.web3.queries :as web3-queries]
+   [re-frame.core :as re-frame]
+
+
+            ))
 
 (def interceptors [re-frame/trim-v])
 
@@ -16,10 +20,7 @@
  [interceptors]
  (fn [{:keys [:db]}]
    (let [web3 (web3-queries/web3 db)]
-     {:dispatch [::now-events/set-now (->> (web3-eth/block-number web3)
-                                           (web3-eth/get-block web3)
-                                           :timestamp
-                                           web3-utils/web3-time->date-time)]})))
+     {:dispatch [::now-events/set-now (sync-now-utils/get-last-block-timestamp web3)]})))
 
 (re-frame/reg-fx
  :increase-evm-time
