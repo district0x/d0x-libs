@@ -7,7 +7,7 @@
   :dependencies [[cljs-web3 "0.19.0-0-11"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
                  [district0x/district-ui-now "1.0.2"]
-                 #_[district0x/district-ui-web3 "1.0.1"]
+                 [district0x/district-ui-web3 "1.0.1"]
                  [district0x/district-web3-utils "1.0.2"]
                  [mount "0.1.11"]
                  [org.clojure/clojurescript "1.9.946"]
