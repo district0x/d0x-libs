@@ -1,19 +1,21 @@
 (ns district.ui.web3-sync-now.events
-  (:require
-
-   [cljs-web3.evm :as web3-evm]
-   [day8.re-frame.forward-events-fx]
-   [district.ui.now.events :as now-events]
-   [district.ui.web3-sync-now.queries :as web3-sync-now-queries]
-   [district.ui.web3-sync-now.utils :as sync-now-utils]
-   [district.ui.web3.events :as web3-events]
-   [district.ui.web3.queries :as web3-queries]
-   [re-frame.core :as re-frame]
-
-
-            ))
+  (:require [cljs-web3.evm :as web3-evm]
+            [day8.re-frame.forward-events-fx]
+            [district.ui.now.events :as now-events]
+            [district.ui.web3-sync-now.queries :as web3-sync-now-queries]
+            [district.ui.web3-sync-now.utils :as sync-now-utils]
+            [district.ui.web3.events :as web3-events]
+            [district.ui.web3.queries :as web3-queries]
+            [re-frame.core :as re-frame]))
 
 (def interceptors [re-frame/trim-v])
+
+(re-frame/reg-event-fx
+ ::increment-now
+ [interceptors]
+ (fn [{:keys [:db]} [millis]]
+   {:dispatch [::now-events/increment-now millis]
+    :increase-evm-time [(web3-queries/web3 db) millis]}))
 
 (re-frame/reg-event-fx
  ::set-now
@@ -26,13 +28,6 @@
  :increase-evm-time
  (fn [[web3 millis]]
    (web3-evm/increase-time! web3 millis)))
-
-(re-frame/reg-event-fx
- ::increment-now
- [interceptors]
- (fn [{:keys [:db]} [millis]]
-   {:dispatch [::now-events/increment-now millis]
-    :increase-evm-time [(web3-queries/web3 db) millis]}))
 
 (re-frame/reg-event-fx
  ::start
