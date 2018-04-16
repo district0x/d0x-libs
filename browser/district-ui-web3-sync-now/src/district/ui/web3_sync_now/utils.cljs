@@ -2,7 +2,7 @@
     (:require [cljs-web3.eth :as web3-eth]
               [district.web3-utils :as web3-utils]))
 
-(defn get-last-block-timestampt [web3]
+(defn get-last-block-timestamp [web3]
   (->> (web3-eth/block-number web3)
        (web3-eth/get-block web3)
        :timestamp
