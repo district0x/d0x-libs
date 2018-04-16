@@ -12,11 +12,7 @@
             [district.ui.web3.events :as web3-events]
             [district.ui.web3]
             [mount.core :as mount]
-            [re-frame.core :as re-frame]
-
-            [cljs-web3.core :as web3]
-
-            ))
+            [re-frame.core :as re-frame]))
 
 (use-fixtures :each
   {:after (fn [] (mount/stop))})
@@ -30,20 +26,9 @@
      (-> (mount/with-args {:web3 {:url "http://localhost:8549"}})
          (mount/start))
 
-     (wait-for [::now-events/update-now]
-       #_[::web3-events/web3-created]
-
-       (prn "@B" @web3)
-
+     (wait-for [::web3-events/web3-created]
        (wait-for [::now-events/update-now]
-
-         #_(prn "@A" @web3)
-         (prn @now)
-
-         (is (t/equal? @now (sync-now-utils/get-last-block-timestamp @web3)))
          (reset! *prev-now* @now)
-
-         #_(re-frame/dispatch-sync [::sync-now-events/increment-now 8.64e+7])
-         #_(wait-for [::now-events/update-now]
-           (is (t/equal? @now (sync-now-utils/get-last-block-timestamp @web3)))
-           (is (= 1 (t/in-days (t/interval @now @*prev-now*))))))))))
+         (re-frame/dispatch-sync [::sync-now-events/increment-now 8.64e+7])
+         (wait-for [::now-events/update-now]
+           (is (= 1 (t/in-days (t/interval  @*prev-now* @now))))))))))
