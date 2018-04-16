@@ -5,8 +5,8 @@
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that synchronises UI time with the blockchain time.
 
 ## Installation
-Add `[district0x/district-ui-web3-sync-now "1.0.0"]` into your project.clj
-Include `[district.ui.web3-sync-now]` in your CLJS file, where you use `mount/start`
+Add `[district0x/district-ui-web3-sync-now "1.0.0"]` into your project.clj.
+Include `[district.ui.web3-sync-now]` in your CLJS file, where you use `mount/start`.
 
 ## API Overview
 
@@ -36,7 +36,7 @@ After the `:start` lifecycle method gets called this module waits for the [`:dis
 re-frame events provided by this module:
 
 #### <a name="increment-now-event">`::increment-now`
-Event to increment now time in re-frame db and the (testrpc) blockchain time by a number of milliseconds.
+Event to increment now time in a re-frame db and the (testrpc) blockchain time by a number of milliseconds.
 
 ```clojure
 (ns my-district.core
@@ -47,7 +47,7 @@ Event to increment now time in re-frame db and the (testrpc) blockchain time by 
 ```
 
 #### <a name="set-now-event">`::set-now`
-This is an utility event which sets the  [`:district.ui.now.subs/now`](https://github.com/district0x/district-ui-now#now-sub) time and is called by the `:start` lifecycle method of the [module](#module)
+This is an utility event which sets the  [`:district.ui.now.subs/now`](https://github.com/district0x/district-ui-now#now-sub) time and is called by the `:start` lifecycle method of the [module](#module).
 In a typical application you will never need to call this event yourself.
 
 #### <a name="increase-evm-time">`::increase-evm-time`
