@@ -6,7 +6,6 @@
             [district.ui.now.subs :as now-subs]
             [district.ui.now]
             [district.ui.web3-sync-now.events :as sync-now-events]
-            [district.ui.web3-sync-now.utils :as sync-now-utils]
             [district.ui.web3-sync-now]
             [district.ui.web3.subs :as web3-subs]
             [district.ui.web3.events :as web3-events]
