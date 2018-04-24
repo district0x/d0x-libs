@@ -1,0 +1,15 @@
+sudo: required
+dist: trusty
+language: clojure
+script: lein doo chrome "tests" once
+addons:
+  chrome: stable
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+notifications:
+  email:
+    recipients:
+      - filip@district0x.io
+    on_success: change
+    on_failure: always
