@@ -1,6 +1,6 @@
 # district-ui-tx-button
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-tx-button.svg?branch=master)](https://travis-ci.org/district0x/district-ui-tx-button)
+[![Build Status](https://travis-ci.org/district0x/district-ui-component-tx-button.svg?branch=master)](https://travis-ci.org/district0x/district-ui-component-tx-button)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module which provides a button for submitting blockchain transactions.
 
