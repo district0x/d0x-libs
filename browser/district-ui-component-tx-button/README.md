@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/district0x/district-ui-tx-button.svg?branch=master)](https://travis-ci.org/district0x/district-ui-tx-button)
 
-Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module which provides a button for submitting blockchain transaction.
+Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module which provides a button for submitting blockchain transactions.
 
 ## Installation
 Add `[district0x/district-ui-tx-button "1.0.0"]` into your project.clj
@@ -20,7 +20,6 @@ This UI component assumes you have following UI modules installed in your app:
 
 ## <a name="component">`district.ui.component.tx-button`
 This namespace contains the reagent UI component with a button for sending transactions. <br>
-It assumes
 
 You can pass following args to this component:
 * `:pending?` Takes a boolean value on `true` displays the value passed with the `:pending-text` key.
