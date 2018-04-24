@@ -1,4 +1,4 @@
-(defproject mount-cljs-demo "1.0.1"
+(defproject web3-sync-now "1.0.1"
   :description "district0x UI module for syncing time between the blockchain and the frontend."
   :url "https://github.com/district0x/"
   :license {:name "Eclipse Public License"
