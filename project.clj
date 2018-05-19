@@ -1,6 +1,6 @@
-(defproject district0x/district-ui-tx-button "1.0.0"
+(defproject district0x/district-ui-component-tx-button "1.0.0"
   :description "district UI reagent component for sending blockchain transactions."
-  :url "https://github.com/district0x/district-ui-tx-button"
+  :url "https://github.com/district0x/district-ui-component-tx-button"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
