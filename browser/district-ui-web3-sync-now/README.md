@@ -5,7 +5,7 @@
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that synchronises UI time with the blockchain time.
 
 ## Installation
-Add `[district0x/district-ui-web3-sync-now "1.0.2"]` into your project.clj.
+Add `[district0x/district-ui-web3-sync-now "1.0.3"]` into your project.clj.
 Include `[district.ui.web3-sync-now]` in your CLJS file, where you use `mount/start`.
 
 ## API Overview
@@ -43,14 +43,14 @@ Set the logging level to get notified of errors and/or successfull events.
 re-frame events provided by this module:
 
 #### <a name="increment-now-event">`::increment-now`
-Event to increment now time in a re-frame db and the (testrpc) blockchain time by a number of milliseconds.
+Event to increment now time in a re-frame db and the (testrpc) blockchain time by a number of seconds.
 
 ```clojure
 (ns my-district.core
   (:require [district.ui.web3-sync-now.events :as sync-now-events]
             [re-frame.core :as re-frame]))
 
-(re-frame/dispatch [::sync-now-events/increment-now 8.64e+7])
+(re-frame/dispatch [::sync-now-events/increment-now 300])
 ```
 
 Errors and successfully handled events will be logged to the JS console.

@@ -30,4 +30,4 @@
          (reset! *prev-now* @now)
          (re-frame/dispatch-sync [::sync-now-events/increment-now 8.64e+7])
          (wait-for [::now-events/update-now]
-           (is (= 1 (t/in-days (t/interval  @*prev-now* @now))))))))))
+           (is (= 1000 (t/in-days (t/interval  @*prev-now* @now))))))))))

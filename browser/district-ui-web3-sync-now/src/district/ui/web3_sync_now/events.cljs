@@ -17,12 +17,12 @@
 (re-frame/reg-event-fx
  ::increment-now
  [interceptors]
- (fn [{:keys [:db]} [millis]]
+ (fn [{:keys [:db]} [seconds]]
    (let [web3 (web3-queries/web3 db)]
-     {:dispatch [::now-events/increment-now millis]
+     {:dispatch [::now-events/increment-now (* seconds 1000)]
       :web3/call {:web3 web3
                   :fns [{:fn web3-evm/increase-time!
-                         :args [millis]
+                         :args [seconds]
                          :on-success [::logging-events/success [::increment-now]]
                          :on-error [::logging-events/error [::increment-now]]}]}})))
 
