@@ -22,13 +22,21 @@ Default is `:ETH`.
 * `:max-fraction-digits` Max. fraction digits to display. Default 2
 
 ```clojure
-  (ns my-district.core
-    (:require [district.ui.component.active-account-balance :refer [active-account-balance]]))
-              
-  (defn home-page []
-      [active-account-balance
-       {:token :DNT
-        :locale "en-US"
-        :max-fraction-digits 3
-        :min-fraction-digits 2}])
+(ns my-district.core
+  (:require [district.ui.component.active-account-balance :refer [active-account-balance]]))
+
+(defn home-page []
+  [:div.accounts
+   [active-account-balance
+    {:token-code :DNT
+     :contract :DNT
+     :class :dank
+     :locale "en-US"
+     :max-fraction-digits 3
+     :min-fraction-digits 2}]
+   [active-account-balance
+    {:token-code :ETH
+     :locale "en-US"
+     :max-fraction-digits 3
+     :min-fraction-digits 2}]])
 ```
