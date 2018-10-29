@@ -3,16 +3,18 @@
             [cljs-web3.evm :as web3-evm]
             [cljsjs.web3]
             [day8.re-frame.forward-events-fx]
+            [district.ui.logging.events :as logging]
             [district.ui.now.events :as now-events]
             [district.ui.web3-sync-now.queries :as web3-sync-now-queries]
             [district.ui.web3.events :as web3-events]
-            [district.ui.logging.events :as logging-events]
             [district.ui.web3.queries :as web3-queries]
             [district.web3-utils :as web3-utils]
             [district0x.re-frame.web3-fx]
             [re-frame.core :as re-frame]))
 
 (def interceptors [re-frame/trim-v])
+(def success-txt "Success")
+(def error-txt "Error")
 
 (re-frame/reg-event-fx
  ::increment-now
@@ -23,8 +25,8 @@
       :web3/call {:web3 web3
                   :fns [{:fn web3-evm/increase-time!
                          :args [seconds]
-                         :on-success [::logging-events/success [::increment-now]]
-                         :on-error [::logging-events/error [::increment-now]]}]}})))
+                         :on-success [::logging/info success-txt ::increment-now]
+                         :on-error [::logging/error error-txt ::increment-now]}]}})))
 
 (re-frame/reg-event-fx
  ::block-number
@@ -35,7 +37,7 @@
                   :fns [{:fn web3-eth/block-number
                          :args []
                          :on-success [::get-block]
-                         :on-error [::logging-events/error [::block-number]]}]}})))
+                         :on-error [::logging/error error-tx ::block-number]}]}})))
 
 (re-frame/reg-event-fx
  ::get-block
@@ -46,7 +48,7 @@
                   :fns [{:fn web3-eth/get-block
                          :args [number]
                          :on-success [::set-now]
-                         :on-error [::logging-events/error [::get-block]]}]}})))
+                         :on-error [::logging/error error-txt ::get-block]}]}})))
 
 (re-frame/reg-event-fx
  ::set-now
@@ -56,7 +58,7 @@
      {:dispatch [::now-events/set-now (-> block
                                           :timestamp
                                           web3-utils/web3-time->date-time)]
-      :log/success [::set-now]})))
+      :log/info [success-txt ::set-now]})))
 
 (re-frame/reg-event-fx
  ::start

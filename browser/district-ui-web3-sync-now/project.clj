@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-sync-now "1.0.3"
+(defproject district0x/district-ui-web3-sync-now "1.0.3-1"
   :description "district0x UI module for syncing time between the blockchain and the frontend."
   :url "https://github.com/district0x/"
   :license {:name "Eclipse Public License"
@@ -6,7 +6,7 @@
 
   :dependencies [[cljs-web3 "0.19.0-0-11"]
                  [district0x.re-frame/web3-fx "1.0.4"]
-                 [district0x/district-ui-logging "1.0.1"]
+                 [district0x/district-ui-logging "1.0.3"]
                  [district0x/district-ui-now "1.0.2"]
                  [district0x/district-ui-web3 "1.0.1"]
                  [district0x/district-web3-utils "1.0.2"]
