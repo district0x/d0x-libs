@@ -5,7 +5,7 @@
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that synchronises UI time with the blockchain time.
 
 ## Installation
-Add `[district0x/district-ui-web3-sync-now "1.0.3"]` into your project.clj.
+Add `[district0x/district-ui-web3-sync-now "1.0.3-1"]` into your project.clj.
 Include `[district.ui.web3-sync-now]` in your CLJS file, where you use `mount/start`.
 
 ## API Overview
