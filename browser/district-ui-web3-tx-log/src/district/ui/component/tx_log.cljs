@@ -1,14 +1,13 @@
 (ns district.ui.component.tx-log
-  (:require
-    [district.format :as format]
-    [district.ui.web3-accounts.subs :as accounts-subs]
-    [district.ui.web3-tx-log.events :as events]
-    [district.ui.web3-tx-log.subs :as subs]
-    [district.web3-utils :as web3-utils]
-    [district.ui.web3-tx.events :as tx-events]
-    [re-frame.core :refer [subscribe dispatch]]
-    [reagent.core :as r]
-    [soda-ash.core :as ui]))
+  (:require [district.format :as format]
+            [district.ui.web3-accounts.subs :as accounts-subs]
+            [district.ui.web3-tx-log.events :as events]
+            [district.ui.web3-tx-log.subs :as subs]
+            [district.ui.web3-tx.events :as tx-events]
+            [district.web3-utils :as web3-utils]
+            [re-frame.core :refer [subscribe dispatch]]
+            [reagent.core :as r]
+            [soda-ash.core :as ui]))
 
 
 (defn header [{:keys [:text] :as props
@@ -20,10 +19,10 @@
 (defn from-active-address-only-toggle [props]
   [ui/Checkbox
    (r/merge-props
-     {:toggle true
-      :label "Show transactions from active address only."
-      :on-change #(dispatch [::events/set-settings {:from-active-address-only? (aget %2 "checked")}])}
-     props)])
+    {:toggle true
+     :label "Show transactions from active address only."
+     :on-change #(dispatch [::events/set-settings {:from-active-address-only? (aget %2 "checked")}])}
+    props)])
 
 
 (defn settings []
@@ -36,8 +35,8 @@
          (dissoc props :from-active-address-only-toggle-props)
          [from-active-address-only-toggle-el
           (merge
-            {:checked from-active-address-only?}
-            from-active-address-only-toggle-props)]]))))
+           {:checked from-active-address-only?}
+           from-active-address-only-toggle-props)]]))))
 
 
 (defn tx-created-on [{:keys [:tx :label] :as props
@@ -60,8 +59,8 @@
             (when (and tx-cost-currency
                        (get tx-costs tx-cost-currency))
               (str "(" (format/format-currency
-                         (get tx-costs tx-cost-currency)
-                         {:currency tx-cost-currency})
+                        (get tx-costs tx-cost-currency)
+                        {:currency tx-cost-currency})
                    ")")))
        "...")]))
 
@@ -69,7 +68,7 @@
 (defn tx-from [{:keys [:tx :label]
                 :or {label "From: "}
                 :as props}]
-  (let [from (:from (:tx-opts tx))]
+  (let [from (:from tx)]
     [:div.tx-sender
      (dissoc props :tx :label)
      label
@@ -82,13 +81,14 @@
 (defn tx-id [{:keys [:tx :label]
               :or {label "Tx ID: "}
               :as props}]
-  [:div.tx-id
-   (dissoc props :tx :label)
-   label
-   [:a
-    {:href (format/etherscan-tx-url (:hash tx))
-     :target :_blank}
-    hash]])
+  (let [{:keys [:hash]} tx]
+      [:div.tx-id
+       (dissoc props :tx :label)
+       label
+       [:a
+        {:href (format/etherscan-tx-url hash)
+         :target :_blank}
+        hash]]))
 
 
 (defn tx-value [{:keys [:tx] :as props}]
@@ -115,8 +115,8 @@
         status-text (tx-status->text status)]
     [:div.tx-status
      (r/merge-props
-       {:class (name status)}
-       (dissoc props :tx))
+      {:class (name status)}
+      (dissoc props :tx))
      [:i.icon]
      [:div.tx-status-text status-text]]))
 
@@ -124,10 +124,10 @@
 (defn tx-remove [{:keys [:tx] :as props}]
   [:i.icon.tx-remove
    (r/merge-props
-     {:on-click (fn [e]
-                  (dispatch [::tx-events/remove-tx (:hash tx)])
-                  (.stopPropagation e))}
-     (dissoc props :tx))])
+    {:on-click (fn [e]
+                 (dispatch [::tx-events/remove-tx (:hash tx)])
+                 (.stopPropagation e))}
+    (dissoc props :tx))])
 
 
 (defn transaction [{:keys [:tx
@@ -150,19 +150,20 @@
                     :as props}]
   (let [{:keys [:tx-log]} tx
         {:keys [:related-href]} tx-log]
-    [:a.transaction
+    [:div.transaction
      (merge
-       {:href related-href
-        :on-click #(dispatch [::events/set-open false])}
-       (dissoc props
-               :tx :tx-name-props :tx-name-el
-               :tx-created-on-props :tx-created-on-el
-               :tx-gas-props :tx-gas-el
-               :tx-from-props :tx-from-el
-               :tx-id-props :tx-id-el
-               :tx-status-props :tx-status-el
-               :tx-value-props :tx-value-el
-               :tx-remove-props :tx-remove-el))
+      {:href related-href
+       :on-click #(dispatch [::events/set-open false])}
+      (dissoc props
+              :tx :tx-name-props :tx-name-el
+              :tx-created-on-props :tx-created-on-el
+              :tx-gas-props :tx-gas-el
+              :tx-from-props :tx-from-el
+              :tx-id-props :tx-id-el
+              :tx-status-props :tx-status-el
+              :tx-value-props :tx-value-el
+              :tx-remove-props :tx-remove-el
+              :tx-cost-currency))
      [tx-name-el (assoc tx-name-props :tx tx)]
      [tx-created-on-el (assoc tx-created-on-props :tx tx)]
      [tx-gas-el (merge tx-gas-props (select-keys props [:tx :tx-cost-currency]))]
@@ -190,14 +191,14 @@
       (let [tx-log-items @tx-log]
         (if (seq tx-log-items)
           [:div.transactions
-           (dissoc props :transaction-props :transaction-el :no-transactions-props :no-transactions-el)
+           (dissoc props :tx-cost-currency :transaction-props :transaction-el :no-transactions-props :no-transactions-el)
            (for [{:keys [:hash] :as tx} tx-log-items]
              [transaction-el
               (merge
-                {:key hash
-                 :tx tx
-                 :tx-cost-currency tx-cost-currency}
-                transaction-props)])]
+               {:key hash
+                :tx tx
+                :tx-cost-currency tx-cost-currency}
+               transaction-props)])]
           [no-transactions-el no-transactions-props])))))
 
 
@@ -211,11 +212,10 @@
           :as props}]
       (when @active-account
         [:div.tx-log
-         (r/merge-props
-           {:class (when @open? "open")}
-           (dissoc props :title-props :header-el :settings-props :settings-el :transactions-props :transactions-el))
+         (dissoc props :header-props :header-el :settings-props :settings-el :transactions-props :transactions-el)
          [header-el header-props]
-         [settings-el settings-props]
-         [transactions-el (merge transactions-props
-                                 (select-keys props [:tx-cost-currency]))]]))))
-
+         [:div.tx-content
+          {:class (when @open? "open")}
+          [settings-el settings-props]
+          [transactions-el (merge transactions-props
+                                  (select-keys props [:tx-cost-currency]))]]]))))
