@@ -212,7 +212,9 @@
           :as props}]
       (when @active-account
         [:div.tx-log
-         (dissoc props :header-props :header-el :settings-props :settings-el :transactions-props :transactions-el)
+         (merge
+          {:class (when @open? "open")}
+          (dissoc props :header-props :header-el :settings-props :settings-el :transactions-props :transactions-el))
          [header-el header-props]
          [:div.tx-content
           {:class (when @open? "open")}
