@@ -37,7 +37,7 @@
                   :fns [{:fn web3-eth/block-number
                          :args []
                          :on-success [::get-block]
-                         :on-error [::logging/error error-tx ::block-number]}]}})))
+                         :on-error [::logging/error error-txt ::block-number]}]}})))
 
 (re-frame/reg-event-fx
  ::get-block
