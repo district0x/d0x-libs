@@ -7,7 +7,7 @@ that provides [reagent](https://github.com/reagent-project/reagent) UI component
 re-frame events and subscriptions.
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-log "1.0.3"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-log "1.0.3-SNAPSHOT"]` into your project.clj  
 Include `[district.ui.web3-tx-log]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
