@@ -46,18 +46,24 @@
        (get-version-param version contracts-version)))
 
 
-(defn- contracts-to-load [{:keys [:contracts :load-bin?] :as opts}]
+(defn- files-to-load [{:keys [:contracts :load-bin? :format]
+                       :or {format :solc-abi-bin}
+                       :as opts}]
   (reduce
     (fn [acc [key {:keys [:abi :bin] :as contract}]]
       (cond-> acc
-        (not abi) (conj {:file-path (get-file-path :abi contract opts)
+        (not abi) (conj {:file-path (get-file-path ({:solc-abi-bin :abi
+                                                     :truffle-json :json} format)
+                                                   contract opts)
                          :contract-key key
-                         :file-type :abi})
+                         :file-type :abi
+                         :format format})
 
         (and load-bin?
-             (not bin)) (conj {:file-path (get-file-path :bin contract opts)
-                               :contract-key key
-                               :file-type :bin})))
+             (not bin)
+             (= format :solc-abi-bin)) (conj {:file-path (get-file-path :bin contract opts)
+                                              :contract-key key
+                                              :file-type :bin})))
     []
     contracts))
 
@@ -67,7 +73,7 @@
   [interceptors (validate-first-arg :district.ui.smart-contracts/opts)]
   (fn [{:keys [:db]} [{:keys [:request-timeout :contracts] :as opts
                        :or {request-timeout 10000}}]]
-    (let [to-load (contracts-to-load opts)
+    (let [to-load (files-to-load opts)
           *load-batch* (atom (zipmap to-load (repeat false)))]
       {:db (queries/merge-contracts db contracts)
        :http-xhrio
@@ -85,11 +91,15 @@
 (reg-event-fx
   ::contract-loaded
   interceptors
-  (fn [{:keys [:db]} [{:keys [:contract-key :file-type] :as contract} success? *load-batch* response]]
+  (fn [{:keys [:db]} [{:keys [:contract-key :file-type :format] :as contract} success? *load-batch* response]]
     (swap! *load-batch* assoc contract true)
     (let [new-db (if success?
                    (condp = file-type
-                     :abi (queries/assoc-contract-abi db contract-key response)
+                     :abi (case format
+                            :solc-abi-bin (queries/assoc-contract-abi db contract-key response)
+                            :truffle-json (-> db
+                                              (queries/assoc-contract-abi contract-key (get response "abi"))
+                                              (queries/assoc-contract-bin contract-key (get response "bytecode"))))
                      :bin (queries/assoc-contract-bin db contract-key response))
                    db)]
       (merge
@@ -130,4 +140,3 @@
   interceptors
   (fn [{:keys [:db]}]
     {:db (queries/dissoc-smart-contracts db)}))
-

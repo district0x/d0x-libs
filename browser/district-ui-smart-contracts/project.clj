@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-smart-contracts "1.0.5"
+(defproject district0x/district-ui-smart-contracts "1.0.6-SNAPSHOT"
   :description "district UI module for loading smart contract files"
   :url "https://github.com/district0x/district-ui-smart-contracts"
   :license {:name "Eclipse Public License"
@@ -31,6 +31,19 @@
                    :plugins [[lein-cljsbuild "1.1.7"]
                              [lein-doo "0.1.8"]
                              [lein-npm "0.6.2"]]}}
+
+  :deploy-repositories [["snapshots" {:url "https://clojars.org/repo"
+                                      :username :env/clojars_username
+                                      :password :env/clojars_password
+                                      :sign-releases false}]
+                        ["releases"  {:url "https://clojars.org/repo"
+                                      :username :env/clojars_username
+                                      :password :env/clojars_password
+                                      :sign-releases false}]]
+
+  :release-tasks [
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["deploy"]]
 
   :cljsbuild {:builds [{:id "tests"
                         :source-paths ["src" "test"]

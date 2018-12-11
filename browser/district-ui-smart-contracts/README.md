@@ -5,7 +5,9 @@
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that takes care of loading Ethereum smart-contract files.
 
 ## Installation
-Add `[district0x/district-ui-smart-contracts "1.0.5"]` into your project.clj  
+This module is available as a Maven artifact from Clojars. The latest released version is: <br>
+[![Clojars Project](https://img.shields.io/clojars/v/district0x/district-ui-smart-contracts.svg)](https://clojars.org/district0x/district-ui-smart-contracts)
+
 Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -44,15 +46,16 @@ Include `[district.ui.smart-contracts]` in your CLJS file, where you use `mount/
   - [assoc-contract-bin](#assoc-contract-bin)
 
 ## district.ui.smart-contracts
-This namespace contains smart-contracts [mount](https://github.com/tolitius/mount) module. Once you start mount it'll take care 
+This namespace contains smart-contracts [mount](https://github.com/tolitius/mount) module. Once you start mount it'll take care
 of loading smart contract files.
 
-You can pass following args to initiate this module: 
+You can pass following args to initiate this module:
 * `:disable-loading-at-start?` Pass true if you don't want load ABIs or BINs at start
 * `:contracts` A map of smart-contracts to load
 * `:load-bin?` Pass true if you want to load BIN files as well
+* `:format` The compiled contracts output format, can be one of :solc-abi-bin :truffle-json
 * `:contracts-path` Path where contracts should be loaded from. Default: `"./contracts/build/"`
-* `:contracts-version` Pass some version for bypassing browser's cache after deploying new contracts to production. 
+* `:contracts-version` Pass some version for bypassing browser's cache after deploying new contracts to production.
 Pass `:no-cache` if you want to invalidate browser cache on every request (useful for development)
 * `:request-timeout` Request timeout for loading files. Default: 10000 (10s)
 
@@ -61,9 +64,9 @@ Passed `:contracts` should have following format:
 (ns my-district.smart-contracts)
 
 (def smart-contracts
-  {:my-contract {:name "MyContract"                         ;; ABI and BIN is loaded by this name 
+  {:my-contract {:name "MyContract"                         ;; ABI and BIN is loaded by this name
                  :address "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"
-                 ;; optional, if not provided, will try to load 
+                 ;; optional, if not provided, will try to load
                  :abi nil
                  ;; optional, if not provided, will try to load
                  :bin nil
@@ -130,7 +133,7 @@ re-frame events provided by this module:
 Loads smart contracts. Pass same args as to mount start.
 
 #### <a name="contract-loaded`">`::contract-loaded`
-Event fired when a single file was loaded. Either ABI or BIN. 
+Event fired when a single file was loaded. Either ABI or BIN.
 
 #### <a name="contracts-loaded`">`::contracts-loaded`
 Event fired when all smart contract files have been loaded. Use this event to hook into event flow from your modules.
@@ -141,7 +144,7 @@ One example using [re-frame-forward-events-fx](https://github.com/Day8/re-frame-
     (:require [district.ui.smart-contracts.events :as contracts-events]
               [re-frame.core :refer [reg-event-fx]]
               [day8.re-frame.forward-events-fx]))
-              
+
 (reg-event-fx
   ::my-event
   (fn []
@@ -172,13 +175,13 @@ Deploys a smart-contract of key `contract-key` and saves new address into re-fra
 
   (-> (mount/with-args
         {:web3 {:url "http://localhost:8549"}
-         :smart-contracts 
+         :smart-contracts
           {:disable-loading-at-start? true
            :contracts {:deploy-test-contract {:name "DeployTestContract"
                                               :abi (js/JSON.parse "[{\"inputs\":[{\"name\":\"someNumber\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]")
                                               :bin "0x60606040523415600e57600080fd5b604051602080607183398101604052808051915050801515602e57600080fd5b50603580603c6000396000f3006060604052600080fd00a165627a7a72305820f6c231e485f5b65831c99412cbcad5b4e41a4b69d40f3d4db8de3a38137701fb0029"}}}})
     (mount/start))
-    
+
 (dispatch [::deploy-events/deploy-contract :deploy-test-contract {:gas 4500000
                                                                   :arguments [1]
                                                                   :from "0xb2930b35844a230f00e51431acae96fe543a0347"
@@ -193,11 +196,11 @@ When successfully deployed, you'll be able to access contract instance and addre
 ```
 
 #### <a name="contract-deploy-failed`">`::contract-deploy-failed`
-Event fired when deploying a contract failed. 
+Event fired when deploying a contract failed.
 
 ## district.ui.smart-contracts.queries
-DB queries provided by this module:  
-*You should use them in your events, instead of trying to get this module's 
+DB queries provided by this module:
+*You should use them in your events, instead of trying to get this module's
 data directly with `get-in` into re-frame db.*
 
 #### <a name="contracts">`contracts [db]`
