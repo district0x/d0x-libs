@@ -54,6 +54,7 @@ You can pass following args to initiate this module:
 * `:contracts` A map of smart-contracts to load
 * `:load-bin?` Pass true if you want to load BIN files as well
 * `:format` The compiled contracts output format, can be one of :solc-abi-bin :truffle-json
+* `:load-method` How to take contracts content to the browser. Possible values :request(default), :use-loaded (see [adding abis into js bundle](#adding-abis-to-js))
 * `:contracts-path` Path where contracts should be loaded from. Default: `"./contracts/build/"`
 * `:contracts-version` Pass some version for bypassing browser's cache after deploying new contracts to production.
 Pass `:no-cache` if you want to invalidate browser cache on every request (useful for development)
@@ -90,6 +91,19 @@ Starting the module may look like this:
                            :contracts-path "./"}})
     (mount/start))
 ```
+
+## <a name="adding-abis-to-js"> Adding abis into js bundle
+In order to use the option :load-method :use-loaded you need to provide some info at build time so contracts abis
+can be included in the bundle. You provide this information via environment variables at build time.
+
+Example:
+```
+SMART_CONTRACTS=./src/memefactory/shared/smart_contracts.cljs
+SMART_CONTRACTS_BUILD_PATH=./resources/public/contracts/build/
+SMART_CONTRACTS_SKIP=ds-guard,param-change-registry-db,meme-registry-db,minime-token-factory
+```
+
+Be aware that using this method is only supported for contracts compiled in the truffle json format.
 
 ## district.ui.smart-contracts.subs
 re-frame subscriptions provided by this module:

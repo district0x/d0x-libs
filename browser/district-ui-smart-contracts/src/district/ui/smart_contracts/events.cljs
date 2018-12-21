@@ -10,18 +10,40 @@
     [district.ui.web3.events :as web3-events]
     [district0x.re-frame.spec-interceptors :refer [validate-first-arg validate-args]]
     [re-frame.core :refer [reg-event-fx trim-v]]
-    [clojure.string :as string]))
+    [clojure.string :as string]
+    [district.ui.logging.events :as logging])
+  (:require-macros [district.ui.smart-contracts.utils :refer [slurp-env-contracts]]))
 
 (def interceptors [trim-v])
+(def contracts-files-contents (slurp-env-contracts))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ATTENTION                                    ;;
+;; Using :load-method :use-loaded only supports ;;
+;; format: truffle-json                         ;;
+;; load-bin?: false                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (reg-event-fx
   ::start
   interceptors
-  (fn [{:keys [:db]} [{:keys [:contracts :disable-loading-at-start?] :as opts}]]
+  (fn [{:keys [:db]} [{:keys [:contracts :disable-loading-at-start? :format :load-method :load-bin?]
+                       :or {load-method :request}
+                       :as opts}]]
+    (when (and (= load-method :use-loaded)
+               (or (= load-bin? true)
+                   (not= format :truffle-json)))
+      (throw (js/Error. "Load method :use-loaded only supported for truffle-json. No bin support yet")))
     (merge
       {:db (queries/merge-contracts db contracts)}
       (when-not disable-loading-at-start?
-        {:dispatch [::load-contracts opts]}))))
+        {:dispatch (if (and (= load-method :use-loaded)
+                            (or (= load-bin? true)
+                                (not= format :truffle-json)))
+                     [::logging/error "Load method :use-loaded only supported for truffle-json. No bin support yet" opts ::start]
+                     (case load-method
+                      :request [::load-contracts opts]
+                      :use-loaded [::use-loaded-contracts opts]))}))))
 
 
 (defn- ensure-slash [path]
@@ -86,6 +108,17 @@
                              (ajax/text-response-format))
           :on-success [::contract-loaded contract-to-load true *load-batch*]
           :on-failure [::contract-loaded contract-to-load false *load-batch*]})})))
+
+(reg-event-fx
+ ::use-loaded-contracts
+ [interceptors (validate-first-arg :district.ui.smart-contracts/opts)]
+ (fn [{:keys [:db]} [{:keys [:contracts] :as opts}]]
+   {:db (reduce
+         (fn [r contract-key]
+           (queries/assoc-contract-abi r contract-key (clj->js (get-in contracts-files-contents [contract-key :abi]))))
+         (queries/merge-contracts db contracts)
+         (keys contracts))
+    :dispatch-n [[::contracts-loaded]]}))
 
 
 (reg-event-fx
