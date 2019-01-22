@@ -192,12 +192,13 @@
         (if (seq tx-log-items)
           [:div.transactions
            (dissoc props :tx-cost-currency :transaction-props :transaction-el :no-transactions-props :no-transactions-el)
-           (for [{:keys [:hash] :as tx} tx-log-items]
-             ^{:key hash} [transaction-el
-                           (merge
-                            {:tx tx
-                             :tx-cost-currency tx-cost-currency}
-                            transaction-props)])]
+           (for [{:keys [:transaction-hash] :as tx} tx-log-items]
+             [transaction-el
+              (merge
+               {:key transaction-hash
+                :tx tx
+                :tx-cost-currency tx-cost-currency}
+               transaction-props)])]
           [no-transactions-el no-transactions-props])))))
 
 

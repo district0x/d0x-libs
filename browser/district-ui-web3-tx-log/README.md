@@ -7,7 +7,9 @@ that provides [reagent](https://github.com/reagent-project/reagent) UI component
 re-frame events and subscriptions.
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-log "1.0.3-SNAPSHOT"]` into your project.clj  
+Add into your project.clj: <br>
+[![Clojars Project](https://img.shields.io/clojars/v/district0x/district-ui-web3-tx-log.svg)](https://clojars.org/district0x/district-ui-web3-tx-log)
+
 Include `[district.ui.web3-tx-log]` in your CLJS file, where you use `mount/start`
 
 ## API Overview

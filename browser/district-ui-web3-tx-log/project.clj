@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-log "1.0.3-SNAPSHOT"
+(defproject district0x/district-ui-web3-tx-log "1.0.4-SNAPSHOT"
   :description "district UI module providing web3 transaction log"
   :url "https://github.com/district0x/district-ui-web3-tx-log"
   :license {:name "Eclipse Public License"
@@ -41,4 +41,17 @@
                         :compiler {:output-to "tests-output/tests.js"
                                    :output-dir "tests-output"
                                    :main "tests.runner"
-                                   :optimizations :none}}]})
+                                   :optimizations :none}}]}
+
+  :deploy-repositories [["snapshots" {:url "https://clojars.org/repo"
+                                      :username :env/clojars_username
+                                      :password :env/clojars_password
+                                      :sign-releases false}]
+                        ["releases"  {:url "https://clojars.org/repo"
+                                      :username :env/clojars_username
+                                      :password :env/clojars_password
+                                      :sign-releases false}]]
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["deploy"]])
