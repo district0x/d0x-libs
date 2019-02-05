@@ -150,7 +150,7 @@
                     :as props}]
   (let [{:keys [:tx-log]} tx
         {:keys [:related-href]} tx-log]
-    [:div.transaction
+    [:a.transaction
      (merge
       {:href related-href
        :on-click #(dispatch [::events/set-open false])}
