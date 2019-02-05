@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-log "1.0.4-SNAPSHOT"
+(defproject district0x/district-ui-web3-tx-log "1.0.5"
   :description "district UI module providing web3 transaction log"
   :url "https://github.com/district0x/district-ui-web3-tx-log"
   :license {:name "Eclipse Public License"
