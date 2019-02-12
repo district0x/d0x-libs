@@ -64,29 +64,32 @@
                    ")")))
        "...")]))
 
-
 (defn tx-from [{:keys [:tx :label]
                 :or {label "From: "}
                 :as props}]
-  (let [from (:from tx)]
+  (let [from (:from tx)
+        {:keys [:etherscan-url]
+         :or {etherscan-url "https://etherscan.io"}
+         :as opts} @(subscribe [::subs/opts])]
     [:div.tx-sender
      (dissoc props :tx :label)
      label
      [:a
-      {:href (format/etherscan-addr-url from)
+      {:href (format/etherscan-addr-url etherscan-url from)
        :target :_blank}
       from]]))
-
 
 (defn tx-id [{:keys [:tx :label]
               :or {label "Tx ID: "}
               :as props}]
-  (let [{:keys [:hash]} tx]
+  (let [{:keys [:hash]} tx
+        {:keys [:etherscan-url]
+         :or {etherscan-url "https://etherscan.io"}} @(subscribe [::subs/opts])]
       [:div.tx-id
        (dissoc props :tx :label)
        label
        [:a
-        {:href (format/etherscan-tx-url hash)
+        {:href (format/etherscan-tx-url etherscan-url hash)
          :target :_blank}
         hash]]))
 
@@ -150,7 +153,7 @@
                     :as props}]
   (let [{:keys [:tx-log]} tx
         {:keys [:related-href]} tx-log]
-    [:a.transaction
+    [:div.transaction
      (merge
       {:href related-href
        :on-click #(dispatch [::events/set-open false])}

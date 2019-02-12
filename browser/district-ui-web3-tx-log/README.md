@@ -55,7 +55,7 @@ You can pass following args to initiate this module:
 * `:open-on-tx-hash?` Pass true for opening transaction log automatically when user sends a new tx to the network
 * `:tx-costs-currencies` List of currency rates to load, so transaction cost can be displayed in those currencies
 * `:disable-using-localstorage?` Pass true if you don't want to store transaction log settings in browser's localstorage
-
+* `:etherscan-url` Pass root url as a string e.g. "https://etherscan.io" (the default) or "https://ropsten.etherscan.io" to configure transaction log links..
 
 ```clojure
   (ns my-district.core

@@ -12,5 +12,9 @@
   queries/settings)
 
 (reg-sub
+  ::opts
+  queries/opts)
+
+(reg-sub
   ::open?
   queries/open?)

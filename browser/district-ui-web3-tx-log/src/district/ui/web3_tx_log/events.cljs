@@ -16,13 +16,15 @@
   [interceptors (inject-cofx :web3-tx-log-localstorage)]
   (fn [{:keys [:db :web3-tx-log-localstorage]} [{:keys [:disable-using-localstorage?
                                                         :tx-costs-currencies
-                                                        :open-on-tx-hash?]}]]
+                                                        :open-on-tx-hash?
+                                                        :etherscan-url]}]]
     (let [settings (if disable-using-localstorage? {} (queries/settings web3-tx-log-localstorage))]
 
       (merge
         {:db (-> db
                (queries/merge-settings settings)
-               (queries/assoc-opt :disable-using-localstorage? disable-using-localstorage?))
+               (queries/assoc-opt :disable-using-localstorage? disable-using-localstorage?)
+               (queries/assoc-opt :etherscan-url etherscan-url))
          :dispatch [::tx-costs-events/add-currencies tx-costs-currencies]}
         (when open-on-tx-hash?
           {:forward-events [{:register ::open-on-tx-hash
@@ -60,4 +62,3 @@
   (fn [{:keys [:db]}]
     {:db (queries/dissoc-web3-tx-log db)
      :forward-events {:unregister ::open-on-tx-hash}}))
-

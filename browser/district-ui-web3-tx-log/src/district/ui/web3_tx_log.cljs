@@ -21,7 +21,8 @@
 (s/def ::tx-costs-currencies ::district.ui.web3-tx-costs/currencies)
 (s/def ::opts (s/nilable (s/keys :opt-un [::disable-using-localstorage?
                                           ::tx-costs-currencies
-                                          ::open-on-tx-hash?])))
+                                          ::open-on-tx-hash?
+                                          ::etherscan-url])))
 
 (defn start [opts]
   (s/assert ::opts opts)
@@ -32,4 +33,3 @@
 
 (defn stop []
   (dispatch-sync [::events/stop]))
-

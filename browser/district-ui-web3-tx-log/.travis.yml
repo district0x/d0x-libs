@@ -8,7 +8,12 @@ notifications:
     on_failure: always
     rooms:
     - district0x:53vhalUfg0MitsQwzjP5PWdd#travis-ci
-    email: false
+  email:
+    recipients:
+      - juan@district0x.io
+      - daniel@district0x.io
+    on_success: never # default: change
+    on_failure: always # default: always
 addons:
   chrome: stable
 before_script:

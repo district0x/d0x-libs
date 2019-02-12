@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-tx-log "1.0.5"
+(defproject district0x/district-ui-web3-tx-log "1.0.7-SNAPSHOT"
   :description "district UI module providing web3 transaction log"
   :url "https://github.com/district0x/district-ui-web3-tx-log"
   :license {:name "Eclipse Public License"
@@ -6,7 +6,7 @@
 
   :dependencies [[akiroz.re-frame/storage "0.1.2"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
-                 [district0x/district-format "1.0.0"]
+                 [district0x/district-format "1.0.5"]
                  [district0x/district-ui-web3-accounts "1.0.5"]
                  [district0x/district-ui-web3-tx-costs "1.0.3"]
                  [district0x/district-ui-web3-tx-log-core "1.0.3"]
@@ -26,7 +26,6 @@
 
   :profiles {:dev {:dependencies [[cljsjs/react "15.6.1-2"]
                                   [cljsjs/react-dom "15.6.1-2"]
-                                  [com.cemerick/piggieback "0.2.2"]
                                   [day8.re-frame/test "0.1.5"]
                                   [district0x/district-ui-smart-contracts "1.0.5"]
                                   [district0x/district-ui-web3-tx "1.0.8"]

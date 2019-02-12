@@ -27,5 +27,8 @@
 (defn assoc-opt [db key value]
   (assoc-in db [db-key key] value))
 
+(defn opts [db]
+  (db-key db))
+
 (defn dissoc-web3-tx-log [db]
   (dissoc db db-key))
