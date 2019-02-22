@@ -3,12 +3,22 @@
             [district.ui.web3-accounts.subs :as accounts-subs]
             [district.ui.web3-tx-log.events :as events]
             [district.ui.web3-tx-log.subs :as subs]
+            [clojure.string :as str]
+            [district.ui.router.events :as router-events]
+            [cemerick.url :as url]
             [district.ui.web3-tx.events :as tx-events]
             [district.web3-utils :as web3-utils]
-            [re-frame.core :refer [subscribe dispatch]]
+            [re-frame.core :as re-frame :refer [subscribe dispatch]]
             [reagent.core :as r]
             [soda-ash.core :as ui]))
 
+(defn- related-href->map
+  "This function will do its best to parse the provided string."
+  [related-href]
+  (let [urly (-> related-href (str/split #"/"))]
+    {:name (keyword (str "route." (second urly)) "index")
+     :param nil
+     :query (url/query->map (str/replace (last urly) "?" ""))}))
 
 (defn header [{:keys [:text] :as props
                :or {text "Transaction Log"}}]
@@ -75,7 +85,8 @@
      (dissoc props :tx :label)
      label
      [:a
-      {:href (format/etherscan-addr-url etherscan-url from)
+      {:on-click #(.stopPropagation %)
+       :href (format/etherscan-addr-url etherscan-url from)
        :target :_blank}
       from]]))
 
@@ -89,7 +100,8 @@
        (dissoc props :tx :label)
        label
        [:a
-        {:href (format/etherscan-tx-url etherscan-url hash)
+        {:on-click #(.stopPropagation %)
+         :href (format/etherscan-tx-url etherscan-url hash)
          :target :_blank}
         hash]]))
 
@@ -132,7 +144,6 @@
                  (.stopPropagation e))}
     (dissoc props :tx))])
 
-
 (defn transaction [{:keys [:tx
                            :tx-name-props :tx-name-el
                            :tx-created-on-props :tx-created-on-el
@@ -155,8 +166,12 @@
         {:keys [:related-href]} tx-log]
     [:div.transaction
      (merge
-      {:href related-href
-       :on-click #(dispatch [::events/set-open false])}
+      {:on-click (fn [e]
+                   (let [{:keys [:name :params :query]} (if (map? related-href) related-href
+                                                            (related-href->map related-href))]
+                     (dispatch [::router-events/navigate name
+                                params
+                                query])))}
       (dissoc props
               :tx :tx-name-props :tx-name-el
               :tx-created-on-props :tx-created-on-el
