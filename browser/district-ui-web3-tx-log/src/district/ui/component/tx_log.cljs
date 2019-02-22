@@ -13,11 +13,14 @@
             [soda-ash.core :as ui]))
 
 (defn- related-href->map
-  "This function will do its best to parse the provided string."
+  "This function will do its best to parse the provided uri string as a map:
+  `{:name district.page/index
+    :param :foo
+    :query {:x :y}}`"
   [related-href]
   (let [urly (-> related-href (str/split #"/"))]
     {:name (keyword (str "route." (second urly)) "index")
-     :param nil
+     :params nil
      :query (url/query->map (str/replace (last urly) "?" ""))}))
 
 (defn header [{:keys [:text] :as props

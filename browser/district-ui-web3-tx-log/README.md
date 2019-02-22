@@ -99,7 +99,10 @@ Component props (besides standard reagent props):
 In order for transaction log to work properly, you need to pass following data about a transaction under the key
 `:tx-log` when sending a transaction with [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) module:
 * `:name` Human readable name for a transaction. Will be displayed by [tx-name](#tx-name)
-* `:related-href` Href to go to, after user clicks on a transaction in transaction log. 
+* `:related-href` Href to go to, after user clicks on a transaction in transaction log. Either a string or a map: 
+`{:name district.page/index
+  :param :foo
+  :query {:x :y}}`
 
 ```clojure
 (ns my-district.events
