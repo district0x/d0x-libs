@@ -124,7 +124,7 @@
 
 (def tx-status->text
   {:tx.status/success "Completed"
-   :tx.status/failure "Failed"
+   :tx.status/error   "Error"
    :tx.status/pending "Pending"})
 
 
