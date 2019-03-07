@@ -118,7 +118,8 @@
 (defn tx-name [{:keys [:tx] :as props}]
   (let [{:keys [:name]} (:tx-log tx)]
     [:div.tx-name
-     (dissoc props :tx)
+     (r/merge-props {:title name}
+                    (dissoc props :tx))
      name]))
 
 
