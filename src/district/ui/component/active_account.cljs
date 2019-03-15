@@ -10,7 +10,7 @@
   (let [accounts (subscribe [::accounts-subs/accounts])
         active-acc (subscribe [::accounts-subs/active-account])]
     (fn [{:keys [:select-props :single-account-props]}]
-      (when (seq @accounts)
+      (if (seq @accounts)
         [:div.active-account
          (if (= 1 (count @accounts))
            [:span.single-account
@@ -18,12 +18,14 @@
             @active-acc]
            [ui/Select
             (r/merge-props
-              {:select-on-blur false
-               :class "active-account-select"
-               :value @active-acc
-               :on-change (fn [e data]
-                            (dispatch [::accounts-events/set-active-account (aget data "value")]))
-               :fluid true
-               :options (doall (for [acc @accounts]
-                                 {:value acc :text acc}))}
-              select-props)])]))))
+             {:select-on-blur false
+              :class "active-account-select"
+              :value @active-acc
+              :on-change (fn [e data]
+                           (dispatch [::accounts-events/set-active-account (aget data "value")]))
+              :fluid true
+              :options (doall (for [acc @accounts]
+                                {:value acc :text acc}))}
+             select-props)])]
+        [:div
+         "Ethereum wallet not connected"]))))

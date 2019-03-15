@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-component-active-account "1.0.0"
+(defproject district0x/district-ui-component-active-account "1.0.1"
   :description "district UI component for displaying and selecting active web3 account"
   :url "https://github.com/district0x/district-ui-component-active-account"
   :license {:name "Eclipse Public License"
