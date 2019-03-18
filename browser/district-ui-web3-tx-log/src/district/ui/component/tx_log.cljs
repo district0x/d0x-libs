@@ -84,19 +84,20 @@
         {:keys [:etherscan-url]
          :or {etherscan-url "https://etherscan.io"}
          :as opts} @(subscribe [::subs/opts])]
-    [:div.tx-sender
-     (dissoc props :tx :label)
-     label
-     [:a
-      {:on-click #(.stopPropagation %)
-       :href (format/etherscan-addr-url etherscan-url from)
-       :target :_blank}
-      from]]))
+    (when from
+      [:div.tx-sender
+       (dissoc props :tx :label)
+       label
+       [:a
+        {:on-click #(.stopPropagation %)
+         :href (format/etherscan-addr-url etherscan-url from)
+         :target :_blank}
+        from]])))
 
 (defn tx-id [{:keys [:tx :label]
               :or {label "Tx ID: "}
               :as props}]
-  (let [{:keys [:hash]} tx
+  (let [{:keys [:transaction-hash]} tx
         {:keys [:etherscan-url]
          :or {etherscan-url "https://etherscan.io"}} @(subscribe [::subs/opts])]
       [:div.tx-id
@@ -104,9 +105,9 @@
        label
        [:a
         {:on-click #(.stopPropagation %)
-         :href (format/etherscan-tx-url etherscan-url hash)
+         :href (format/etherscan-tx-url etherscan-url transaction-hash)
          :target :_blank}
-        hash]]))
+        transaction-hash]]))
 
 
 (defn tx-value [{:keys [:tx] :as props}]
