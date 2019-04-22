@@ -190,30 +190,3 @@
     (log/warn "Stopping web3-events" {:event-filters (medley/map-vals #(aget % "filterId") filters)})
     (doseq [filter (remove nil? (vals filters))]
       (uninstall-filter filter))))
-
-(comment
-  (ns my-district.my-module
-    (:require
-      [mount.core :refer [defstate]]
-      [district.server.web3-events :refer [register-callback! unregister-callbacks!]]))
-
-  (defn handle-some-event []
-    (println "Handling some event"))
-
-  (defn handle-some-other-event []
-    (println "Handling some other event"))
-
-  (defn start []
-    (register-callback! :my-contract/some-event handle-some-event ::some-event)
-    (register-callback! :my-contract/some-other-event handle-some-other-event ::some-other-event)
-    opts)
-
-  (defn stop []
-    (unregister-callbacks! [::some-event ::some-other-event]))
-
-  (defstate my-module
-    :start (start)
-    :stop (stop))
-
-
-  )
