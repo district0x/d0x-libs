@@ -34,6 +34,8 @@
     (is (t/equal? date
                   (web3-utils/web3-time->date-time (web3/to-big-number (time-coerce/to-epoch date))))))
 
+  (is (nil? (web3-utils/web3-time->date-time (web3/to-big-number 0))))
+
   (let [date (t/local-date-time 2017 3 4 10 10)]
     (is (t/equal? date
                   (web3-utils/web3-time->local-date-time (time-coerce/to-epoch date)))))

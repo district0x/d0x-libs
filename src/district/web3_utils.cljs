@@ -41,7 +41,9 @@
   (string/replace s #"0x" ""))
 
 (defn web3-time->date-time [x]
-  (time-coerce/from-long (* (bn/number x) 1000)))
+  (let [x (bn/number x)]
+    (when (pos? x)
+      (time-coerce/from-long (* x 1000)))))
 
 (defn web3-time->local-date-time [x]
   (when-let [dt (web3-time->date-time x)]

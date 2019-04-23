@@ -7,7 +7,7 @@ Set of extra functions helpful for working with [web3.js](https://github.com/eth
 
 
 ## Installation
-Add `[district0x/district-web3-utils "1.0.2"]` into your project.clj  
+Add `[district0x/district-web3-utils "1.0.3"]` into your project.clj  
 Include `[district.web3-utils]` in your CLJS file  
 
 ## API Overview
@@ -104,6 +104,10 @@ Converts time returned by smart-contracts (usually as BigNumber UNIX epoch) into
 
 (web3-utils/web3-time->date-time 1516223428)
 ;; => #object[Object 20180117T211028]
+
+(web3-utils/web3-time->date-time (web3/to-big-number 0))
+;; => nil
+
 ```
 
 #### <a name="web3-time-local-date-time">`web3-time->local-date-time [x]`
