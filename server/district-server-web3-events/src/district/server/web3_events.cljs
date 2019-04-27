@@ -28,7 +28,9 @@
 
 
 (defn register-callback! [event-key callback & [callback-id]]
-  (let [[contract-key event] (get (:events @web3-events) event-key)
+  (let [[contract-key event] (if-not (= event-key ::after-past-events-dummy-key)
+                               (get (:events @web3-events) event-key)
+                               [::after-past-events-dummy-contract ::after-past-events-dummy-event])
         callback-id (or callback-id (rand-int 999999999))]
 
     (when-not contract-key
@@ -39,6 +41,10 @@
                                          (assoc-in [contract-key event callback-id] callback)
                                          (assoc-in [:callback-id->path callback-id] [contract-key event])))))
   callback-id)
+
+
+(defn register-after-past-events-dispatched-callback! [callback]
+  (register-callback! ::after-past-events-dummy-key callback))
 
 
 (defn unregister-callbacks! [callback-ids]
@@ -141,6 +147,15 @@
     event-filters))
 
 
+(defn- dispatch-after-past-events-callbacks! []
+  (let [callbacks (get-in @(:callbacks @web3-events) [::after-past-events-dummy-contract ::after-past-events-dummy-event])
+        callback-fns (vals callbacks)
+        callback-ids (keys callbacks)]
+    (doseq [callback callback-fns]
+      (callback))
+    (unregister-callbacks! callback-ids)))
+
+
 (defn- uninstall-filter [filter]
   (web3-eth/stop-watching!
     filter (fn [err]
@@ -170,7 +185,9 @@
         (replay-past-events-in-order
           (vals past-event-filters)
           dispatch
-          {:on-finish #(start-dispatching-latest-events! events last-block-number)})
+          {:on-finish (fn []
+                        (dispatch-after-past-events-callbacks!)
+                        (start-dispatching-latest-events! events last-block-number))})
         (log-event-filters-start! past-event-filters))
       (js/setTimeout                                        ;; other mount components need to start first
         (fn []

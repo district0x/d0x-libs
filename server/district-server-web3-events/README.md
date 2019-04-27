@@ -20,6 +20,7 @@ Include `[district.server.web3-events]` in your CLJS file, where you use `mount/
 
 - [district-server-web3-events](#districtserverweb3-events)
   - [register-callback!](#register-callback)
+  - [register-after-past-events-dispatched-callback!](#register-after-past-events-dispatched-callback)
   - [unregister-callbacks!](#unregister-callbacks)
 
 ## Usage
@@ -114,7 +115,11 @@ Namespace contains following functions for working with web3 events:
 #### <a name="register-callback">`register-callback! [event-key callback & [callback-id]]`
 Registers a callback by the key you've passed into configuration of this module. Callback will receive contract and event
 as well, so it can be identified backwards. Optionally, you can pass `callback-id` by which you can unregister callback, 
-if not supplied random will be generated and returned from the function call.  
+if not supplied random will be generated and returned from the function call.
+
+#### <a name="register-after-past-events-dispatched-callback">`register-after-past-events-dispatched-callback! [callback]`
+Registers a callback that will be fired once, after all past events were replayed and before listening on latest events starts.
+No need to unregister this callback, since it's fired only once, it's automatically unregistered.     
 
 #### <a name="unregister-callback">`unregister-callbacks! [callback-ids]`
 Unregisters collection of callbacks by their ids. 

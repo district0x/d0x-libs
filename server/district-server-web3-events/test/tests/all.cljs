@@ -3,7 +3,7 @@
     [cljs-web3.core :as web3]
     [cljs.test :refer-macros [deftest use-fixtures is testing async]]
     [district.server.smart-contracts :as contracts]
-    [district.server.web3-events :refer [register-callback! unregister-callbacks!]]
+    [district.server.web3-events :refer [register-callback! unregister-callbacks! register-after-past-events-dispatched-callback!]]
     [mount.core :as mount]
     [tests.smart-contracts]))
 
@@ -39,14 +39,23 @@
       (.then (fn []
                (mount/start #'district.server.web3-events/web3-events)
 
-               (let [some-other-event-called? (atom false)]
-                 (register-callback! :my-contract/some-other-event (fn [err {:keys [:args]}]
+               (let [some-other-event-called? (atom false)
+                     after-past-events-callback-called? (atom false)]
+
+                 (register-after-past-events-dispatched-callback! (fn []
+                                                                    (is (true? @some-other-event-called?))
+                                                                    (reset! after-past-events-callback-called? true)))
+
+                 (register-callback! :my-contract/some-other-event (fn [err {:keys [:args :latest-event?]}]
                                                                      (is (not err))
                                                                      (is (= 4 (web3/to-decimal (:some-other-param args))))
+                                                                     (is (false? latest-event?))
                                                                      (reset! some-other-event-called? true)))
-                 (register-callback! :my-contract/some-event (fn [err {:keys [:args]}]
+                 (register-callback! :my-contract/some-event (fn [err {:keys [:args :latest-event?]}]
                                                                (is (not err))
                                                                (is (= 20 (web3/to-decimal (:some-param args))))
+                                                               (is (true? latest-event?))
                                                                (is (true? @some-other-event-called?))
+                                                               (is (true? @after-past-events-callback-called?))
                                                                (done)))))))))
 
