@@ -49,7 +49,7 @@
                  (register-callback! :my-contract/some-other-event (fn [err {:keys [:args :latest-event?]}]
                                                                      (is (not err))
                                                                      (is (= 4 (web3/to-decimal (:some-other-param args))))
-                                                                     (is (false? latest-event?))
+                                                                     (is (nil? latest-event?))
                                                                      (reset! some-other-event-called? true)))
                  (register-callback! :my-contract/some-event (fn [err {:keys [:args :latest-event?]}]
                                                                (is (not err))
