@@ -87,6 +87,10 @@
     (when-not (:disable-dispatch-logging? @web3-events)
       (log/info "Dispatching event" {:err err :event evt} ::event-dispatch)))
 
+  (when (and err
+             (fn? (:on-error @web3-events)))
+    ((:on-error @web3-events) err evt))
+
   (when (or (not err)
             (and err (:dispatch-on-error? @web3-events)))
 
