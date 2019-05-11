@@ -31,7 +31,8 @@ You can pass following args to web3-events module:
 * `:read-past-events-from-file?` Pass true if you want to read events from a file. The module will read past events from file and then start listening for a new events on connected Ethereum node.
 * `:file-path` Path to a file you want to read/write
 * `:dispatch-on-error?` Pass true if you want to dispatch an event despite being an error there. 
-* `:disable-dispatch-logging?` Normally each dispatched event is logged. Pass true to disable.  
+* `:disable-dispatch-logging?` Normally each dispatched event is logged. Pass true to disable.
+* `:on-error` Function that will be fired, when there's error in any event callback  
 
 Let's see example of using this module:
 ```clojure
