@@ -1,8 +1,8 @@
 (ns tests.all
   (:require
-    [cljs.test :refer-macros [deftest is testing use-fixtures]]
+    [cljs.test :refer-macros [deftest is testing use-fixtures async]]
     [district.server.web3 :refer [web3]]
-    [district.server.web3-watcher]
+    [district.server.web3-watcher :as web3-watcher]
     [mount.core :as mount]))
 
 (use-fixtures
@@ -11,12 +11,46 @@
    (fn []
      (mount/stop))})
 
-(deftest test-web3-watcher
-  ;; Cannot write tests until Ganache starts supporting synchronous requests
-  ;; https://github.com/trufflesuite/ganache-core/issues/15
-  ;; because web3/connected? will otherwise hang
-  ;; Write tests once it's supported
-  #_ (is (= 1 1))
+(def *connected?* (atom true))
 
-  #_ (-> (mount/with-args {:web3 {:port 8549}})
-    (mount/start)))
+(defn set-connected! [connected?]
+  (reset! *connected?* connected?))
+
+(deftest test-web3-watcher
+  (let [went-offline? (atom false)
+        went-online-again? (atom false)]
+    (-> (mount/with-args {:web3 {:port 8549}
+                          :web3-watcher {:interval 1000
+                                         :confirmations 4
+                                         :on-online #(reset! went-online-again? true)
+                                         :on-offline #(reset! went-offline? true)}})
+      (mount/start-without #'web3-watcher/web3-watcher))
+
+    (aset @web3 "isConnected" (fn [] @*connected?*))
+
+    (mount/start #'web3-watcher/web3-watcher)
+
+    (is (false? @went-offline?))
+    (is (false? @went-online-again?))
+
+    (set-connected! false)
+
+    (async done
+      (js/setTimeout
+        (fn []
+          (is (false? @went-offline?))
+          (is (false? @went-online-again?))
+          (js/setTimeout
+            (fn []
+              (is (true? @went-offline?))
+              (is (false? @went-online-again?))
+              (set-connected! true)
+              (js/setTimeout
+                (fn []
+                  (is (true? @went-online-again?))
+                  (is (= 4 @(:confirmations-left @web3-watcher/web3-watcher)))
+                  (done))
+                1100))
+            1100))
+        4000))))
+
