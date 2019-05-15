@@ -5,7 +5,7 @@
 Clojurescript-node.js [mount](https://github.com/tolitius/mount) module for a district server, that watches server connection to a blockchain. 
 
 ## Installation
-Add `[district0x/district-server-web3-watcher "1.0.2"]` into your project.clj  
+Add `[district0x/district-server-web3-watcher "1.0.3"]` into your project.clj  
 Include `[district.server.web3-watcher]` in your CLJS file, where you use `mount/start`
 
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
@@ -17,6 +17,7 @@ where this is deployed in production.
 ## Usage
 You can pass following args to web3-watcher module: 
 * `:interval` Interval at which it should check the connection. Default: 3s
+* `:confirmations` How many offline responses module needs to get before triggers `:on-offline`. Default: 3
 * `:on-online` Callback that is run when connection goes from offline to online
 * `:on-offline` Callback that is run when connection goes from online to offline
 

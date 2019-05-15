@@ -21,26 +21,42 @@
   (reset! (:online? @web3-watcher) online?))
 
 
+(defn- reset-confirmations-left! []
+  (reset! (:confirmations-left @web3-watcher) (:confirmations @web3-watcher)))
+
+
+(defn- decrease-confirmations-left! []
+  (swap! (:confirmations-left @web3-watcher) dec))
+
+
 (defn- check-connection []
   (let [connected? (web3/connected? @web3)]
     (cond
       (and connected? (not (online?)))
       (do
         (update-online! true)
+        (reset-confirmations-left!)
         ((:on-online @web3-watcher)))
 
-      (and (not connected?) (online?))
+      (and (not connected?)
+           (> @(:confirmations-left @web3-watcher) 0))
+      (decrease-confirmations-left!)
+
+      (and (not connected?)
+           (online?)
+           (<= @(:confirmations-left @web3-watcher) 0))
       (do
         (update-online! false)
         ((:on-offline @web3-watcher))))))
 
 
-(defn start [{:keys [:interval :on-online :on-offline] :as opts
-              :or {interval 3000}}]
+(defn start [{:keys [:interval :on-online :on-offline :confirmations] :as opts
+              :or {interval 3000 confirmations 3}}]
   (merge {:on-online identity
           :on-offline identity
           :interval-id (js/setInterval check-connection interval)
-          :online? (atom (web3/connected? @web3))}
+          :online? (atom (web3/connected? @web3))
+          :confirmations-left (atom confirmations)}
          opts))
 
 
