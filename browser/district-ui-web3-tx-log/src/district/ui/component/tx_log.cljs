@@ -70,10 +70,10 @@
      (if (contains? #{:tx.status/success :tx.status/failure} status)
        (str (format/format-number gas-used {:max-fraction-digits 0})
             (when (and tx-cost-currency
-                       (get tx-costs tx-cost-currency))
-              (str "(" (format/format-currency
+                       (pos? (get tx-costs tx-cost-currency)))
+              (str " (" (format/format-currency
                         (get tx-costs tx-cost-currency)
-                        {:currency tx-cost-currency})
+                        {:currency (name tx-cost-currency)})
                    ")")))
        "...")]))
 
@@ -145,7 +145,7 @@
   [:i.icon.tx-remove
    (r/merge-props
     {:on-click (fn [e]
-                 (dispatch [::tx-events/remove-tx (:hash tx)])
+                 (dispatch [::tx-events/remove-tx (:transaction-hash tx)])
                  (.stopPropagation e))}
     (dissoc props :tx))])
 
@@ -237,7 +237,7 @@
         [:div.tx-log
          (merge
           {:class (when @open? "open")}
-          (dissoc props :header-props :header-el :settings-props :settings-el :transactions-props :transactions-el))
+          (dissoc props :header-props :header-el :settings-props :settings-el :transactions-props :transactions-el :tx-cost-currency))
          [header-el header-props]
          [:div.tx-content
           {:class (when @open? "open")}
