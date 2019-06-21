@@ -55,15 +55,6 @@
                                                                             (reset! some-other-event-called? true)))
 
                         (register-callback! :my-contract/some-event (fn [err {:keys [:args :latest-event?]}]
-                                                                      (prn "@@@ some-event-handler")
-                                                                      (is (not err))
-                                                                      (is (= 20 (web3/to-decimal (:some-param args))))
-                                                                      (is (true? latest-event?))
-                                                                      (is (true? @some-other-event-called?))
-                                                                      (is (true? @after-past-events-callback-called?))
-                                                                      (reset! some-event-called? true)))
-
-                        (register-callback! :my-contract/some-event (fn [err {:keys [:args :latest-event?]}]
                                                                       (js/Promise.
                                                                        (fn [resolve reject]
                                                                          (js/setTimeout #(do
@@ -71,4 +62,13 @@
                                                                                            (resolve (web3/to-decimal (:some-param args)))
                                                                                            (is (true? @some-event-called?))
                                                                                            (done))
-                                                                                        5000)))))))))))
+                                                                                        5000)))))
+
+                        (register-callback! :my-contract/some-event (fn [err {:keys [:args :latest-event?]}]
+                                                                      (prn "@@@ some-event-handler")
+                                                                      (is (not err))
+                                                                      (is (= 20 (web3/to-decimal (:some-param args))))
+                                                                      (is (true? latest-event?))
+                                                                      (is (true? @some-other-event-called?))
+                                                                      (is (true? @after-past-events-callback-called?))
+                                                                      (reset! some-event-called? true)))))))))
