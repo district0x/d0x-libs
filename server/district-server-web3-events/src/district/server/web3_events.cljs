@@ -91,15 +91,16 @@
              (fn? (:on-error @web3-events)))
     ((:on-error @web3-events) err evt))
 
+  (when (and (:write-events-into-file? @web3-events)
+             (not err))
+    (append-line-into-file! (:file-path @web3-events) (str evt)))
+
   (when (or (not err)
             (and err (:dispatch-on-error? @web3-events)))
 
-    (doseq [callback (vals (get-in @(:callbacks @web3-events) [(:contract-key contract) event]))]
-      (callback err evt)))
-
-  (when (and (:write-events-into-file? @web3-events)
-             (not err))
-    (append-line-into-file! (:file-path @web3-events) (str evt))))
+    (doall
+     (for [callback (vals (get-in @(:callbacks @web3-events) [(:contract-key contract) event]))]
+       (callback err evt)))))
 
 
 (defn- create-past-event-filters [events last-block-number]
