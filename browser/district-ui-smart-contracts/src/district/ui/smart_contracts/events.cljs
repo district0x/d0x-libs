@@ -62,7 +62,7 @@
 (defn- get-file-path [file-type
                       {:keys [:name :path :version]}
                       {:keys [:contracts-path :contracts-version]
-                       :or {contracts-path "./contracts/build/"}}]
+                       :or {contracts-path "/contracts/build/"}}]
   (str (ensure-slash (or path contracts-path))
        name "." (cljs.core/name file-type)
        (get-version-param version contracts-version)))
