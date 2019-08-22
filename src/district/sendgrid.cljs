@@ -15,7 +15,8 @@
         (println "From:" from)
         (println "To:" to)
         (println "Subject:" subject)
-        (println "Content:" content))
+        (println "Content:" content)
+        (println "Substitutions:" substitutions))
       (let [body (merge {:from {:email from}
                          :personalizations [{:to [{:email to}]
                                              ;; Substitutions are in format e.g ":header", so (str :header) works well
