@@ -6,8 +6,6 @@ Helper functions for sending emails via Sendgrid API.
 
 # Installation
 
-<!-- Add `[district0x/district-sendgrid "1.0.0"]` into your project.clj -->
-
 This module is available as a Maven artifact from Clojars. The latest released version is:
 [![Clojars Project](https://img.shields.io/clojars/v/district0x/district-sendgrid.svg)](https://clojars.org/district0x/district-sendgrid)
 <br>
