@@ -56,6 +56,9 @@ You can pass following args to initiate this module:
 * `:tx-costs-currencies` List of currency rates to load, so transaction cost can be displayed in those currencies
 * `:disable-using-localstorage?` Pass true if you don't want to store transaction log settings in browser's localstorage
 * `:etherscan-url` Pass root url as a string e.g. "https://etherscan.io" (the default) or "https://ropsten.etherscan.io" to configure transaction log links..
+* `:default-settings` Pass default settings. Following options are available: 
+  * `:from-active-address-only?` Shows transactions only made by currently active address
+  * `:open?` Whether transaction log is open or not
 
 ```clojure
   (ns my-district.core

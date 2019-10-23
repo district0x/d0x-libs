@@ -17,8 +17,10 @@
   (fn [{:keys [:db :web3-tx-log-localstorage]} [{:keys [:disable-using-localstorage?
                                                         :tx-costs-currencies
                                                         :open-on-tx-hash?
-                                                        :etherscan-url]}]]
-    (let [settings (if disable-using-localstorage? {} (queries/settings web3-tx-log-localstorage))]
+                                                        :etherscan-url
+                                                        :default-settings]}]]
+    (let [settings (merge (if disable-using-localstorage? {} (queries/settings web3-tx-log-localstorage))
+                          default-settings)]
 
       (merge
         {:db (-> db
