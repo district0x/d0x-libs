@@ -12,8 +12,6 @@
   :npm {:dependencies [[web3 "1.2.0"]]
         :devDependencies [[ws "2.0.1"]]}
 
-  :figwheel {:server-port 4673}
-
   :profiles {:dev {:dependencies [[district0x/async-helpers "0.1.3"]
                                   [org.clojure/clojure "1.10.1"]
                                   [org.clojure/core.async "0.4.500"]]

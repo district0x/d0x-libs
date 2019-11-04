@@ -21,11 +21,7 @@
   (async done
          (go
            (let [connected? (<! (web3-eth/is-listening? @web3))
-                 accounts (<! (web3-eth/accounts @web3))]))
-         (is (true? connected?))
-         (done)))
+                 accounts (<! (web3-eth/accounts @web3))]
 
-#_(deftest test-config-setup
-    (-> (mount/with-args {:config {:default {:web3 {:url "ws://127.0.0.1:8545"}}}})
-        (mount/start))
-    (is (true? (web3-core/connected? @web3))))
+             (is (true? connected?))
+             (done)))))
