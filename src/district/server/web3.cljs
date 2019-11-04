@@ -1,9 +1,14 @@
 (ns district.server.web3
   (:require
-    [cljs-web3.core :refer [http-provider]]
-    [cljs.nodejs :as nodejs]
-    [district.server.config :refer [config]]
-    [mount.core :as mount :refer [defstate]]))
+   [cljs-web3.helpers :as web3-helpers]
+   [cljs-web3.macros]
+   [clojure.string :as string]
+   [cljs-web3.core :as web3-core]
+   [cljs-web3.eth :as web3-eth]
+   [cljs-web3.impl.web3js :as web3js]
+   [taoensso.timbre :as log]
+   [district.server.config :refer [config]]
+   [mount.core :as mount :refer [defstate]]))
 
 (declare start)
 (declare stop)
@@ -13,32 +18,49 @@
                        (:web3 (mount/args))))
   :stop (stop web3))
 
-(def Web3 (nodejs/require "web3"))
-(def Ganache (nodejs/require "ganache-core"))
+(defn websocket-connection? [uri]
+  (string/starts-with? uri "ws"))
 
-(set! js/Web3 Web3)
+(defn create [{:keys [:host :port :url] :as opts}]
+  (let [uri (if url
+              url
+              (str (or host "http://127.0.0.1") ":" port))
+        instance (web3js/new)]
+    (if (websocket-connection? uri)
+      (web3-core/websocket-provider instance uri)
+      (web3-core/http-provider instance uri))))
 
-(defn start-ganache-server [{:keys [:port :ganache-opts]} callback]
-  #_(let [server (.server Ganache (clj->js ganache-opts))
-          listen (aget server "listen")]
-      (listen port)
-      server))
+(defn start [{:keys [:port :url :on-online :on-offline :healthcheck-interval :polling-interval]
+              :or {polling-interval 3000} :as opts}]
+  (let [this-web3 (create opts)
+        interval-id (atom nil)
+        reset-connection (fn []
+                           (on-offline)
+                           (reset! interval-id (js/setInterval (fn []
+                                                                 (let [new-web3 (create opts)]
+                                                                   (web3-eth/is-listening? new-web3
+                                                                                           (fn [error result]
+                                                                                             (let [connected? (and (nil? error) result)]
+                                                                                               (log/debug "Polling..." {:connected? connected?})
+                                                                                               (when connected?
+                                                                                                 (js/clearInterval @interval-id)
+                                                                                                 ;; swap websocket
+                                                                                                 (web3-core/set-provider @web3 (aget (:provider new-web3) "currentProvider"))
+                                                                                                 (on-online)))))))
+                                                               polling-interval)))]
 
-(defn start [{:keys [:port :url :start-ganache-server? :use-ganache-provider? :ganache-opts] :as opts}]
-  (when (and (not port) (not url) (not use-ganache-provider?))
-    (throw (js/Error. "You must provide port or url to web3 state component")))
-  ;; Temporarily disabled. When synchronous calls bug gets solved we can switch to commented solution below
-  ;; https://github.com/trufflesuite/ganache-core/issues/15
-  #_(when (and port start-ganache-server?)
-      (reset! *ganache-server-process* (start-ganache-server opts)))
-  (let [provider (if false #_use-ganache-provider?
-                   (.provider Ganache (clj->js ganache-opts))
-                   (http-provider Web3 (if url url (str "http://127.0.0.1:" port))))]
-    (new Web3 provider)))
+    (when (and (not port) (not url))
+      (throw (js/Error. "You must provide port or url to start the web3 component")))
 
-(defn stop [web3]
-  #_(when @*ganache-server*
-      (let [close-server (aget @*ganache-server* "close")]
-        (close-server))
-      (reset! *ganache-server* nil)))
+    (web3-core/on-disconnect this-web3 reset-connection)
 
+    (web3-core/extend this-web3
+      :evm
+      [(web3-helpers/method {:name "increaseTime"
+                             :call "evm_increaseTime"
+                             :params 1})
+       (web3-helpers/method {:name "mineBlock"
+                             :call "evm_mine"})])))
+
+(defn stop [this]
+  (web3-core/disconnect @this))
