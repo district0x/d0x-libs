@@ -8,7 +8,7 @@ setting up and providing [web3](https://github.com/ethereum/web3.js) instance.
 ## Installation
 Add <br>
 [![Clojars Project](https://img.shields.io/clojars/v/district0x/district-server-web3.svg)](https://clojars.org/district0x/district-server-web3) <br>
-into your project.clj
+into your project.clj. <br>
 Include `[district.server.web3]` in your CLJS file, where you use `mount/start`.
 
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
