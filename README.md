@@ -13,19 +13,10 @@ Include `[district.server.web3]` in your CLJS file, where you use `mount/start`.
 
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
 
-## Real-world example
-To see how district server modules play together in real-world app, you can take a look at [NameBazaar server folder](https://github.com/district0x/name-bazaar/tree/master/src/name_bazaar/server),
-where this is deployed in production.
-
 ## Usage
 You can pass following args to web3 module:
-* `:port` Port of locally running [ganache](https://github.com/trufflesuite/ganache-cli) or real blockchain
-* `:url` Full url of blockchain to connect to
-* `:start-ganache-server?` (Temporarily unavailable) Pass true if you want to start [ganache](https://github.com/trufflesuite/ganache-cli) server at `:port` automatically
-* `:use-ganache-provider?` (Temporarily unavailable) Pass true if want to use [ganache](https://github.com/trufflesuite/ganache-cli) as provider without starting a server
-
-Last two options are currently unavailable, because of [ganache issue](https://github.com/trufflesuite/ganache-core/issues/15) that server will hang for synchronous requests.
-**For this reason, use this module only while you have [ganache](https://github.com/trufflesuite/ganache) or real blockchain running on your local machine**
+* `:port` Port of locally running [ganache](https://github.com/trufflesuite/ganache-cli) or real ethereum client
+* `:url` Full url of the client to connect to.
 
 ```clojure
 (ns my-district
@@ -37,7 +28,7 @@ Last two options are currently unavailable, because of [ganache issue](https://g
       {:web3 {:port 8545}})
   (mount/start))
 
-(web3-eth/accounts @web3)
+(.then (web3-eth/accounts @web3) prn)
 ;; => ["0x184c2c67dec231c32856e13134670e44f636acc9"]
 ```
 ## Module dependencies
@@ -48,15 +39,8 @@ Last two options are currently unavailable, because of [ganache issue](https://g
 If you wish to use custom modules instead of dependencies above while still using `district-server-web3`, you can easily do so by [mount's states swapping](https://github.com/tolitius/mount#swapping-states-with-states).
 
 ## Development
+
 ```bash
-# To start REPL and run tests
-lein deps
-lein repl
-(start-tests!)
-
-# In other terminal
-node tests-compiled/run-tests.js
-
-# To run tests without REPL
-lein doo node "tests" once
+lein npm install
+lein doo node "nodejs-tests" auto
 ```
