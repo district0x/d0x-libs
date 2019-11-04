@@ -1,35 +1,46 @@
-(defproject district0x/district-server-web3 "1.0.1"
+(defproject district0x/district-server-web3 "1.1.0-SNAPSHOT"
   :description "district0x server module for setting up web3"
   :url "https://github.com/district0x/district-server-web3"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[district0x/district-server-config "1.0.1"]
-                 [mount "0.1.11"]
-                 [org.clojure/clojurescript "1.9.946"]]
+  :dependencies [[cljs-web3-next "0.0.10"]
+                 [com.taoensso/timbre "4.10.0"]
+                 [district0x/district-server-config "1.0.1"]
+                 [mount "0.1.16"]
+                 [org.clojure/clojurescript "1.10.439"]]
 
-  :npm {:dependencies [[web3 "0.19.0"]
-                       [ganache-core "2.0.2"]]
+  :npm {:dependencies [[web3 "1.2.0"]]
         :devDependencies [[ws "2.0.1"]]}
 
   :figwheel {:server-port 4673}
 
-  :profiles {:dev {:dependencies [[org.clojure/clojure "1.8.0"]
-                                  [com.cemerick/piggieback "0.2.2"]
-                                  [figwheel-sidecar "0.5.14"]
-                                  [org.clojure/tools.nrepl "0.2.13"]
-                                  [cljs-web3 "0.19.0-0-8"]]
+  :profiles {:dev {:dependencies [[district0x/async-helpers "0.1.3"]
+                                  [org.clojure/clojure "1.10.1"]
+                                  [org.clojure/core.async "0.4.500"]]
                    :plugins [[lein-cljsbuild "1.1.7"]
-                             [lein-figwheel "0.5.14"]
                              [lein-npm "0.6.2"]
-                             [lein-doo "0.1.7"]]
-                   :source-paths ["dev"]}}
+                             [lein-doo "0.1.8"]]
+                   :source-paths ["src" "test"]}}
 
-  :cljsbuild {:builds [{:id "tests"
+  :deploy-repositories [["snapshots" {:url "https://clojars.org/repo"
+                                      :username :env/clojars_username
+                                      :password :env/clojars_password
+                                      :sign-releases false}]
+                        ["releases"  {:url "https://clojars.org/repo"
+                                      :username :env/clojars_username
+                                      :password :env/clojars_password
+                                      :sign-releases false}]]
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["deploy"]]
+
+  :cljsbuild {:builds [{:id "nodejs-tests"
                         :source-paths ["src" "test"]
-                        :figwheel {:on-jsload "tests.runner/-main"}
-                        :compiler {:main "tests.runner"
+                        :compiler {
                                    :output-to "tests-compiled/run-tests.js"
                                    :output-dir "tests-compiled"
+                                   :main "tests.runner"
                                    :target :nodejs
                                    :optimizations :none
                                    :source-map true}}]})
