@@ -3,7 +3,7 @@
   :url "https://github.com/district0x/district-server-web3"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[cljs-web3-next "0.0.10"]
+  :dependencies [[cljs-web3-next "0.0.12"]
                  [com.taoensso/timbre "4.10.0"]
                  [district0x/district-server-config "1.0.1"]
                  [mount "0.1.16"]
