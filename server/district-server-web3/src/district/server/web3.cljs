@@ -1,11 +1,9 @@
 (ns district.server.web3
   (:require
    [cljs-web3.helpers :as web3-helpers]
-   [cljs-web3.macros]
    [clojure.string :as string]
    [cljs-web3.core :as web3-core]
    [cljs-web3.eth :as web3-eth]
-   [cljs-web3.impl.web3js :as web3js]
    [taoensso.timbre :as log]
    [district.server.config :refer [config]]
    [mount.core :as mount :refer [defstate]]))
@@ -24,11 +22,10 @@
 (defn create [{:keys [:host :port :url] :as opts}]
   (let [uri (if url
               url
-              (str (or host "http://127.0.0.1") ":" port))
-        instance (web3js/new)]
+              (str (or host "http://127.0.0.1") ":" port))]
     (if (websocket-connection? uri)
-      (web3-core/websocket-provider instance uri)
-      (web3-core/http-provider instance uri))))
+      (web3-core/websocket-provider uri)
+      (web3-core/http-provider uri))))
 
 (defn start [{:keys [:port :url :on-online :on-offline :healthcheck-interval :polling-interval]
               :or {polling-interval 3000} :as opts}]
