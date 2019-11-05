@@ -2,8 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/district0x/district-server-web3.svg?style=svg)](https://circleci.com/gh/district0x/district-server-web3)
 
-Clojurescript-node.js [mount](https://github.com/tolitius/mount) module for a district server, that takes care of
-setting up and providing [web3](https://github.com/ethereum/web3.js) instance.
+Clojurescript-node.js [mount](https://github.com/tolitius/mount) module for a district server, that takes care of setting up and providing [web3](https://github.com/ethereum/web3.js) instance.
 
 ## Installation
 Add <br>
