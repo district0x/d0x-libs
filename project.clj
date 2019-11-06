@@ -7,7 +7,7 @@
                  [com.taoensso/timbre "4.10.0"]
                  [district0x/district-server-config "1.0.1"]
                  [mount "0.1.16"]
-                 [org.clojure/clojurescript "1.10.439"]]
+                 [org.clojure/clojurescript "1.10.520"]]
 
   :npm {:dependencies [[web3 "1.2.0"]]
         :devDependencies [[ws "2.0.1"]]}
