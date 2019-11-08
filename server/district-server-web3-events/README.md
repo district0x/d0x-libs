@@ -1,12 +1,12 @@
 # district-server-web3-events
 
-[![Build Status](https://travis-ci.org/district0x/district-server-web3-events.svg?branch=master)](https://travis-ci.org/district0x/district-server-web3-events)
+[![CircleCI](https://circleci.com/gh/district0x/district-server-web3-events.svg?style=svg)](https://circleci.com/gh/district0x/district-server-web3-events)
 
 Clojurescript-node.js [mount](https://github.com/tolitius/mount) module for a district server, that enables easier setting up and handling web3 smart-contract events.
-This module provides ordered dispatching across different smart-contract events. Other server modules can simply plug in into 
-dispatching cycle by registering callback(s) for any event, being free from handling troublesome web3 events directly. 
+This module provides ordered dispatching across different smart-contract events. Other server modules can simply plug in into
+dispatching cycle by registering callback(s) for any event, being free from handling troublesome web3 events directly.
 It also provides ability to cache events into a local file, for later replaying of events from the file. This is especially
-useful when debugging QA or production and not having locally synced blockchain.     
+useful when debugging QA or production and not having locally synced blockchain.
 
 ## Installation
 Latest released version of this library: <br>
@@ -26,13 +26,13 @@ Include `[district.server.web3-events]` in your CLJS file, where you use `mount/
 ## Usage
 You can pass following args to web3-events module:
 * `:events` Collection of smart-contract events the module will start listening to. Pass definition for each event in format
-`[contract-key event-key event-opts block-opts]` 
-* `:write-events-into-file?` Pass true if you want to write events into file. Serves as a cache, for example when you're connecting to a remote Ethereum node. 
+`[contract-key event-key event-opts block-opts]`
+* `:write-events-into-file?` Pass true if you want to write events into file. Serves as a cache, for example when you're connecting to a remote Ethereum node.
 * `:read-past-events-from-file?` Pass true if you want to read events from a file. The module will read past events from file and then start listening for a new events on connected Ethereum node.
 * `:file-path` Path to a file you want to read/write
-* `:dispatch-on-error?` Pass true if you want to dispatch an event despite being an error there. 
+* `:dispatch-on-error?` Pass true if you want to dispatch an event despite being an error there.
 * `:disable-dispatch-logging?` Normally each dispatched event is logged. Pass true to disable.
-* `:on-error` Function that will be fired, when there's error in any event callback  
+* `:on-error` Function that will be fired, when there's error in any event callback
 
 Let's see example of using this module:
 ```clojure
@@ -73,7 +73,7 @@ Let's take for example simple module, which is supposed to perform some actions 
   :stop (stop))
 ```
 
-Now all we need to do is to include our module and configure web3-events: 
+Now all we need to do is to include our module and configure web3-events:
 
 ```clojure
 (ns my-district
@@ -96,7 +96,7 @@ Now all we need to do is to include our module and configure web3-events:
 
 ```
 
-And that's all! Now handlers in my-module will be fired in exact order as they went through the blockchain. 
+And that's all! Now handlers in my-module will be fired in exact order as they went through the blockchain.
 
 ## module dependencies
 
@@ -115,15 +115,15 @@ If you wish to use custom modules instead of dependencies above while still usin
 Namespace contains following functions for working with web3 events:
 #### <a name="register-callback">`register-callback! [event-key callback & [callback-id]]`
 Registers a callback by the key you've passed into configuration of this module. Callback will receive contract and event
-as well, so it can be identified backwards. Optionally, you can pass `callback-id` by which you can unregister callback, 
+as well, so it can be identified backwards. Optionally, you can pass `callback-id` by which you can unregister callback,
 if not supplied random will be generated and returned from the function call.
 
 #### <a name="register-after-past-events-dispatched-callback">`register-after-past-events-dispatched-callback! [callback]`
 Registers a callback that will be fired once, after all past events were replayed and before listening on latest events starts.
-No need to unregister this callback, since it's fired only once, it's automatically unregistered.     
+No need to unregister this callback, since it's fired only once, it's automatically unregistered.
 
 #### <a name="unregister-callback">`unregister-callbacks! [callback-ids]`
-Unregisters collection of callbacks by their ids. 
+Unregisters collection of callbacks by their ids.
 
 ## Development
 ```bash
