@@ -25,7 +25,7 @@ module.exports = function(deployer, network, accounts) {
       console.log ("@@@ using Web3 version:", web3.version.api);
       console.log ("@@@ using address", address);
     })
-    .then (() => deployer.deploy (MyContract, 1, Object.assign(opts, {gas: gas})))
+    .then (() => deployer.deploy (MyContract, Object.assign(opts, {gas: gas})))
     .then (myContract => {
 
       var smartContracts = edn.encode(
