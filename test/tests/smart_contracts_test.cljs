@@ -1,4 +1,4 @@
-(ns tests.smart-contracts)
+(ns tests.smart-contracts-test)
 
 (def smart-contracts
   {:my-contract
