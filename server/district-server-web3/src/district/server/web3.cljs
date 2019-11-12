@@ -42,7 +42,7 @@
                                                                                                (when connected?
                                                                                                  (js/clearInterval @interval-id)
                                                                                                  ;; swap websocket
-                                                                                                 (web3-core/set-provider @web3 (aget (:provider new-web3) "currentProvider"))
+                                                                                                 (web3-core/set-provider @web3 (web3-core/current-provider new-web3))
                                                                                                  (on-online)))))))
                                                                polling-interval)))]
 
