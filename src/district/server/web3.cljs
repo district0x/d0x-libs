@@ -53,11 +53,16 @@
 
     (web3-core/extend this-web3
       :evm
+      ;; extending ganache defined json rpc calls
       [(web3-helpers/method {:name "increaseTime"
                              :call "evm_increaseTime"
                              :params 1})
        (web3-helpers/method {:name "mineBlock"
-                             :call "evm_mine"})])))
+                             :call "evm_mine"})
+       (web3-helpers/method {:name "snapshot"
+                             :call "evm_snapshot"})
+       (web3-helpers/method {:name "revert"
+                             :call "evm_revert"})])))
 
 (defn stop [this]
   (web3-core/disconnect @this))
