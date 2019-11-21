@@ -1,7 +1,7 @@
 (ns tests.all
-  (:require [cljs-web3.core :as web3-core]
-            [cljs-web3.eth :as web3-eth]
-            [cljs.core.async :refer [<!] :as async]
+  (:require [cljs-web3-next.core :as web3-core]
+            [cljs-web3-next.eth :as web3-eth]
+            [cljs.core.async :refer [<!]]
             [cljs.test :refer-macros [deftest is testing use-fixtures async]]
             [district.server.web3 :refer [web3]]
             [district.shared.async-helpers :as async-helpers]
@@ -22,6 +22,5 @@
          (go
            (let [connected? (<! (web3-eth/is-listening? @web3))
                  accounts (<! (web3-eth/accounts @web3))]
-
              (is (true? connected?))
              (done)))))
