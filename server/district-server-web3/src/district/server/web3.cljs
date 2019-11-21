@@ -1,12 +1,11 @@
 (ns district.server.web3
-  (:require
-   [cljs-web3.helpers :as web3-helpers]
-   [clojure.string :as string]
-   [cljs-web3.core :as web3-core]
-   [cljs-web3.eth :as web3-eth]
-   [taoensso.timbre :as log]
-   [district.server.config :refer [config]]
-   [mount.core :as mount :refer [defstate]]))
+  (:require [cljs-web3-next.core :as web3-core]
+            [cljs-web3-next.eth :as web3-eth]
+            [cljs-web3-next.helpers :as web3-helpers]
+            [clojure.string :as string]
+            [district.server.config :refer [config]]
+            [mount.core :as mount :refer [defstate]]
+            [taoensso.timbre :as log]))
 
 (declare start)
 (declare stop)
