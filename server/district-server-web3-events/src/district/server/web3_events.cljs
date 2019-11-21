@@ -1,5 +1,5 @@
 (ns district.server.web3-events
-  (:require [cljs-web3.eth :as web3-eth]
+  (:require [cljs-web3-next.eth :as web3-eth]
             [district.server.config :refer [config]]
             [district.server.smart-contracts :as smart-contracts]
             [district.server.web3 :refer [web3]]
@@ -79,7 +79,7 @@
       (callback))
     (unregister-callbacks! callback-ids)))
 
-(defn start [{:keys [:events] :as opts}]
+(defn start [{:keys [:events :default-from-block] :as opts}]
   (web3-eth/is-listening? @web3 (fn [_ listening?]
 
                                (if-not listening?
@@ -88,7 +88,7 @@
                                  (smart-contracts/replay-past-events-in-order
                                   events
                                   dispatch
-                                  {:from-block 0
+                                  {:from-block (or default-from-block 0)
                                    :to-block "latest"
                                    :on-finish (fn []
                                                 (dispatch-after-past-events-callbacks!)

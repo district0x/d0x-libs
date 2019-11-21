@@ -1,6 +1,6 @@
 (ns tests.all
-  (:require [cljs-web3.core :as web3-core]
-            [cljs-web3.eth :as web3-eth]
+  (:require [cljs-web3-next.core :as web3-core]
+            [cljs-web3-next.eth :as web3-eth]
             [cljs.core.async :refer [<!]]
             [cljs.test :refer-macros [deftest use-fixtures is testing async]]
             [district.server.smart-contracts :as smart-contracts]
