@@ -27,7 +27,7 @@ Include `[district.server.web3-events]` in your CLJS file, where you use `mount/
 You can pass following args to web3-events module:
 * `:events` Collection of smart-contract events the module will start listening to. Pass definition for each event in format
 `[contract-key event-key event-opts block-opts]`
-* `:default-from-block` You can explicitely configure from which block the past events will be retrieved
+* `:from-block` You can explicitely configure from which block the past events will be retrieved
 
 Let's see example of using this module:
 ```clojure
@@ -83,10 +83,9 @@ Now all we need to do is to include our module and configure web3-events:
       {:web3 {:port 8545}
        :smart-contracts {:contracts-var #'my-district.smart-contracts/smart-contracts
                          :print-gas-usage? true}
-       :web3-events {:events {:my-contract/some-event [:my-contract :SomeEvent {} {:from-block 0 :to-block "latest"}]
-                              :my-contract/some-other-event [:my-contract :SomeOtherEvent {} {:from-block 0 :to-block "latest"}]}
-                     :write-events-into-file? true
-                     :file-path "my-events.log"}})
+       :web3-events {:events {:my-contract/some-event [:my-contract :SomeEvent]
+                              :my-contract/some-other-event [:my-contract :SomeOtherEvent]}
+                     :from-block 900}})
     (mount/start))
 
 ```

@@ -79,7 +79,7 @@
       (callback))
     (unregister-callbacks! callback-ids)))
 
-(defn start [{:keys [:events :default-from-block] :as opts}]
+(defn start [{:keys [:events :from-block] :as opts}]
   (web3-eth/is-listening? @web3 (fn [_ listening?]
 
                                (if-not listening?
@@ -88,7 +88,7 @@
                                  (smart-contracts/replay-past-events-in-order
                                   events
                                   dispatch
-                                  {:from-block (or default-from-block 0)
+                                  {:from-block (or from-block 0)
                                    :to-block "latest"
                                    :on-finish (fn []
                                                 (dispatch-after-past-events-callbacks!)
