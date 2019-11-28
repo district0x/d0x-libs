@@ -10,6 +10,8 @@
 (declare start)
 (declare stop)
 
+(defonce ping (atom nil))
+
 (defstate web3
   :start (start (merge (:web3 @config)
                        (:web3 (mount/args))))
@@ -26,11 +28,23 @@
       (web3-core/websocket-provider uri)
       (web3-core/http-provider uri))))
 
+(defn keep-alive [web3 interval]
+  (js/setInterval
+   (fn []
+     (cljs-web3-next.eth/is-listening? web3
+                                       (fn [error response]
+                                         (if-not error
+                                           (log/debug "ping" {:listening? response})
+                                           (log/error "ping" {:error error})))))
+   interval))
+
 (defn start [{:keys [:port :url :on-online :on-offline :healthcheck-interval :polling-interval]
               :or {polling-interval 3000} :as opts}]
   (let [this-web3 (create opts)
+        ;; ping (atom (keep-alive this-web3 1000))
         interval-id (atom nil)
         reset-connection (fn []
+                           (js/clearInterval @ping)
                            (on-offline)
                            (reset! interval-id (js/setInterval (fn []
                                                                  (let [new-web3 (create opts)]
@@ -42,13 +56,16 @@
                                                                                                  (js/clearInterval @interval-id)
                                                                                                  ;; swap websocket
                                                                                                  (web3-core/set-provider @web3 (web3-core/current-provider new-web3))
-                                                                                                 (on-online)))))))
+                                                                                                 (on-online)
+                                                                                                 (reset! ping (keep-alive @web3 1000))))))))
                                                                polling-interval)))]
 
     (when (and (not port) (not url))
       (throw (js/Error. "You must provide port or url to start the web3 component")))
 
     (web3-core/on-disconnect this-web3 reset-connection)
+    (web3-core/on-error this-web3 reset-connection)
+    (reset! ping (keep-alive this-web3 1000))
 
     (web3-core/extend this-web3
       :evm
@@ -64,4 +81,5 @@
                              :call "evm_revert"})])))
 
 (defn stop [this]
+  (js/clearInterval @ping)
   (web3-core/disconnect @this))
