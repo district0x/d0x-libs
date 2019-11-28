@@ -1,5 +1,6 @@
 (ns district.server.web3-events
   (:require [cljs-web3-next.eth :as web3-eth]
+            [cljs-web3-next.core :as web3-core]
             [district.server.config :refer [config]]
             [district.server.smart-contracts :as smart-contracts]
             [district.server.web3 :refer [web3]]
@@ -81,10 +82,8 @@
 
 (defn start [{:keys [:events :from-block] :as opts}]
   (web3-eth/is-listening? @web3 (fn [_ listening?]
-
                                (if-not listening?
                                  (throw (js/Error. "Can't connect to Ethereum node"))
-
                                  (smart-contracts/replay-past-events-in-order
                                   events
                                   dispatch
@@ -99,4 +98,5 @@
 (defn stop [web3-events]
   (log/info "Stopping web3-events" (:events @web3-events))
   (doseq [subscription @(:event-filters @web3-events)]
-    (web3-eth/unsubscribe subscription)))
+    (when (web3-core/connected? @web3)
+      (web3-eth/unsubscribe subscription))))
