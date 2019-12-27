@@ -1,4 +1,4 @@
-(defproject district0x/district-server-web3-events "1.1.10-SNAPSHOT"
+(defproject district0x/district-server-web3-events "1.1.11-SNAPSHOT"
   :description "district0x server module for handling web3 events"
   :url "https://github.com/district0x/district-server-web3-events"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -6,8 +6,9 @@
   :dependencies [[cljs-web3-next "0.1.2"]
                  [com.taoensso/timbre "4.10.0"]
                  [district0x/district-server-config "1.0.1"]
-                 [district0x/district-server-smart-contracts "1.2.4"]
+                 [district0x/district-server-smart-contracts "1.2.5"]
                  [district0x/district-server-web3 "1.2.4"]
+                 [cljs-node-io "1.1.2"]
                  [medley "1.0.0"]
                  [mount "0.1.16"]
                  [org.clojure/clojurescript "1.10.520"]]
@@ -16,7 +17,7 @@
             [lein-doo "0.1.8"]
             [lein-solc "1.0.11"]]
 
-  :npm {:dependencies [[web3 "1.2.0"]]
+  :npm {:dependencies [[web3 "1.2.4"]]
         :devDependencies [[jsedn "0.4.1"]
                           [ws "2.0.1"]]}
 
