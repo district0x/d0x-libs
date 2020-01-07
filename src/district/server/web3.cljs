@@ -28,7 +28,7 @@
       (web3-core/websocket-provider uri)
       (web3-core/http-provider uri))))
 
-(defn keep-alive [web3 interval]
+(defn- keep-alive [web3 interval]
   (js/setInterval
    (fn []
      (cljs-web3-next.eth/is-listening? web3
@@ -38,12 +38,19 @@
                                            (log/error "ping" {:error error})))))
    interval))
 
-(defn start [{:keys [:port :url :on-online :on-offline :healthcheck-interval :ping-interval :reset-connection-poll-interval]
-              :or {ping-interval 1000 reset-connection-poll-interval 3000} :as opts}]
+(defn ping-start [{:keys [:ping-interval]
+                   :or {ping-interval 10000}}]
+  (reset! ping (keep-alive @web3 ping-interval)))
+
+(defn ping-stop []
+  (js/clearInterval @ping))
+
+(defn start [{:keys [:port :url :on-online :on-offline
+                     :reset-connection-poll-interval]
+              :or {reset-connection-poll-interval 3000} :as opts}]
   (let [this-web3 (create opts)
         interval-id (atom nil)
         reset-connection (fn []
-                           (js/clearInterval @ping)
                            (on-offline)
                            (reset! interval-id (js/setInterval (fn []
                                                                  (let [new-web3 (create opts)]
@@ -55,8 +62,7 @@
                                                                                                  (js/clearInterval @interval-id)
                                                                                                  ;; swap websocket
                                                                                                  (web3-core/set-provider @web3 (web3-core/current-provider new-web3))
-                                                                                                 (on-online)
-                                                                                                 (reset! ping (keep-alive @web3 ping-interval))))))))
+                                                                                                 (on-online)))))))
                                                                reset-connection-poll-interval)))]
 
     (when (and (not port) (not url))
@@ -64,7 +70,6 @@
 
     (web3-core/on-disconnect this-web3 reset-connection)
     (web3-core/on-error this-web3 reset-connection)
-    (reset! ping (keep-alive this-web3 ping-interval))
 
     (web3-core/extend this-web3
       :evm
