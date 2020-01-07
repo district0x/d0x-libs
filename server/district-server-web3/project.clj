@@ -1,4 +1,4 @@
-(defproject district0x/district-server-web3 "1.2.2-SNAPSHOT"
+(defproject district0x/district-server-web3 "1.2.3-SNAPSHOT"
   :description "district0x server module for setting up web3"
   :url "https://github.com/district0x/district-server-web3"
   :license {:name "Eclipse Public License"
