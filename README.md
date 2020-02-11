@@ -16,10 +16,10 @@ Include `[district.server.web3]` in your CLJS file, where you use `mount/start`.
 You can pass following args to web3 module:
 * `:port` Port of locally running [ganache](https://github.com/trufflesuite/ganache-cli) or real ethereum client
 * `:url` Full url of the client to connect to.
-* `:ping-interval` How often to ping the node to keep the websocket connection alive (milliseconds)
+* `:client-config` map of options passed to the websocket client.
 * `:reset-connection-poll-interval` If websocket disconnects or detects an error module calls `on-offline` and starts polling with this interval (milliseconds) if the connection can be re-created.
-* `:on-offline` Function to be called when websocket connection disconnects or throws an error.
 * `:on-online` Function to be called when connection to the node comes back online.
+* `:on-offline` Function to be called when websocket connection disconnects or throws an error.
 
 ```clojure
 (ns my-district

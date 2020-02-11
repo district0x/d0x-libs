@@ -20,12 +20,14 @@
 (defn websocket-connection? [uri]
   (string/starts-with? uri "ws"))
 
-(defn create [{:keys [:host :port :url] :as opts}]
+(defn create [{:keys [:host :port :url :client-config] :as opts}]
   (let [uri (if url
               url
               (str (or host "http://127.0.0.1") ":" port))]
     (if (websocket-connection? uri)
-      (web3-core/websocket-provider uri)
+      (web3-core/websocket-provider uri {:client-config (merge {:max-received-frame-size 100000000
+                                                                :max-received-message-size 100000000}
+                                                               client-config)})
       (web3-core/http-provider uri))))
 
 (defn- keep-alive [web3 interval]
@@ -45,9 +47,10 @@
 (defn ping-stop []
   (js/clearInterval @ping))
 
-(defn start [{:keys [:port :url :on-online :on-offline
+(defn start [{:keys [:port :url :client-config :on-online :on-offline
                      :reset-connection-poll-interval]
-              :or {reset-connection-poll-interval 3000} :as opts}]
+              :or {reset-connection-poll-interval 3000}
+              :as opts}]
   (let [this-web3 (create opts)
         interval-id (atom nil)
         reset-connection (fn []

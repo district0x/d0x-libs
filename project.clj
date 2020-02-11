@@ -1,9 +1,9 @@
-(defproject district0x/district-server-web3 "1.2.3-SNAPSHOT"
+(defproject district0x/district-server-web3 "1.2.4-SNAPSHOT"
   :description "district0x server module for setting up web3"
   :url "https://github.com/district0x/district-server-web3"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[cljs-web3-next "0.1.1"]
+  :dependencies [[cljs-web3-next "0.1.2"]
                  [com.taoensso/timbre "4.10.0"]
                  [district0x/district-server-config "1.0.1"]
                  [mount "0.1.16"]
