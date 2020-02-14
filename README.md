@@ -28,6 +28,7 @@ You can pass following args to web3-events module:
 * `:events` Collection of smart-contract events the module will start listening to. Pass definition for each event in format
 `[contract-key event-key event-opts block-opts]`
 * `:from-block` You can explicitely configure from which block the past events will be retrieved
+* `:block-step` Size of block chunk when syncing past events (see [replay-past-events-in-order](https://github.com/district0x/district-server-smart-contracts#replay-past-events-in-order)).
 
 Let's see example of using this module:
 ```clojure
