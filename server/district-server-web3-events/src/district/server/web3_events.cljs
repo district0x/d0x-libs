@@ -80,18 +80,22 @@
       (callback))
     (unregister-callbacks! callback-ids)))
 
-(defn start [{:keys [:events :from-block] :as opts}]
+(defn start [{:keys [:events :from-block :block-step] :as opts}]
   (web3-eth/is-listening? @web3 (fn [_ listening?]
-                               (if-not listening?
-                                 (throw (js/Error. "Can't connect to Ethereum node"))
-                                 (smart-contracts/replay-past-events-in-order
-                                  events
-                                  dispatch
-                                  {:from-block (or from-block 0)
-                                   :to-block "latest"
-                                   :on-finish (fn []
-                                                (dispatch-after-past-events-callbacks!)
-                                                (start-dispatching-latest-events! events))}))))
+                                  (if-not listening?
+                                    (throw (js/Error. "Can't connect to Ethereum node"))
+                                    (web3-eth/get-block-number @web3 (fn [_ last-block-number]
+                                                                       (let [from-block (or from-block 0)
+                                                                             block-step (int (or block-step ( / (- to-block from-block) (dec 1000))))]
+                                                                         (smart-contracts/replay-past-events-in-order
+                                                                          events
+                                                                          dispatch
+                                                                          {:from-block from-block
+                                                                           :to-block last-block-number
+                                                                           :block-step block-step
+                                                                           :on-finish (fn []
+                                                                                        (dispatch-after-past-events-callbacks!)
+                                                                                        (start-dispatching-latest-events! events))})))))))
   (merge opts {:callbacks (atom {})
                :event-filters (atom nil)}))
 

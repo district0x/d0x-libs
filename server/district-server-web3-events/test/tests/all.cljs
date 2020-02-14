@@ -21,8 +21,6 @@
                     :smart-contracts {:contracts-var #'tests.smart-contracts-test/smart-contracts
                                       :print-gas-usage? true
                                       :auto-mining? true}
-                    :web3-events {:events {:my-contract/some-event [:my-contract :SomeEvent]
-                                           :my-contract/some-other-event [:my-contract :SomeOtherEvent]}}
                     :logging {:level :info
                               :console? true}})
                  (mount/start-without #'district.server.web3-events/web3-events)))
@@ -43,13 +41,15 @@
              (is (true? connected?))
              (is (not= my-contract-address "0x0000000000000000000000000000000000000000"))
 
-             ;; NOTE: this event ordering will only work on just deployed contracts
-
              ;; fire two past events
              (<! (smart-contracts/contract-send :my-contract :fire-some-event [7]))
              (<! (smart-contracts/contract-send :my-contract :fire-some-other-event [7]))
 
-             (mount/start #'district.server.web3-events/web3-events)
+             (-> (mount/with-args {:web3-events {:events {:my-contract/some-event [:my-contract :SomeEvent]
+                                                          :my-contract/some-other-event [:my-contract :SomeOtherEvent]}
+                                                 :from-block (- (<! (web3-eth/get-block-number @web3)) 2)
+                                                 :block-step 1}})
+                 (mount/start #'district.server.web3-events/web3-events))
 
              (register-callback! :my-contract/some-event (fn [err {:keys [:args :latest-event?]}]
                                                            (prn "@@@ some-event" args latest-event?)
