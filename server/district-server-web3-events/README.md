@@ -30,6 +30,8 @@ You can pass following args to web3-events module:
 * `:from-block` You can explicitely configure from which block the past events will be retrieved
 * `:block-step` Size of block chunk when syncing past events (see [replay-past-events-in-order](https://github.com/district0x/district-server-smart-contracts#replay-past-events-in-order)).
 * `:crash-on-event-fail?` When set to true, will crash the server on a unhandled event exception.
+* `checkpoint-file` The file that will be used to store checkpoints information for incremental event processing
+
 
 Let's see example of using this module:
 ```clojure
