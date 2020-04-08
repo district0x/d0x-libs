@@ -80,7 +80,7 @@
       (callback))
     (unregister-callbacks! callback-ids)))
 
-(defn start [{:keys [:events :from-block :block-step] :as opts
+(defn start [{:keys [:events :from-block :block-step :crash-on-event-fail?] :as opts
               :or {from-block 0
                    block-step 1}}]
   (web3-eth/is-listening? @web3 (fn [_ listening?]
@@ -91,6 +91,7 @@
                                                                         events
                                                                         dispatch
                                                                         {:from-block from-block
+                                                                         :crash-on-event-fail? crash-on-event-fail?
                                                                          :to-block last-block-number
                                                                          :block-step block-step
                                                                          :on-finish (fn []
