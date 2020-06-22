@@ -28,6 +28,9 @@ jobs:
           paths:
             - ./node_modules/
       - run: lein doo node "nodejs-tests" once
+      - slack/status:
+          channel: continuous-int
+          mentions: $CIRCLE_USERNAME
 
   deploy:
    machine: true
@@ -36,6 +39,10 @@ jobs:
      - run:
          name: Deploy to clojars
          command: lein release :patch
+     - slack/status:
+         channel: continuous-int
+         mentions: $CIRCLE_USERNAME
+         fail_only: true
 
 workflows:
   version: 2
