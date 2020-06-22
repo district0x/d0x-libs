@@ -17,6 +17,7 @@
 (declare ping-stop)
 
 (defonce ping (atom nil))
+(defonce on-ping-error (atom nil))
 
 (defstate web3
   :start (start (merge (:web3 @config)
@@ -70,7 +71,7 @@
            (do
              (log/warn "ping error" {:connected? connected?})
              ;; NOTE: triggers exponential backoff
-             (web3-core/disconnect @web3))))))
+             (@on-ping-error))))))
    interval))
 
 (defn ping-start [{:keys [:ping-interval]
@@ -82,10 +83,13 @@
 
 (defn start [{:keys [:port :url :client-config :on-online :on-offline]
               :as opts}]
-  (let [this-web3 (create opts)]
+  (let [this-web3 (create opts)
+        on-ping-error-fn #(exponential-backoff {:on-offline on-offline :on-online on-online :web3-opts opts})]
 
     (when (and (not port) (not url))
       (throw (js/Error. "You must provide port or url to start the web3 component")))
+
+    (reset! on-ping-error on-ping-error-fn)
 
     (web3-core/on-disconnect this-web3 (fn []
                                          (log/warn "web3 disconnected")
