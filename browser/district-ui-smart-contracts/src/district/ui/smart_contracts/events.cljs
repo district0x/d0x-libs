@@ -94,7 +94,7 @@
   ::load-contracts
   [interceptors (validate-first-arg :district.ui.smart-contracts/opts)]
   (fn [{:keys [:db]} [{:keys [:request-timeout :contracts] :as opts
-                       :or {request-timeout 10000}}]]
+                       :or {request-timeout 60000}}]]
     (let [to-load (files-to-load opts)
           *load-batch* (atom (zipmap to-load (repeat false)))]
       {:db (queries/merge-contracts db contracts)
