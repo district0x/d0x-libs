@@ -1,4 +1,4 @@
-(defproject district0x/district-ui-web3-chain "1.0.0-SNAPSHOT"
+(defproject io.github.district0x/district-ui-web3-chain "1.0.0-SNAPSHOT"
   :description "district UI module for handling web3 chain"
   :url "https://github.com/district0x/district-ui-web3-chain"
   :license {:name "Eclipse Public License"
