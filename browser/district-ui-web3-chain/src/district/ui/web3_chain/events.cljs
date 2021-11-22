@@ -17,12 +17,6 @@
 
 (s/def ::chain-id (s/nilable string?))
 
-(defn reg-opts-cofx [opts]
-  (re-frame/reg-cofx
-   :opts
-   (fn [coeffects _]
-     (assoc coeffects :opts opts))))
-
 (re-frame/reg-event-fx
  ::start
  interceptors
@@ -76,7 +70,7 @@
 
 (re-frame/reg-event-fx
  ::set-chain
- [(re-frame/inject-cofx :opts) interceptors (spec-interceptors/validate-first-arg ::chain-id)]
+ [interceptors (spec-interceptors/validate-first-arg ::chain-id)]
  (fn [{:keys [:db]} [chain-id]]
    (let [chain-id (str (web3/to-decimal chain-id))]
     (when (not= chain-id (queries/chain db))

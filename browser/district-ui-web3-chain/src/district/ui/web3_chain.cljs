@@ -23,7 +23,6 @@
 
 (defn start [opts]
   (s/assert ::opts opts)
-  ((events/reg-opts-cofx opts))
   (re-frame/dispatch-sync [::events/start opts])
   opts)
 
