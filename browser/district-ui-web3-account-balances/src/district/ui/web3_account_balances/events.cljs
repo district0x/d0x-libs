@@ -22,7 +22,7 @@
 (reg-event-fx
   ::load-account-balances
   [interceptors (validate-first-arg :district.ui.web3-account-balances/opts)]
-  (fn [{:keys [:db]} [{:keys [:disable-loading-at-start? :for-contracts]} [_ {:keys [:old]}]]]
+  (fn [{:keys [:db]} [{:keys [:disable-watching? :for-contracts]} [_ {:keys [:old]}]]]
     (merge
       (when (seq old)
         {:dispatch [::balances-events/stop-watching
@@ -41,13 +41,22 @@
                           (for [contract for-contracts]
                             {:address address
                              :contract contract
-                             :watch? (not disable-loading-at-start?)})))]})))))
+                             :watch? (not disable-watching?)})))]})))))
 
 
 (reg-event-fx
   ::stop
   interceptors
-  (fn [{:keys [:db]} [{:keys [:disable-loading-at-start?]}]]
+  (fn [{:keys [:db]} [{:keys [:disable-loading-at-start? :disable-watching? :for-contracts]}]]
+    (when-not disable-watching?
+      (let [for-contracts (if for-contracts for-contracts [:ETH])
+            accounts (accounts-queries/accounts db)]
+        {:dispatch [::balances-events/stop-watching
+                    (flatten
+                      (for [address accounts]
+                        (for [contract for-contracts]
+                          {:address address
+                           :contract contract})))]}))
     (when-not disable-loading-at-start?
       {:forward-events {:unregister ::accounts-changed}})))
 
