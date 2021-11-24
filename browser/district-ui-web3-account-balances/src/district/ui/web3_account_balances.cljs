@@ -25,4 +25,4 @@
 
 
 (defn stop []
-  (dispatch-sync [::events/stop]))
+  (dispatch-sync [::events/stop @web3-account-balances]))
