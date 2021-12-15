@@ -1,4 +1,4 @@
-(defproject district0x/district-server-web3-events "1.1.11-SNAPSHOT"
+(defproject district0x/district-server-web3-events "1.1.12-SNAPSHOT"
   :description "district0x server module for handling web3 events"
   :url "https://github.com/district0x/district-server-web3-events"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -11,7 +11,7 @@
                  [cljs-node-io "1.1.2"]
                  [medley "1.0.0"]
                  [mount "0.1.16"]
-                 [org.clojure/clojurescript "1.10.520"]]
+                 [org.clojure/clojurescript "1.10.439"]]
 
   :plugins [[lein-npm "0.6.2"]
             [lein-doo "0.1.8"]

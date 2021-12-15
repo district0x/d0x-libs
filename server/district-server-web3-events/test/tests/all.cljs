@@ -37,6 +37,7 @@
                               :console? true}})
                  (mount/start-without #'district.server.web3-events/web3-events)))
    :after (fn []
+            (mount/stop #'district.server.web3-events/web3-events)
             (mount/stop))})
 
 (deftest test-web3-events
@@ -114,27 +115,29 @@
              (register-callback! :my-contract/some-other-event (fn [err {:keys [:args :latest-event? :block-number :transaction-index :log-index] :as ev}]
                                                                  (prn "@Processed" [block-number transaction-index log-index])))
 
+             (register-after-past-events-dispatched-callback!
+               (fn []
+                 (go
+                   ;; fire two past events
+                   (<! (smart-contracts/contract-send :my-contract :fire-some-event [42] send-opts))
+                   (<! (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts))
+
+                   (is (= (load-checkpoint-info checkpoint-file)
+                          {:last-processed-block (+ starting-block 2), :processed-log-indexes #{[0 0]}})
+                       "Checkpoint file should be updated after replaying past events")
+
+                 (<! (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts))
+                 (<! (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts))
+                 (<! (smart-contracts/contract-send :my-contract :fire-some-event [42] send-opts))
+
+                 (is (= (load-checkpoint-info checkpoint-file)
+                        {:last-processed-block (+ starting-block 5), :processed-log-indexes #{[0 0]}})
+                     "Checkpoint file should be updated after processing live events")
+                  (done))))
+
              (is (nil? (load-checkpoint-info checkpoint-file))
                  "We should not have a checkpoint file the first time")
 
-             ;; fire two past events
-             (smart-contracts/contract-send :my-contract :fire-some-event [42] send-opts)
-
-             (<! (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts))
-
              (mount/start #'district.server.web3-events/web3-events)
 
-             (is (= (load-checkpoint-info checkpoint-file)
-                    {:last-processed-block (+ starting-block 1), :processed-log-indexes #{[0 0] [1 0]}})
-                 "Checkpoint file should be updated after replaying past events")
-
-             (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts)
-             (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts)
-
-             (<! (smart-contracts/contract-send :my-contract :fire-some-event [42] send-opts))
-
-             (is (= (load-checkpoint-info checkpoint-file)
-                    {:last-processed-block (+ starting-block 2), :processed-log-indexes #{[2 0] [0 0] [1 0]}})
-                 "Checkpoint file should be updated after processing live events")
-
-             (done)))))
+             ))))
