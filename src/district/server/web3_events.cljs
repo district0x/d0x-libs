@@ -1,14 +1,14 @@
 (ns district.server.web3-events
   (:require [cljs-web3-next.eth :as web3-eth]
             [cljs-web3-next.core :as web3-core]
+            [cljs.reader :as reader]
             [district.server.config :refer [config]]
             [district.server.smart-contracts :as smart-contracts]
             [district.server.web3 :refer [web3]]
             [medley.core :as medley]
             [mount.core :as mount :refer [defstate]]
             [taoensso.timbre :as log]
-            [cljs-node-io.core :as io :refer [slurp spit]]
-            [clojure.edn :as edn]))
+            [cljs-node-io.core :as io :refer [slurp spit]]))
 
 (declare start)
 (declare stop)
@@ -18,10 +18,15 @@
                        (:web3-events (mount/args))))
   :stop (stop web3-events))
 
-(defn load-checkpoint-info [file-path]
-  (try
-    (edn/read-string (slurp file-path))
-    (catch js/Error e)))
+(defn load-checkpoint-info [file-path & [backtrack]]
+  (if file-path
+    (try
+      (let [{:keys [last-processed-block] :as checkpoint-info} (reader/read-string (slurp file-path))]
+        (if (and (some? last-processed-block) (some? backtrack) (> backtrack 0))
+          {:last-processed-block (max 0 (- last-processed-block backtrack))}
+          checkpoint-info))
+      (catch js/Error e (log/info "Checkpoint file not loaded")))
+    (log/info "web3-events checkpoint file disabled")))
 
 (defn save-checkpoint! [block-number tx log-index]
   (swap! (:checkpoint @web3-events)
@@ -35,10 +40,10 @@
 
 (defn wrap-callback-checkpoint-middleware [callback]
   (fn [err {:keys [block-number transaction-index log-index] :as ev}]
-    ;; TODO: what should we do when we have a error here?
     (callback err ev)
     ;; if callback throws we don't save the checkpoint
-    (save-checkpoint! block-number transaction-index log-index)))
+    (when-not err
+      (save-checkpoint! block-number transaction-index log-index))))
 
 (defn register-callback! [event-key callback & [callback-id]]
   (let [[contract-key event] (if-not (= event-key ::after-past-events-dummy-key)
@@ -83,18 +88,18 @@
      (for [callback (vals (get-in @(:callbacks @web3-events) [(:contract-key contract) event]))]
        (callback err evt)))))
 
-(defn- start-dispatching-latest-events! [events]
-  (web3-eth/get-block-number @web3 (fn [_ last-block-number]
-                                     (let [event-filters (doall (for [[contract event->callbacks] (dissoc @(:callbacks @web3-events) :callback-id->path)
-                                                                      [event callbacks] event->callbacks]
-                                                                  (smart-contracts/subscribe-events contract
-                                                                                                    event
-                                                                                                    {:from-block last-block-number
-                                                                                                     :latest-event? true}
-                                                                                                    (map wrap-callback-checkpoint-middleware (vals callbacks)))))]
-                                       (log/info "Subscribed to future events" {:events (keys events)
-                                                                                :from-block last-block-number})
-                                       (swap! (:event-filters @web3-events) (fn [_ new] new) event-filters)))))
+(defn- start-dispatching-latest-events! [events last-block-number]
+  (let [event-filters (doall (for [[contract event->callbacks] (dissoc @(:callbacks @web3-events) :callback-id->path)
+                                [event callbacks] event->callbacks]
+
+                                 (smart-contracts/subscribe-events contract
+                                                              event
+                                                              {:from-block last-block-number
+                                                               :latest-event? true}
+                                                              (map wrap-callback-checkpoint-middleware (vals callbacks)))))]
+  (log/info "Subscribed to future events" {:events (keys events)
+                                          :from-block last-block-number})
+  (swap! (:event-filters @web3-events) (fn [_ new] new) event-filters)))
 
 (defn- dispatch-after-past-events-callbacks! []
   (let [callbacks (get-in @(:callbacks @web3-events) [::after-past-events-dummy-contract ::after-past-events-dummy-event])
@@ -104,32 +109,33 @@
       (callback))
     (unregister-callbacks! callback-ids)))
 
-(defn start [{:keys [:events :from-block :checkpoint-file :crash-on-event-fail?] :as opts}]
+(defn start [{:keys [:events :from-block :block-step :checkpoint-file :crash-on-event-fail? :backtrack] :as opts
+              :or {block-step 1}}]
   (web3-eth/is-listening? @web3 (fn [_ listening?]
                                   (if-not listening?
                                     (throw (js/Error. "Can't connect to Ethereum node"))
-
-                                    (let [{:keys [last-processed-block processed-log-indexes] :as checkpoint-info} (load-checkpoint-info checkpoint-file)]
-                                      (smart-contracts/replay-past-events-in-order
-                                       events
-                                       dispatch
-                                       {:from-block (or last-processed-block from-block 0)
-                                        :crash-on-event-fail? crash-on-event-fail?
-                                        :skip-log-indexes processed-log-indexes
-                                        :to-block "latest"
-                                        :on-finish (fn []
-                                                     (dispatch-after-past-events-callbacks!)
-                                                     ;; since we are replaying all past events until current(latest)
-                                                     ;; it should be safe to set a checkpoint in current block number
-                                                     ;; in case of a restart after a full sync it should start imediately
-                                                     (.then (web3-eth/get-block-number @web3)
-                                                            (fn [block-number]
-                                                              (log/info "Done replaying past events " {:bock-number block-number})
-                                                              (add-watch (:checkpoint @web3-events) :file-flusher
-                                                                         (fn [_ _ _ new-state]
-                                                                           (spit checkpoint-file new-state)))
-                                                              (reset! (:checkpoint @web3-events) {:last-processed-block block-number})))
-                                                     (start-dispatching-latest-events! events))})))))
+                                    (web3-eth/get-block-number @web3 (fn [_ last-block-number]
+                                      (let [{:keys [last-processed-block processed-log-indexes] :as checkpoint-info} (load-checkpoint-info checkpoint-file backtrack)]
+                                        (smart-contracts/replay-past-events-in-order
+                                         events
+                                         dispatch
+                                         {:from-block (or last-processed-block from-block 0)
+                                          :crash-on-event-fail? crash-on-event-fail?
+                                          :skip-log-indexes processed-log-indexes
+                                          :to-block last-block-number
+                                          :block-step block-step
+                                          :on-finish (fn []
+                                                       (dispatch-after-past-events-callbacks!)
+                                                       (log/info "Done replaying past events " {:block-number last-block-number})
+                                                       ;; since we are replaying all past events until current(latest)
+                                                       ;; it should be safe to set a checkpoint in current block number
+                                                       ;; in case of a restart after a full sync it should start immediately
+                                                       (when checkpoint-file
+                                                         (add-watch (:checkpoint @web3-events) :file-flusher
+                                                                   (fn [_ _ _ new-state]
+                                                                     (spit checkpoint-file new-state))))
+                                                       (reset! (:checkpoint @web3-events) {:last-processed-block last-block-number})
+                                                       (start-dispatching-latest-events! events (inc last-block-number)))})))))))
 
   (merge opts {:callbacks (atom {})
                ;; Keeps the latest checkpoint (events processed so far).
@@ -141,6 +147,7 @@
 
 (defn stop [web3-events]
   (log/info "Stopping web3-events" (:events @web3-events))
+  (remove-watch (:checkpoint @web3-events) :file-flusher)
   (doseq [subscription @(:event-filters @web3-events)]
     (when (web3-core/connected? @web3)
       (web3-eth/unsubscribe subscription))))

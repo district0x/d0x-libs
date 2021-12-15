@@ -27,10 +27,11 @@ Include `[district.server.web3-events]` in your CLJS file, where you use `mount/
 You can pass following args to web3-events module:
 * `:events` Collection of smart-contract events the module will start listening to. Pass definition for each event in format
 `[contract-key event-key event-opts block-opts]`
-* `:from-block` You can explicitely configure from which block the past events will be retrieved
+* `:from-block` You can explicitly configure from which block the past events will be retrieved
 * `:block-step` Size of block chunk when syncing past events (see [replay-past-events-in-order](https://github.com/district0x/district-server-smart-contracts#replay-past-events-in-order)).
 * `:crash-on-event-fail?` When set to true, will crash the server on a unhandled event exception.
-* `checkpoint-file` The file that will be used to store checkpoints information for incremental event processing
+* `:checkpoint-file` The file that will be used to store checkpoints information for incremental event processing
+* `:backtrack` Amount of blocks to look back before checkpointed when starting the module 
 
 
 Let's see example of using this module:
