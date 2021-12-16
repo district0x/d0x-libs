@@ -18,6 +18,7 @@
 
 (defonce ping (atom nil))
 (defonce on-ping-error (atom nil))
+(defonce retrying? (atom false))
 
 (defstate web3
   :start (start (merge (:web3 @config)
@@ -41,25 +42,34 @@
   "Retries reconnection attempts to a web3 node exponentially, increasing the waiting time between retries up to a maximum backoff time of 32 seconds
   after which every reconnection attempt is tried every 32 seconds + delta."
   [{:keys [on-offline on-online web3-opts]}]
-  (let [maximum-backoff 32000
-        backoff-rate 2]
-    (on-offline)
-    (ping-stop)
-    (go-loop [backoff 1000]
-      (let [new-web3 (create web3-opts)
-            connected? (true? (<! (web3-eth/is-listening? new-web3)))]
-        (log/info "Polling..." {:connected? connected? :backoff backoff})
-        (if connected?
-          (do
-            (log/info "Reconnecting web3...")
-            ;; swap websocket
-            (web3-core/set-provider @web3 (web3-core/current-provider new-web3))
-            (on-online))
-          (do
-            (<! (async/timeout backoff))
-            (recur (if (>= backoff maximum-backoff)
-                       backoff
-                       (+ (* backoff backoff-rate) (rand-int 1000))))))))))
+  (when (compare-and-set! retrying? false true) ; makes sure only one connection retry is being attempted at once
+    (let [maximum-backoff 32000
+          backoff-rate 2]
+      (try
+        (on-offline)
+        (ping-stop)
+        (catch :default e
+          (reset! retrying? false)
+          (throw e)
+          ))
+      (go
+        (try
+          (loop [backoff 1000]
+            (let [new-web3 (create web3-opts)
+                  connected? (true? (<! (web3-eth/is-listening? new-web3)))]
+              (log/info "Polling..." {:connected? connected? :backoff backoff})
+              (if connected?
+                (do
+                  (log/info "Reconnecting web3...")
+                  ;; swap websocket
+                  (web3-core/set-provider @web3 (web3-core/current-provider new-web3))
+                  (on-online))
+                (do
+                  (<! (async/timeout backoff))
+                  (recur (if (>= backoff maximum-backoff)
+                             maximum-backoff
+                             (+ (* backoff backoff-rate) (rand-int 1000))))))))
+          (finally (reset! retrying? false)))))))
 
 (defn- keep-alive [interval]
   (js/setInterval
