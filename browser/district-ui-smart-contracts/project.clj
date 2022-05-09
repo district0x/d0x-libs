@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[cljs-ajax "0.7.2"]
+  :dependencies [[cljs-ajax "0.7.5"]
                  [cljs-web3 "0.19.0-0-9"]
                  [org.clojure/data.json "0.2.6"]
                  [day8.re-frame/async-flow-fx "0.0.8"]
@@ -15,7 +15,7 @@
                  [district0x/district-ui-web3 "1.0.1"]
                  [district0x/re-frame-spec-interceptors "1.0.1"]
                  [mount "0.1.11"]
-                 [org.clojure/clojurescript "1.9.946"]
+                 [org.clojure/clojurescript "1.11.4"]
                  [re-frame "0.10.2"]]
 
   :doo {:paths {:karma "./node_modules/karma/bin/karma"}}
@@ -25,7 +25,7 @@
                           [karma-cli "1.0.1"]
                           [karma-cljs-test "0.1.0"]]}
 
-  :profiles {:dev {:dependencies [[org.clojure/clojure "1.8.0"]
+  :profiles {:dev {:dependencies [[org.clojure/clojure "1.11.1"]
                                   [com.cemerick/piggieback "0.2.2"]
                                   [org.clojure/tools.nrepl "0.2.13"]
                                   [day8.re-frame/test "0.1.5"]
