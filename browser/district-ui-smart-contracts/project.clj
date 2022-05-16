@@ -5,7 +5,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[cljs-ajax "0.7.5"]
-                 [cljs-web3 "0.19.0-0-9"]
+                 ; [cljs-web3 "0.19.0-0-9"]
+                 [io.github.district0x/cljs-web3-next "0.2.0-SNAPSHOT"]
                  [org.clojure/data.json "0.2.6"]
                  [day8.re-frame/async-flow-fx "0.0.8"]
                  [day8.re-frame/forward-events-fx "0.0.5"]
@@ -20,21 +21,13 @@
 
   :doo {:paths {:karma "./node_modules/karma/bin/karma"}}
 
-  ; :npm {:devDependencies [[karma "1.7.1"]
-  ;                         [karma-chrome-launcher "2.2.0"]
-  ;                         [karma-cli "1.0.1"]
-  ;                         [karma-cljs-test "0.1.0"]
-  ;                         [cljs-oss/module-deps "1.1.1"]]}
-
   :profiles {:dev {:dependencies [[org.clojure/clojure "1.11.1"]
                                   [com.cemerick/piggieback "0.2.2"]
                                   [org.clojure/tools.nrepl "0.2.13"]
                                   [day8.re-frame/test "0.1.5"]
                                   [district0x/district-ui-web3-accounts "1.0.3"]]
                    :plugins [[lein-cljsbuild "1.1.7"]
-                             [lein-doo "0.1.8"]
-                             ; [lein-npm "0.6.2"]
-                             ]}}
+                             [lein-doo "0.1.8"]]}}
 
   :deploy-repositories [["snapshots" {:url "https://clojars.org/repo"
                                       :username :env/clojars_username

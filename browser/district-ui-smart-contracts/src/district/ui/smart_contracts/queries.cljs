@@ -1,6 +1,6 @@
 (ns district.ui.smart-contracts.queries
   (:require
-    [cljs-web3.eth :refer [contract-at]]
+    [cljs-web3-next.eth :refer [contract-at]]
     [district.ui.web3.queries :as web3-queries]
     [clojure.string :as string]))
 

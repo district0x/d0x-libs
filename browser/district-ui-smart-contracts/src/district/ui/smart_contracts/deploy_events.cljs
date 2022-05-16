@@ -1,6 +1,6 @@
 (ns district.ui.smart-contracts.deploy-events
   (:require
-    [cljs-web3.eth :as web3-eth]
+    [cljs-web3-next.eth :as web3-eth]
     [cljs.spec.alpha :as s]
     [district.ui.smart-contracts.events :as events]
     [district.ui.smart-contracts.queries :as queries]
@@ -8,7 +8,7 @@
     [district0x.re-frame.spec-interceptors :refer [validate-first-arg validate-args]]
     [district0x.re-frame.web3-fx]
     [re-frame.core :refer [reg-event-fx trim-v console]]
-    [cljs-web3.core :as web3]))
+    [cljs-web3-next.core :as web3]))
 
 (def interceptors [trim-v])
 
