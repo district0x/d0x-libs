@@ -1,6 +1,6 @@
 # district-ui-smart-contracts
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-smart-contracts.svg?branch=master)](https://travis-ci.org/district0x/district-ui-smart-contracts)
+[![CircleCI](https://circleci.com/gh/district0x/district-ui-smart-contracts.svg?style=svg)](https://circleci.com/gh/district0x/district-ui-smart-contracts)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that takes care of loading Ethereum smart-contract files.
 
