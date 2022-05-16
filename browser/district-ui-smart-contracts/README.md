@@ -260,5 +260,5 @@ yarn install
 # Start ganache blockchain with 1s block time
 ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
 # To run tests and rerun on changes
-lein doo chrome tests
+CHROME_BIN=`which chromium-browser` lein doo chrome-headless tests
 ```
