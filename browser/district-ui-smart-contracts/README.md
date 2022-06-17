@@ -253,12 +253,27 @@ Associates BIN to contract and returns new re-frame db
 ## Dependency on other district UI modules
 * [district-ui-web3](https://github.com/district0x/district-ui-web3)
 
-## Development
+# Development
+
 ```bash
-lein deps
 yarn install
 # Start ganache blockchain with 1s block time
 ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
-# To run tests and rerun on changes
-CHROME_BIN=`which chromium-browser` lein doo chrome-headless tests
 ```
+
+## Test
+
+### Browser
+
+1. Build: `npx shadow-cljs watch test-browser`
+2. Tests: http://d0x-vm:6502
+
+### CI (Headless Chrome, Karma)
+
+1. Build: `npx shadow-cljs compile test-ci`
+2. Tests: ```CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run```
+
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`
