@@ -1,6 +1,6 @@
 # district-ui-reagent-render
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-reagent-render.svg?branch=master)](https://travis-ci.org/district0x/district-ui-reagent-render)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/district0x/district-ui-reagent-render/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/district0x/district-ui-reagent-render/tree/master)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that facilitates root [reagent](https://github.com/reagent-project/reagent) UI component mounting.
 
@@ -73,16 +73,6 @@ Next call the resulting JS function in your `index.html` file to bootstrap the a
 </html>
 ```
 
-#### <a name="rerender"> `rerender`
-
-If you're using [figwheel](https://github.com/bhauman/lein-figwheel) for development, ensure hot-reloading by passing this function to the figwheel config:
-
-```clojure
-:figwheel {:on-jsload "district.ui.reagent-render/rerender"}
-```
-
-It will ensure that the root component (and all it's child ocmponents) is re-rendered when you make code changes.
-
 ## <a name="district.ui.reagent-render.events"> district.ui.reagent-render.events
 
 This namespace contains re-frame events provided by this module.
@@ -114,17 +104,12 @@ Spec for the options passed to the module. You can toggle whether this spec is c
 
 ## Development
 
-Run test suite:
-
-```bash
-# install dependencies
-lein deps
-# watch tests and rerun on changes
-lein doo chrome tests
-```
-Install into local repo:
-
-```bash
-lein cljsbuild test
-lein install
-```
+1. Run test suite:
+  - `npx shadow-cljs watch test-browser`
+  - open https://d0x-vm:6502
+  - tests refresh automatically on code change
+2. Build
+  - on merging pull request to master on GitHub, CI builds & publishes new version automatically
+  - update version in `build.clj`
+  - to build: `clj -T:build jar`
+  - to release: `clj -T:build deploy` (needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` env vars to be set)
