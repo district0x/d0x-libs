@@ -29,5 +29,5 @@
           :ns-default build}
   :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}}
            :exec-fn deps-deploy.deps-deploy/deploy
-           :exec-args {:installer :remote :artifact "target/test-lib-0.0.2.jar"}}},
+           :exec-args {:installer :remote :artifact "target/district-ui-smart-contract-1.1.0.jar"}}},
  }

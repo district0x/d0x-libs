@@ -2,7 +2,7 @@
   (:require [clojure.tools.build.api :as b]
             [deps-deploy.deps-deploy :as dd]))
 
-(def lib 'io.github.district0x/district-ui-smart-contracts) ; ends up as <group-id>/<artifact-id> in pom.xml
+(def lib 'district0x/district-ui-smart-contracts) ; ends up as <group-id>/<artifact-id> in pom.xml
 (def version "1.1.0-SNAPSHOT")
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
