@@ -1,4 +1,4 @@
-(ns tests.all
+(ns tests.smart-contracts-tests
   (:require
     [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
     [day8.re-frame.test :refer [run-test-async wait-for run-test-sync]]
@@ -10,13 +10,13 @@
     [district.ui.web3-accounts.subs :as accounts-subs]
     [district.ui.web3-accounts]
     [mount.core :as mount]
-    [re-frame.core :refer [reg-event-fx dispatch-sync subscribe reg-cofx reg-fx dispatch]]
-    [cljs-web3.core :as web3]))
+    [re-frame.core :refer [subscribe reg-fx dispatch]]
+    [cljs-web3-next.core :as web3]))
 
 (def responses
-  {"./Contract1.abi" "[{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"
+  {"./Contract1.abi" "[{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x8da5cb5b\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xf2fde38b\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"
    "./Contract1.bin" "12306040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820b36bcb7ce114631229920f09a26ec479d8bcac7fbe4c0857cfd512d76c7df91f0029"
-   "./Contract2.abi" "[{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"
+   "./Contract2.abi" "[{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\",\"signature\":\"0x8da5cb5b\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\",\"signature\":\"0xf2fde38b\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]"
    "./Contract2.bin" "45606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820b36bcb7ce114631229920f09a26ec479d8bcac7fbe4c0857cfd512d76c7df91f0029"})
 
 (def smart-contracts
@@ -85,25 +85,26 @@
                (-> smart-contracts :contract1 :address)
                (:address @contract1)
                @contract1-addr
-               (aget @contract1-instance "address")))
+               (clojure.string/lower-case (aget @contract1-instance "options" "address"))))
 
         (is (= (-> @contracts :contract2 :address)
                (-> smart-contracts :contract2 :address)
                (:address @contract2)
                @contract2-addr
-               (aget @contract2-instance "address")))
+               (clojure.string/lower-case (aget @contract2-instance "options" "address"))))
 
         (is (= (js/JSON.stringify (-> @contracts :contract1 :abi))
                (responses "./Contract1.abi")
                (js/JSON.stringify (:abi @contract1))
                (js/JSON.stringify @contract1-abi)
-               (js/JSON.stringify (aget @contract1-instance "abi"))))
+               (js/JSON.stringify (aget @contract1-instance "options" "jsonInterface"))))
 
         (is (= (js/JSON.stringify (-> @contracts :contract2 :abi))
                (responses "./Contract2.abi")
                (js/JSON.stringify (:abi @contract2))
                (js/JSON.stringify @contract2-abi)
-               (js/JSON.stringify (aget @contract2-instance "abi"))))
+               (js/JSON.stringify (aget @contract2-instance "options" "jsonInterface"))
+               ))
 
         (is (= (-> @contracts :contract1 :bin)
                (str "0x" (responses "./Contract1.bin"))
@@ -116,7 +117,7 @@
                @contract2-bin))))))
 
 (deftest tests2
-  (run-test-sync
+  (run-test-async
     (let [contracts (subscribe [::subs/contracts])
           contract1-bin (subscribe [::subs/contract-bin :contract1])
           contract1-abi (subscribe [::subs/contract-abi :contract1])]
@@ -132,13 +133,13 @@
 
       (dispatch [::events/load-contracts {:contracts (select-keys smart-contracts [:contract1])
                                           :contracts-path "./"}])
+      (wait-for [::events/contracts-loaded ::events/contract-load-failed]
+        (is (= (js/JSON.stringify (-> @contracts :contract1 :abi))
+               (responses "./Contract1.abi")
+               (js/JSON.stringify @contract1-abi)))
 
-      (is (= (js/JSON.stringify (-> @contracts :contract1 :abi))
-             (responses "./Contract1.abi")
-             (js/JSON.stringify @contract1-abi)))
-
-      (testing "Doesn't load bin unless explicitly told"
-        (is (nil? @contract1-bin))))))
+        (testing "Doesn't load bin unless explicitly told"
+          (is (nil? @contract1-bin)))))))
 
 
 (deftest deploy-tests

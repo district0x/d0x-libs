@@ -1,6 +1,6 @@
 (ns district.ui.smart-contracts
   (:require
-    [cljs-web3.core :as web3]
+    [cljs-web3-next.core :as web3]
     [cljs.spec.alpha :as s]
     [district.ui.smart-contracts.events :as events]
     [district.ui.web3]

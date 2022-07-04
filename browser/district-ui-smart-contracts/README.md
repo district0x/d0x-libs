@@ -1,6 +1,6 @@
 # district-ui-smart-contracts
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-smart-contracts.svg?branch=master)](https://travis-ci.org/district0x/district-ui-smart-contracts)
+[![CircleCI](https://circleci.com/gh/district0x/district-ui-smart-contracts.svg?style=svg)](https://circleci.com/gh/district0x/district-ui-smart-contracts)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that takes care of loading Ethereum smart-contract files.
 
@@ -253,11 +253,27 @@ Associates BIN to contract and returns new re-frame db
 ## Dependency on other district UI modules
 * [district-ui-web3](https://github.com/district0x/district-ui-web3)
 
-## Development
+# Development
+
 ```bash
-lein deps
+yarn install
 # Start ganache blockchain with 1s block time
 ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
-# To run tests and rerun on changes
-lein doo chrome tests
 ```
+
+## Test
+
+### Browser
+
+1. Build: `npx shadow-cljs watch test-browser`
+2. Tests: http://d0x-vm:6502
+
+### CI (Headless Chrome, Karma)
+
+1. Build: `npx shadow-cljs compile test-ci`
+2. Tests: ```CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run```
+
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`
