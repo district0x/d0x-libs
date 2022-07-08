@@ -1,7 +1,7 @@
 (ns district.ui.web3-balances.events
   (:require
-    [cljs-web3.core :as web3]
-    [cljs-web3.eth :as web3-eth]
+    [cljs-web3-next.core :as web3]
+    [cljs-web3-next.eth :as web3-eth]
     [cljs.spec.alpha :as s]
     [day8.re-frame.async-flow-fx]
     [district.ui.web3-balances.queries :as queries]
@@ -28,19 +28,26 @@
                                           :contracts contracts
                                           :watch-ids []})}))
 
-
+(defn- balance-key->instance [db balance-key]
+  (cond
+    (web3/address? balance-key) (web3-eth/contract-at (web3-queries/web3 db) abi-balance-of balance-key)
+    (aget balance-key "address") balance-key
+    :else nil))
 
 (defn- contract->instance [db contract]
   (let [balance-key (queries/balance-key db contract)]
-    (cond
-      (web3/address? balance-key) (web3-eth/contract-at (web3-queries/web3 db) abi-balance-of balance-key)
-      (aget balance-key "address") balance-key
-      :else nil)))
+    (balance-key->instance db balance-key)))
 
 
 (defn- item->watch-id [db {:keys [:address :contract]}]
   [address (queries/balance-key db contract)])
 
+
+(defn- watch-ids->addresses [db watch-ids]
+  (map (fn [[address balance-key]]
+             {:address address
+              :instance (balance-key->instance db balance-key)})
+       watch-ids))
 
 (reg-event-fx
   ::load-balances
@@ -48,13 +55,12 @@
   (fn [{:keys [:db]} [items]]
     (let [watch-ids (->> items
                       (filter :watch?)
-                      (map item->watch-id))]
+                      (map (partial item->watch-id db)))]
       (if-let [web3 (web3-queries/web3 db)]
         {:db (queries/concat-watch-ids db watch-ids)
          :web3/get-balances {:web3 web3
                              :addresses (for [{:keys [:address :watch? :contract] :as item} items]
-                                          {:id (and watch? (item->watch-id db item))
-                                           :instance (contract->instance db contract)
+                                          {:instance (contract->instance db contract)
                                            :address address
                                            :watch? watch?
                                            :on-success [::set-balance item]
@@ -88,14 +94,14 @@
   ::stop-watching
   [interceptors (validate-first-arg ::items)]
   (fn [{:keys [:db]} [items]]
-    {:web3/stop-watching {:ids (map item->watch-id items)}}))
+    {:web3/stop-watching-balances {:addresses (watch-ids->addresses db (map (partial item->watch-id db) items))}}))
 
 
 (reg-event-fx
   ::stop-watching-all
   interceptors
   (fn [{:keys [:db]}]
-    {:web3/stop-watching {:ids (queries/watch-ids db)}}))
+    {:web3/stop-watching-balances {:addresses (watch-ids->addresses db (queries/watch-ids db))}}))
 
 
 (reg-event-fx
@@ -103,8 +109,8 @@
   interceptors
   (fn [{:keys [:db]}]
     (merge
-      {:db (queries/dissoc-web3-balances db)
-       :web3/stop-watching {:ids (queries/watch-ids db)}})))
+      {:web3/stop-watching-balances {:addresses (watch-ids->addresses db (queries/watch-ids db))}
+       :db (queries/dissoc-web3-balances db)})))
 
 
 

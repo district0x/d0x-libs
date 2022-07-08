@@ -74,7 +74,7 @@ Returns balance of an address. Optionally, you can pass contract to get balance 
 (ns my-district.core
     (:require [mount.core :as mount]
               [district.ui.web3-balances.subs :as balances-subs]
-              [cljs-web3.core :as web3]))
+              [cljs-web3-next.core :as web3]))
   
   (defn home-page []
     (let [addr "0x0000000000000000000000000000000000000000"
@@ -178,9 +178,26 @@ Merges balances, contracts and watch-ids into this module.
 * [district-ui-web3](https://github.com/district0x/district-ui-web3)
 
 ## Development
-```bash
-lein deps
 
-# To run tests and rerun on changes
-lein doo chrome tests
-```
+1. Setup local testnet
+
+- spin up a testnet instance in a separate shell
+  - `npx truffle develop`
+
+- migrate contracts in `test/` folder
+  - `(cd test; npx truffle migrate --network ganache --reset)`
+
+2. Run test suite:
+- Browser
+  - `npx shadow-cljs watch test-browser`
+  - open https://d0x-vm:6502
+  - tests refresh automatically on code change
+- CI (Headless Chrome, Karma)
+  - `npx shadow-cljs compile test-ci`
+  - ``CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run``
+
+3. Build
+- on merging pull request to master on GitHub, CI builds & publishes new version automatically
+- update version in `build.clj`
+- to build: `clj -T:build jar`
+- to release: `clj -T:build deploy` (needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` env vars to be set)
