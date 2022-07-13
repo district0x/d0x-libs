@@ -2,7 +2,6 @@
 
 let smartContractsPaths = '/tests/smart_contracts_test.cljs';
 
-
 module.exports = {
   smart_contracts_path: __dirname + smartContractsPaths,
   contracts_build_directory: __dirname + '/resources/public/contracts/build/',
