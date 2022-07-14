@@ -15,4 +15,10 @@ pom.xml.asc
 /node_modules/
 /figwheel_server.log
 /tests-output/
-/district-ui-web3-balances.iml
+/district-ui-web3-balances.imlyarn-error.log
+out
+.shadow-cljs
+.cpcache
+yarn-error.log
+test/resources/
+test/tests/smart_contracts_test.cljs

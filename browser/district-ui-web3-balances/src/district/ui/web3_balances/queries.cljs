@@ -1,5 +1,5 @@
 (ns district.ui.web3-balances.queries
-  (:require [cljs-web3.core :as web3]))
+  (:require [cljs-web3-next.core :as web3]))
 
 (defn contracts [db]
   (-> db :district.ui.web3-balances :contracts))
@@ -13,7 +13,7 @@
 (defn balance-key [db contract]
   (if (and contract
            (not= contract :ETH))
-    (let [instance-addr (aget contract "address")]
+    (let [instance-addr (when (aget contract "options") (aget contract "options" "address"))]
       (cond
         instance-addr instance-addr
         (web3/address? contract) contract

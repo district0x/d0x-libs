@@ -1,6 +1,6 @@
 (ns district.ui.web3-balances
   (:require
-    [cljs-web3.core :as web3]
+    [cljs-web3-next.core :as web3]
     [cljs.spec.alpha :as s]
     [district.ui.web3-balances.events :as events]
     [district.ui.web3]
