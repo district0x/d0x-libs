@@ -41,9 +41,19 @@ You can pass following args to web3 module:
 
 If you wish to use custom modules instead of dependencies above while still using `district-server-web3`, you can easily do so by [mount's states swapping](https://github.com/tolitius/mount#swapping-states-with-states).
 
-## Development
+# Development (build, test)
 
-```bash
-lein npm install
-lein doo node "nodejs-tests" auto
-```
+## Node.js
+
+1. Build: `npx shadow-cljs compile test-node`
+2. Tests: `node out/node-tests.js`
+
+#### Inspect on headless chrome on another chrome instance
+
+1. Run headless chrome: `chromium-browser --headless --remote-debugging-port=9222 --remote-debugging-address=0.0.0.0 --allowed-origins="*" https://chromium.org`
+2. Open `chrome://inspect/#devices` and configure remote target with *IP ADDRESS* (hostname doesn't work)
+
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`

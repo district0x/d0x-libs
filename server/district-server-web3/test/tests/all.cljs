@@ -12,7 +12,7 @@
 
 (use-fixtures :each
   {:before (fn []
-             (-> (mount/with-args {:web3 {:url "ws://127.0.0.1:8545"}})
+             (-> (mount/with-args {:web3 {:url "ws://127.0.0.1:8549"}})
                  (mount/start)))
    :after (fn []
             (mount/stop))})
@@ -23,4 +23,5 @@
            (let [connected? (<! (web3-eth/is-listening? @web3))
                  accounts (<! (web3-eth/accounts @web3))]
              (is (true? connected?))
+             (is (not (nil? accounts)))
              (done)))))
