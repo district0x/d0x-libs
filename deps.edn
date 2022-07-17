@@ -1,0 +1,22 @@
+{:paths ["src" "test"]
+ :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://clojars.org/repo"}}
+ :deps
+ {
+  io.github.district0x/cljs-web3-next {:mvn/version "0.2.0-SNAPSHOT"}
+  com.taoensso/timbre {:mvn/version "4.10.0"}
+  district0x/async-helpers {:mvn/version "0.1.3"}
+  district0x/district-server-config {:mvn/version "1.0.1"}
+  mount/mount {:mvn/version "0.1.16"}
+  org.clojure/clojurescript {:mvn/version "1.11.4"}}
+ :aliases
+ {:dev
+  {:extra-deps
+   {org.clojure/clojure {:mvn/version "1.10.3"}}}
+
+  :build {:deps {io.github.clojure/tools.build {:tag "v0.8.1" :sha "7d40500"}
+                 slipset/deps-deploy {:mvn/version "RELEASE"}}
+          :ns-default build}
+  :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}}
+           :exec-fn deps-deploy.deps-deploy/deploy
+           :exec-args {:installer :remote :artifact "target/district-server-web3-1.3.0-SNAPSHOT.jar"}}}}

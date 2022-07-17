@@ -29,9 +29,8 @@
   (string/starts-with? uri "ws"))
 
 (defn create [{:keys [:host :port :url :client-config] :as opts}]
-  (let [uri (if url
-              url
-              (str (or host "http://127.0.0.1") ":" port))]
+  (let [default-url (str (or host "http://127.0.0.1") ":" port)
+        uri (if url url default-url)]
     (if (websocket-connection? uri)
       (web3-core/websocket-provider uri {:client-config (merge {:max-received-frame-size 100000000
                                                                 :max-received-message-size 100000000}
@@ -100,10 +99,10 @@
       (throw (js/Error. "You must provide port or url to start the web3 component")))
 
     (reset! on-ping-error on-ping-error-fn)
-
     (web3-core/on-disconnect this-web3 (fn []
                                          (log/warn "web3 disconnected")
                                          (exponential-backoff {:on-offline on-offline :on-online on-online :web3-opts opts})))
+
     (web3-core/on-error this-web3 (fn [error]
                                     (log/error "web3 error" {:error error})
                                     (exponential-backoff {:on-offline on-offline :on-online on-online :web3-opts opts})))
