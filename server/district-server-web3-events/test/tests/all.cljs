@@ -24,7 +24,7 @@
              (when (.existsSync fs checkpoint-file)
                (.unlinkSync fs checkpoint-file (fn [])))
              (-> (mount/with-args
-                   {:web3 {:url "ws://127.0.0.1:8545"
+                   {:web3 {:url "ws://127.0.0.1:8549"
                            :on-offline (fn [])
                            :on-online (fn [])}
                     :smart-contracts {:contracts-var #'tests.smart-contracts-test/smart-contracts

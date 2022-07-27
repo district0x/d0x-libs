@@ -31,7 +31,7 @@ You can pass following args to web3-events module:
 * `:block-step` Size of block chunk when syncing past events (see [replay-past-events-in-order](https://github.com/district0x/district-server-smart-contracts#replay-past-events-in-order)).
 * `:crash-on-event-fail?` When set to true, will crash the server on a unhandled event exception.
 * `:checkpoint-file` The file that will be used to store checkpoints information for incremental event processing
-* `:backtrack` Amount of blocks to look back before checkpointed when starting the module 
+* `:backtrack` Amount of blocks to look back before checkpointed when starting the module
 
 
 Let's see example of using this module:
@@ -124,19 +124,14 @@ No need to unregister this callback, since it's fired only once, it's automatica
 #### <a name="unregister-callback">`unregister-callbacks! [callback-ids]`
 Unregisters collection of callbacks by their ids.
 
-## Development
-```bash
-# To start REPL and run tests
-lein deps
-lein repl
-(start-tests!)
+# Development (build, test)
 
-# In other terminal
-node tests-compiled/run-tests.js
+## Node.js
 
-# To run tests without REPL
-lein doo node "tests" once
+1. Build: `npx shadow-cljs compile test-node`
+2. Tests: `node out/node-tests.js`
 
-# To run tests without REPL and rerun on file changes
-lein doo node "tests" auto
-```
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`
