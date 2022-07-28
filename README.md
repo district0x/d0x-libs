@@ -128,8 +128,9 @@ Unregisters collection of callbacks by their ids.
 
 ## Node.js
 
-1. Build: `npx shadow-cljs compile test-node`
-2. Tests: `node out/node-tests.js`
+1. Compile the contracts: `npx truffle migrate --reset --network ganache`
+2. Build: `npx shadow-cljs compile test-node`
+3. Tests: `node out/node-tests.js`
 
 ## Build & release with `deps.edn` and `tools.build`
 
