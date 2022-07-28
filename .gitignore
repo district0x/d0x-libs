@@ -14,4 +14,12 @@ pom.xml.asc
 /figwheel_server.log
 /tests-compiled/
 /node_modules/
-resources/public/contracts/build/
+resources/public/contracts/build
+out
+yarn-error.log
+.shadow-cljs
+.cpcache
+Session.vim*
+browser-tests-output
+.shadow-cljs
+web3-events-checkpoint.edn
