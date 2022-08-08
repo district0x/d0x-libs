@@ -3,7 +3,7 @@
     [bignumber.core :as bn]
     [cljs-time.coerce :as time-coerce]
     [cljs-time.core :as t]
-    [cljs-web3.core :as web3]
+    [cljs-web3-next.core :as web3]
     [clojure.string :as string]))
 
 (defn wei->eth [x]
@@ -22,7 +22,8 @@
                      (string/replace x \, \.)
                      x)
                    :ether)
-      (catch :default _
+      (catch :default e
+        (js/console.log e)
         nil))))
 
 (def eth->wei-number (comp bn/number eth->wei))

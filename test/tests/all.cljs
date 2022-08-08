@@ -1,24 +1,36 @@
 (ns tests.all
   (:require
+    [cljs.spec.alpha :as s]
     [cljs-time.coerce :as time-coerce]
     [cljs-time.core :as t]
-    [cljs-web3.core :as web3]
+    [cljs-web3-next.core :as web3]
     [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
-    [cljsjs.web3]
     [district.web3-utils :as web3-utils]
     [bignumber.core :as bn]))
 
+(s/check-asserts true)
+
 (deftest tests
-  (is (= "1" (web3-utils/wei->eth 1000000000000000000)))
-  (is (bn/= (web3/to-big-number 1) (web3-utils/wei->eth (web3/to-big-number 1000000000000000000))))
-  (is (= nil (web3-utils/wei->eth "abc")))
+  (is (= "1" (web3-utils/wei->eth "1000000000000000000")))
+  (is (= "1" (web3-utils/wei->eth (web3/to-big-number "1000000000000000000"))))
+  (is (= "1" (web3-utils/wei->eth (web3/to-big-number 1000000000000000000))))
+  (is (= nil (web3-utils/wei->eth "gggg")))
+  (is (= "1" (web3-utils/wei->eth "0xDE0B6B3A7640000")))
+  (is (= "1" (web3-utils/wei->eth "0xde0b6b3a7640000")))
+  (is (= "1" (web3-utils/wei->eth "DE0B6B3A7640000")))
+  (is (= "1" (web3-utils/wei->eth "de0b6b3a7640000")))
 
-  (is (= 1 (web3-utils/wei->eth-number 1000000000000000000)))
+  (is (= 1 (web3-utils/wei->eth-number "1000000000000000000")))
+  (is (= 1 (web3-utils/wei->eth-number (web3/to-big-number "1000000000000000000"))))
 
-  (is (= "1100000000000000000" (web3-utils/eth->wei 1.1)))
+  (is (bn/= (web3/to-big-number "1000000000000000000") (web3-utils/eth->wei (web3/to-big-number 1))))
   (is (= "1100000000000000000" (web3-utils/eth->wei "1,1")))
-  (is (= 1000000000000000000 (web3-utils/eth->wei-number 1)))
-  (is (= nil (web3-utils/eth->wei-number "abc")))
+  (is (= 1000000000000000000 (web3-utils/eth->wei-number "1")))
+
+  (is (= nil (web3-utils/eth->wei "0xabcd")))
+  (is (= nil (web3-utils/eth->wei "0xabcd")))
+  (is (= nil (web3-utils/eth->wei-number "0xabcd")))
+  (is (= nil (web3-utils/eth->wei-number "abcd")))
 
   (is (true? (web3-utils/zero-address? "0x")))
   (is (true? (web3-utils/zero-address? "0x0000000000000000000000000000000000000000")))
