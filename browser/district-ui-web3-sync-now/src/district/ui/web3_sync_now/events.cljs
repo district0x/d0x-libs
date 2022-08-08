@@ -1,7 +1,6 @@
 (ns district.ui.web3-sync-now.events
-  (:require [cljs-web3.eth :as web3-eth]
-            [cljs-web3.evm :as web3-evm]
-            [cljsjs.web3]
+  (:require [cljs-web3-next.eth :as web3-eth]
+            [cljs-web3-next.evm :as web3-evm]
             [day8.re-frame.forward-events-fx]
             [district.ui.logging.events :as logging]
             [district.ui.now.events :as now-events]
