@@ -1,11 +1,11 @@
 # district-ui-web3-sync-now
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-web3-sync-now.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-sync-now)
+[![CircleCI](https://circleci.com/gh/district0x/district-ui-web3-sync-now/tree/master.svg?style=svg)](https://circleci.com/gh/district0x/district-ui-web3-sync-now/tree/master)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that synchronises UI time with the blockchain time.
 
 ## Installation
-Add `[district0x/district-ui-web3-sync-now "1.0.3-2"]` into your project.clj.
+Add [![Clojars Project](https://img.shields.io/clojars/v/io.github.district0x/district-ui-web3-sync-now?include_prereleases)](https://clojars.org/io.github.district0x/district-ui-web3-sync-now)
 Include `[district.ui.web3-sync-now]` in your CLJS file, where you use `mount/start`.
 
 ## API Overview
@@ -71,15 +71,22 @@ In a typical application you will never need to call this event yourself.
 
 ## Development
 
-Run test suite:
+1. Setup local testnet
 
-```bash
-lein deps
-# To run tests and rerun on changes
-lein doo chrome tests
-```
-Install into local repo:
+- spin up a testnet instance in a separate shell
+  - `npx truffle develop`
 
-```bash
-lein install
-```
+2. Run test suite:
+- Browser
+  - `npx shadow-cljs watch test-browser`
+  - open https://d0x-vm:6502
+  - tests refresh automatically on code change
+- CI (Headless Chrome, Karma)
+  - `npx shadow-cljs compile test-ci`
+  - ``CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run``
+
+3. Build
+- on merging pull request to master on GitHub, CI builds & publishes new version automatically
+- update version in `build.clj`
+- to build: `clj -T:build jar`
+- to release: `clj -T:build deploy` (needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` env vars to be set)
