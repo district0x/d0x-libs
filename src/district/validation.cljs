@@ -1,6 +1,6 @@
 (ns district.validation
   (:require
-    [cljs-web3.core :as web3]
+    [cljs-web3-next.core :as web3]
     [clojure.string :as string]
     [district.web3-utils :as web3-utils]
     [goog.format.EmailAddress :as email-address]))
