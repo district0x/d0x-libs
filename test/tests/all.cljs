@@ -1,9 +1,11 @@
 (ns tests.all
   (:require
     [cljs-time.core :as t]
+    [cljs.spec.alpha :as s]
     [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
-    [cljsjs.web3]
     [district.validation :as valid]))
+
+(s/check-asserts true)
 
 (deftest tests
   (is (false? (valid/js-date? (t/now))))
