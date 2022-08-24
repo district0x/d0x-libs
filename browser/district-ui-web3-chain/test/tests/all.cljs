@@ -1,5 +1,6 @@
 (ns tests.all
   (:require
+    [cljs.spec.alpha :as s]
     [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
     [day8.re-frame.test :refer [run-test-async wait-for run-test-sync]]
     [district.ui.web3-chain.events :as events]
@@ -7,6 +8,8 @@
     [district.ui.web3-chain]
     [mount.core :as mount]
     [re-frame.core :refer [reg-event-fx dispatch-sync subscribe reg-cofx reg-fx dispatch]]))
+
+(s/check-asserts true)
 
 (defn set-response [chain]
   (reg-fx
@@ -32,7 +35,7 @@
       (set-response mock-chain)
 
       (-> (mount/with-args
-            {:web3 {:url "https://mainnet.infura.io/"}
+            {:web3 {:url "http://localhost:8549"}
              :web3-chain {}})
         (mount/start))
 
@@ -54,11 +57,16 @@
 (deftest invalid-params-tests
   (run-test-sync
     (-> (mount/with-args
-          {:web3 {:url "https://mainnet.infura.io/"}
+          {:web3 {:url "http://localhost:8549"}
            :web3-chain {}})
       (mount/start))
 
-    (is (thrown? :default (dispatch-sync [::events/set-chain 1])))))
+    ;this should pass
+    (dispatch-sync [::events/set-chain nil])
+    (dispatch-sync [::events/set-chain "0xabc"])
+
+    ; this should throw an error though
+    (is (thrown? :default (dispatch-sync [::events/set-chain "jjj"])))))
 
 (deftest disable-loading-at-start-tests
   (run-test-sync

@@ -1,6 +1,6 @@
 (ns district.ui.web3-chain.events
-  (:require [cljs-web3.core :as web3]
-            [cljs-web3.utils :refer [cljkk->js]]
+  (:require [cljs-web3-next.core :as web3]
+            [cljs-web3-next.eth :as web3-eth]
             [cljs.spec.alpha :as s]
             [day8.re-frame.forward-events-fx]
             [district.ui.web3-chain.effects :as effects]
@@ -11,11 +11,12 @@
             [district0x.re-frame.interval-fx]
             [district0x.re-frame.spec-interceptors :as spec-interceptors]
             [district0x.re-frame.web3-fx]
-            [re-frame.core :as re-frame]))
+            [re-frame.core :as re-frame]
+            [clojure.string :as string]))
 
 (def interceptors [re-frame/trim-v])
 
-(s/def ::chain-id (s/nilable string?))
+(s/def ::chain-id (s/nilable (s/or :number number? :string string?)))
 
 (re-frame/reg-event-fx
  ::start
@@ -58,7 +59,7 @@
               (not (web3-queries/web3-injected? db)))
        {:dispatch [::set-chain nil]}
        {:web3/call {:web3 web3
-                    :fns [{:fn web3/version-network
+                    :fns [{:fn web3-eth/get-chain-id
                            :on-success [::set-chain]
                            :on-error [::chain-load-failed]}]}}))))
 
@@ -72,7 +73,12 @@
  ::set-chain
  [interceptors (spec-interceptors/validate-first-arg ::chain-id)]
  (fn [{:keys [:db]} [chain-id]]
-   (let [chain-id (str (web3/to-decimal chain-id))]
+   (let [chain-id (str chain-id)
+         chain-id (if (string/starts-with? chain-id "0x")
+                    (str (web3/to-decimal chain-id))
+                    chain-id)]
+     (when (js/isNaN chain-id)
+       (throw (js/Error. (str "Invalid chainId: " chain-id ))))
     (when (not= chain-id (queries/chain db))
       {:db (queries/assoc-chain db chain-id)
        :dispatch [::chain-changed {:new chain-id :old (queries/chain db)}]}))))

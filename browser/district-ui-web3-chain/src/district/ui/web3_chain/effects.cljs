@@ -1,6 +1,6 @@
 (ns district.ui.web3-chain.effects
   (:require
-    [cljs-web3.utils :refer [cljkk->js]]
+    [cljs-web3-next.utils :refer [cljkk->js]]
     [re-frame.core :refer [reg-fx dispatch]]))
 
 (reg-fx
