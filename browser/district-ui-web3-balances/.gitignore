@@ -15,7 +15,7 @@ pom.xml.asc
 /node_modules/
 /figwheel_server.log
 /tests-output/
-/district-ui-web3-balances.imlyarn-error.log
+/district-ui-web3-balances.iml
 out
 .shadow-cljs
 .cpcache

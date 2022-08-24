@@ -5,7 +5,7 @@
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module, that handles [web3](https://github.com/ethereum/web3.js/) balances of Ether or other ERC20 tokens.
 
 ## Installation
-Add `[district0x/district-ui-web3-balances "1.0.2"]` into your project.clj  
+Add [![Clojars Project](https://img.shields.io/clojars/v/io.github.district0x/district-ui-web3-balances.svg?include_prereleases)](https://clojars.org/io.github.district0x/district-ui-web3-balances) into your project.clj  
 Include `[district.ui.web3-balances]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
