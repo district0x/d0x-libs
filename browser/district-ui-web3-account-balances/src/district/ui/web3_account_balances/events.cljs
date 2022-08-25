@@ -43,7 +43,6 @@
                              :contract contract
                              :watch? (not disable-watching?)})))]})))))
 
-
 (reg-event-fx
   ::stop
   interceptors
