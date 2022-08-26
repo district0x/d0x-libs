@@ -2,11 +2,11 @@
   (:require [district.ui.web3-accounts.subs :as accounts-subs]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
-            [soda-ash.core :as ui]))
+            [semantic-ui-reagent.core :as sui]))
 
 (defn tx-button [{:keys [:pending? :pending-text :raised-button?] :as props
-                  :or {:pending-text "Sending..."}} & children]
-  (into [ui/Button
+                  :or {pending-text "Sending..."}} & children]
+  (into [sui/Button
          (r/merge-props
           (dissoc props :raised-button? :pending-text :pending?)
           (merge
