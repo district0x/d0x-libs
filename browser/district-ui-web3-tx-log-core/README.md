@@ -1,6 +1,6 @@
 # district-ui-web3-tx-log-core
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-log-core.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-log-core)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/district0x/district-ui-web3-tx-log-core/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/district0x/district-ui-web3-tx-log-core/tree/master)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module,
 that provides core logic for transaction log components. This module does not provide [reagent](https://github.com/reagent-project/reagent) UI component for a transaction log, only
@@ -12,10 +12,10 @@ based on that performs 2 things:
 [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) uses localstorage as well.
 
 2. Extends [send-tx](https://github.com/district0x/district-ui-web3-tx#send-tx), so you can pass it key `:tx-log` with
-any data you want associate together with a transaction. Then these data can be displayed in transaction log UI component. 
+any data you want associate together with a transaction. Then these data can be displayed in transaction log UI component.
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-log-core "1.0.3"]` into your project.clj  
+Add `[district0x/district-ui-web3-tx-log-core "1.0.3"]` into your project.clj
 Include `[district.ui.web3-tx-log-core]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -45,7 +45,7 @@ This module does not have any configuration options.
   (ns my-district.core
     (:require [mount.core :as mount]
               [district.ui.web3-tx-log-core]))
-              
+
   (-> (mount/with-args
         {:web3 {:url "https://mainnet.infura.io/"}})
     (mount/start))
@@ -75,13 +75,13 @@ way as you'd pass to [district-ui-web3-tx ::txs](https://github.com/district0x/d
 (ns my-district.core
     (:require [mount.core :as mount]
               [district.ui.web3-tx-log-core :as subs]))
-  
+
   (defn transaction-log []
-    (let [txs (subscribe [::subs/txs])]  
+    (let [txs (subscribe [::subs/txs])]
       (fn []
         [:div "Transaction Log: "]
         (for [{:keys [:transaction-hash :created-on :gas-used]} @txs]
-          [:div 
+          [:div
             {:key transaction-hash}
             transaction-hash " - " created-on " - " gas-used]))))
 ```
@@ -96,11 +96,11 @@ re-frame events provided by this module:
 Adds transaction hash into transaction log list.
 
 #### <a name="remove-tx-hash-evt">`::remove-tx-hash [tx-hash]`
-Removes transaction hash from transaction log list.  
+Removes transaction hash from transaction log list.
 
 ## district.ui.web3-tx-log-core.queries
-DB queries provided by this module:  
-*You should use them in your events, instead of trying to get this module's 
+DB queries provided by this module:
+*You should use them in your events, instead of trying to get this module's
 data directly with `get-in` into re-frame db.*
 
 #### <a name="txs">`txs [db]`
@@ -121,9 +121,22 @@ Associates list of tx-hashes into this module's state.
 ## Dependency on other district UI modules
 * [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx)
 
-## Development
-```bash
-lein deps
-# To run tests and rerun on changes
-lein doo chrome tests
+## Test
+
+### Browser
+
+1. Build: `npx shadow-cljs watch test-browser`
+2. Tests: http://d0x-vm:6502
+
+### CI (Headless Chrome, Karma)
+
+1. Build: `npx shadow-cljs compile test-ci`
+2. Tests:
 ```
+CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run
+```
+
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`
