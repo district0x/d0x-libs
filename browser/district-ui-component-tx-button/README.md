@@ -1,6 +1,6 @@
 # district-ui-component-tx-button
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-component-tx-button.svg?branch=master)](https://travis-ci.org/district0x/district-ui-component-tx-button)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/district0x/district-ui-component-tx-button/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/district0x/district-ui-component-tx-button/tree/master)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module which provides a button for submitting blockchain transactions.
 
@@ -50,9 +50,30 @@ Basic example:
   (r/render [main-panel] (.getElementById js/document "app")))
 ```
 
-## Development
+# Development
+
 ```bash
-lein deps
-# To run tests and rerun on changes
-lein doo chrome tests
+yarn install
+# Start ganache blockchain with 1s block time
+ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
 ```
+
+## Test
+
+### Browser
+
+1. Build: `npx shadow-cljs watch test-browser`
+2. Tests: http://d0x-vm:6502
+
+### CI (Headless Chrome, Karma)
+
+1. Build: `npx shadow-cljs compile test-ci`
+2. Tests:
+```
+CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run
+```
+
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`

@@ -35,6 +35,7 @@
            (.setTimeout js/window
                         (fn []
                           ;; TODO: test actions
+                          (set! (.. js/window -zeContainer) @container)
                           (is (-> @container
                                   .-innerHTML
                                   hickory/parse
