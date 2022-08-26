@@ -14,3 +14,6 @@ pom.xml.asc
 /figwheel_server.log
 /tests-output/
 /district-ui-web3-tx-log-core.iml
+out
+.shadow-cljs
+.cpcache
