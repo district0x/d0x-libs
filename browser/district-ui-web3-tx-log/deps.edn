@@ -1,0 +1,33 @@
+{:paths ["src" "test"]
+ :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://clojars.org/repo"}}
+ :deps
+ {org.clojure/clojure {:mvn/version "1.11.1"}
+  thheller/shadow-cljs {:mvn/version "2.19.8"}
+  org.clojure/clojurescript {:mvn/version "1.11.60"}
+  akiroz.re-frame/storage {:mvn/version "0.1.4"}
+  toyokumo/semantic-ui-reagent {:mvn/version "0.2.0"}
+  re-frame/re-frame {:mvn/version "1.2.0"}
+  mount/mount {:mvn/version "0.1.16"}
+  district0x/district-ui-router {:mvn/version "1.0.8"}
+  io.github.district0x/district-ui-web3-accounts {:mvn/version "1.1.0-SNAPSHOT"}
+  io.github.district0x/district-ui-web3-tx-costs {:mvn/version "1.1.0-SNAPSHOT"}
+  io.github.district0x/district-ui-web3-tx {:mvn/version "1.1.0-SNAPSHOT"}
+  district0x/district-ui-web3-tx-log-core {:mvn/version "1.1.0-SNAPSHOT"}
+  io.github.district0x/district-web3-utils {:mvn/version "1.1.0-SNAPSHOT"}
+  }
+
+ :install-deps true
+ :aliases
+ {:dev
+  {:extra-deps
+   {com.cemerick/piggieback {:mvn/version "0.2.2"}
+    org.clojure/tools.nrepl {:mvn/version "0.2.13"}
+    district0x/district-ui-smart-contracts {:mvn/version "1.1.1-SNAPSHOT"}
+    binaryage/devtools {:mvn/version "1.0.6"}}}
+
+  :build {:deps {io.github.clojure/tools.build {:git/tag "v0.8.3" :git/sha "0d20256"}
+                 slipset/deps-deploy {:mvn/version "RELEASE"}}
+          :ns-default build}
+  :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}}
+           :exec-fn deps-deploy.deps-deploy/deploy}}}
