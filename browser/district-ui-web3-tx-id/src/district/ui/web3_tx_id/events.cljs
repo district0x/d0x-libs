@@ -1,6 +1,6 @@
 (ns district.ui.web3-tx-id.events
   (:require
-    [cljs-web3.core :as web3]
+    [cljs-web3-next.core :as web3]
     [cljs.spec.alpha :as s]
     [day8.re-frame.forward-events-fx]
     [district.ui.web3-tx-id.queries :as queries]
