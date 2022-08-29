@@ -1,5 +1,6 @@
 (ns tests.all
   (:require
+    [cljs.spec.alpha :as s]
     [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
     [day8.re-frame.test :refer [run-test-async run-test-sync wait-for]]
     [district.ui.conversion-rates.events :as rates-events]
@@ -10,6 +11,7 @@
     [mount.core :as mount]
     [re-frame.core :refer [reg-event-fx dispatch-sync subscribe reg-cofx reg-sub dispatch trim-v]]))
 
+(s/check-asserts true)
 
 (use-fixtures
   :each

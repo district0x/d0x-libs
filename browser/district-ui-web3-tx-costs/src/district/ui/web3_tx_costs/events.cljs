@@ -1,8 +1,7 @@
 (ns district.ui.web3-tx-costs.events
   (:require
     [bignumber.core :as bn]
-    [cljs-web3.core :as web3]
-    [cljs.spec.alpha :as s]
+    [cljs-web3-next.core :as web3]
     [day8.re-frame.forward-events-fx]
     [district.ui.conversion-rates.events :as rates-events]
     [district.ui.conversion-rates.queries :as rates-queries]
@@ -40,7 +39,7 @@
   ::tx-loaded
   interceptors
   (fn [{:keys [:db]} [[_ tx-hash tx-receipt tx]]]
-    (let [tx-cost-eth (bn/number (web3/from-wei (bn/* (:gas-price tx) (:gas-used tx-receipt)) :ether))
+    (let [tx-cost-eth (bn/number (web3/from-wei (bn/fixed (bn/* (:gas-price tx) (:gas-used tx-receipt))) :ether))
           tx-costs (reduce
                      (fn [result currency]
                        (assoc result currency (rates-queries/convert db :ETH currency tx-cost-eth)))

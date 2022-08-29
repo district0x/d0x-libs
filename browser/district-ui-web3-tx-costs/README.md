@@ -1,6 +1,6 @@
 # district-ui-web3-tx-costs
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-costs.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-costs)
+[![CircleCI](https://circleci.com/gh/district0x/district-ui-web3-tx-costs.svg/tree/master.svg?style=svg)](https://circleci.com/gh/district0x/district-ui-web3-tx-costs/tree/master)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module.
 
@@ -9,7 +9,7 @@ when a transaction is processed, it calculates and saves transaction costs in ch
 It uses [district-ui-conversion-rates](https://github.com/district0x/district-ui-conversion-rates) to obtain conversion rates.  
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-costs "1.0.3"]` into your project.clj  
+Add [![Clojars Project](https://img.shields.io/clojars/v/io.github.district0x/district-ui-web3-tx-costs?include_prereleases)](https://clojars.org/io.github.district0x/district-ui-web3-tx-costs) into your project.clj  
 Include `[district.ui.web3-tx-costs]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -99,8 +99,18 @@ Adds currencies and returns and returns new re-frame db.
 * [district-ui-conversion-rates](https://github.com/district0x/district-ui-conversion-rates)
 
 ## Development
-```bash
-lein deps
-# To run tests and rerun on changes
-lein doo chrome tests
-```
+
+1. Run test suite:
+- Browser
+  - `npx shadow-cljs watch test-browser`
+  - open https://d0x-vm:6502
+  - tests refresh automatically on code change
+- CI (Headless Chrome, Karma)
+  - `npx shadow-cljs compile test-ci`
+  - ``CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run``
+
+2. Build
+- on merging pull request to master on GitHub, CI builds & publishes new version automatically
+- update version in `build.clj`
+- to build: `clj -T:build jar`
+- to release: `clj -T:build deploy` (needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` env vars to be set)
