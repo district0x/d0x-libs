@@ -1,13 +1,13 @@
 # district-ui-web3-tx-id
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-id.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-id)
+[![CircleCI](https://circleci.com/gh/district0x/district-ui-web3-tx-id.svg/tree/master.svg?style=svg)](https://circleci.com/gh/district0x/district-ui-web3-tx-id/tree/master)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module,
 that extends [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) to provide easy way to associate arbitrary id with a transaction.
 This is especially useful when in UI we need to display if certain transaction is pending without knowing its transaction hash. 
 
 ## Installation
-Add `[district0x/district-ui-web3-tx-id "1.0.1"]` into your project.clj  
+Add [![Clojars Project](https://img.shields.io/clojars/v/io.github.district0x/district-ui-web3-tx-id?include_prereleases)](https://clojars.org/io.github.district0x/district-ui-web3-tx-id) into your project.clj  
 Include `[district.ui.web3-tx-id]` in your CLJS file, where you use `mount/start`
 
 ## API Overview
@@ -148,10 +148,22 @@ Removes tx-id association for tx-hash and returns new re-frame db.
 * [district-ui-web3-accounts](https://github.com/district0x/district-ui-web3-accounts)
 
 ## Development
-```bash
-lein deps
-# Start ganache blockchain with 1s block time
-ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
-# To run tests and rerun on changes
-lein doo chrome tests
-```
+1. Setup local testnet
+
+- spin up a testnet instance in a separate shell
+  - `npx truffle develop`
+
+2. Run test suite:
+- Browser
+  - `npx shadow-cljs watch test-browser`
+  - open https://d0x-vm:6502
+  - tests refresh automatically on code change
+- CI (Headless Chrome, Karma)
+  - `npx shadow-cljs compile test-ci`
+  - ``CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run``
+
+3. Build
+- on merging pull request to master on GitHub, CI builds & publishes new version automatically
+- update version in `build.clj`
+- to build: `clj -T:build jar`
+- to release: `clj -T:build deploy` (needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` env vars to be set)

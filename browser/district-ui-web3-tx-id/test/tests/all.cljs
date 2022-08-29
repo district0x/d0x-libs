@@ -1,8 +1,8 @@
 (ns tests.all
   (:require
-    [cljs-web3.core :as web3]
+    [cljs.spec.alpha :as s]
+    [cljs-web3-next.core :as web3]
     [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
-    [cljsjs.web3]
     [day8.re-frame.test :refer [run-test-async run-test-sync wait-for]]
     [district.ui.smart-contracts.deploy-events :as deploy-events]
     [district.ui.smart-contracts.events :as contracts-events]
@@ -11,7 +11,6 @@
     [district.ui.web3-accounts.events :as accounts-events]
     [district.ui.web3-accounts.subs :as accounts-subs]
     [district.ui.web3-tx-id.events :as events]
-    [district.ui.web3-tx-id.queries :as queries]
     [district.ui.web3-tx-id.subs :as subs]
     [district.ui.web3-tx-id]
     [district.ui.web3-tx.events :as tx-events]
@@ -24,6 +23,8 @@
 (def mintable-token {:abi mintable-token-abi
                      :bin mintable-token-bin
                      :name "MintableToken"})
+
+(s/check-asserts true)
 
 (reg-event-fx
   ::clear-localstorage
@@ -63,7 +64,7 @@
 
           (dispatch [::tx-events/send-tx {:instance @instance
                                           :fn :mint
-                                          :args [@active-account (web3/to-wei 1 :ether)]
+                                          :args [@active-account (web3/to-wei "1" :ether)]
                                           :tx-opts {:from @active-account}
                                           :tx-id {:my-tx-id 1}}])
 
