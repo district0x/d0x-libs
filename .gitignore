@@ -14,3 +14,6 @@ pom.xml.asc
 /figwheel_server.log
 /tests-output/
 /cljs-solidity-sha3.iml
+/out/
+/.shadow-cljs/
+/.cpcache/
