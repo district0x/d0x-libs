@@ -10,7 +10,7 @@
             [district.web3-utils :as web3-utils]
             [re-frame.core :as re-frame :refer [subscribe dispatch]]
             [reagent.core :as r]
-            [soda-ash.core :as ui]))
+            [semantic-ui-reagent.core :as sui]))
 
 (defn- related-href->map
   "This function will do its best to parse the provided uri string as a map:
@@ -30,7 +30,7 @@
    text])
 
 (defn from-active-address-only-toggle [props]
-  [ui/Checkbox
+  [sui/Checkbox
    (r/merge-props
     {:toggle true
      :label "Show transactions from active address only."

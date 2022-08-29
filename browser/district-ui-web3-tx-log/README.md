@@ -1,6 +1,6 @@
 # district-ui-web3-tx-log
 
-[![Build Status](https://travis-ci.org/district0x/district-ui-web3-tx-log.svg?branch=master)](https://travis-ci.org/district0x/district-ui-web3-tx-log)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/district0x/district-ui-web3-tx-log/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/district0x/district-ui-web3-tx-log/tree/master)
 
 Clojurescript [re-mount](https://github.com/district0x/d0x-INFRA/blob/master/re-mount.md) module,
 that provides [reagent](https://github.com/reagent-project/reagent) UI component for transaction log, as well as related
@@ -51,12 +51,12 @@ Include `[district.ui.web3-tx-log]` in your CLJS file, where you use `mount/star
 ## district.ui.web3-tx-log
 This namespace contains web3-tx-log [mount](https://github.com/tolitius/mount) module.
 
-You can pass following args to initiate this module: 
+You can pass following args to initiate this module:
 * `:open-on-tx-hash?` Pass true for opening transaction log automatically when user sends a new tx to the network
 * `:tx-costs-currencies` List of currency rates to load, so transaction cost can be displayed in those currencies
 * `:disable-using-localstorage?` Pass true if you don't want to store transaction log settings in browser's localstorage
 * `:etherscan-url` Pass root url as a string e.g. "https://etherscan.io" (the default) or "https://ropsten.etherscan.io" to configure transaction log links..
-* `:default-settings` Pass default settings. Following options are available: 
+* `:default-settings` Pass default settings. Following options are available:
   * `:from-active-address-only?` Shows transactions only made by currently active address
   * `:open?` Whether transaction log is open or not
 
@@ -64,7 +64,7 @@ You can pass following args to initiate this module:
   (ns my-district.core
     (:require [mount.core :as mount]
               [district.ui.web3-tx-log]))
-              
+
   (-> (mount/with-args
         {:web3 {:url "https://mainnet.infura.io/"}
          :web3-tx-log {:open-on-tx-hash? true
@@ -74,11 +74,11 @@ You can pass following args to initiate this module:
 
 ## district.ui.component.tx-log
 Namespace with [reagent](https://github.com/reagent-project/reagent) component for transaction log and its subcomponents.
-Components don't come with styling, you need to provide own CSS. Currently, there can be only 1 transaction log per app. 
+Components don't come with styling, you need to provide own CSS. Currently, there can be only 1 transaction log per app.
 
 #### `tx-log`
 Main transaction log UI component. It cointains all subcomponents below.
-  
+
 Component props (besides standard reagent props):
 * `:tx-cost-currency` - Currency to display transaction cost in
 * `:header-props` - Props passed to [header](#header) component
@@ -86,14 +86,14 @@ Component props (besides standard reagent props):
 * `:settings-props` - Props passed to [settings](#settings) component
 * `:settings-el` - Pass reagent component if you want to replace [settings](#settings) component with your own
 * `:transactions-props` - Props passed to [transactions](#transactions) component
-* `:transactions-el` - Pass reagent component if you want to replace [transactions](#transactions) component with your own 
+* `:transactions-el` - Pass reagent component if you want to replace [transactions](#transactions) component with your own
 
 ```clojure
 (ns my-district.core
     (:require [district.ui.component.tx-log :refer [tx-log]]))
 
   (defn home-page []
-    [tx-log 
+    [tx-log
      {:tx-cost-currency :USD
       :header-props {:text "My Transaction Log"}
       :class "my-tx-log-class"}])
@@ -102,7 +102,7 @@ Component props (besides standard reagent props):
 In order for transaction log to work properly, you need to pass following data about a transaction under the key
 `:tx-log` when sending a transaction with [district-ui-web3-tx](https://github.com/district0x/district-ui-web3-tx) module:
 * `:name` Human readable name for a transaction. Will be displayed by [tx-name](#tx-name)
-* `:related-href` Href to go to, after user clicks on a transaction in transaction log. Either a string or a map: 
+* `:related-href` Href to go to, after user clicks on a transaction in transaction log. Either a string or a map:
 `{:name district.page/index
   :param :foo
   :query {:x :y}}`
@@ -110,7 +110,7 @@ In order for transaction log to work properly, you need to pass following data a
 ```clojure
 (ns my-district.events
     (:require [district.ui.web3-tx.events :as tx-events]))
-    
+
 (dispatch [::tx-events/send-tx {:instance MyContract
                                 :fn :my-function
                                 :args [1]
@@ -124,7 +124,7 @@ An example of transaction log UI component might look like this:
 ![tx-log](https://cdn-images-1.medium.com/max/1600/1*LFKH-q4YTVv_qduka4A5fw.png)
 
 #### `header`
-Header component of transaction log. 
+Header component of transaction log.
 
 Component props:
 * `:text` - Text displayed in the header
@@ -174,20 +174,20 @@ Component props:
 * `:tx-remove-el` - Pass reagent component if you want to replace [tx-remove](#tx-remove) component with your own
 
 #### `tx-name`
-Component that displays name of a transaction. 
+Component that displays name of a transaction.
 
 Component props:
 * `:tx` - Transaction data
 
 #### `tx-created-on`
-Component that displays creation time of a transaction. 
+Component that displays creation time of a transaction.
 
 Component props:
 * `:tx` - Transaction data
 * `:label` - Label text
 
 #### `tx-gas`
-Component that displays gas usage with a gas cost. 
+Component that displays gas usage with a gas cost.
 
 Component props:
 * `:tx` - Transaction data
@@ -202,7 +202,7 @@ Component props:
 * `:label` - Label text
 
 #### `tx-id`
-Component that displays transaction id with link to the etherscan. 
+Component that displays transaction id with link to the etherscan.
 
 Component props:
 * `:tx` - Transaction data
@@ -242,7 +242,7 @@ True if transaction log is currently open
 re-frame events provided by this module:
 
 #### <a name="set-open">`::set-open [open?]`
-Sets whether transaction log should open or not. 
+Sets whether transaction log should open or not.
 
 #### <a name="set-settings">`::set-settings [settings]`
 Sets settings for transaction log.
@@ -251,15 +251,15 @@ Sets settings for transaction log.
 Clears transaction log settings from localstorage.
 
 ## district.ui.web3-tx-log.queries
-DB queries provided by this module:  
-*You should use them in your events, instead of trying to get this module's 
+DB queries provided by this module:
+*You should use them in your events, instead of trying to get this module's
 data directly with `get-in` into re-frame db.*
 
 #### <a name="settings-q">`settings [db]`
 Works the same way as sub `::settings`
 
 #### <a name="from-active-address-only?">`from-active-address-only? [db]`
-True if setting `:from-active-address-only?` is on, to show transactions only from active address. 
+True if setting `:from-active-address-only?` is on, to show transactions only from active address.
 
 #### <a name="open?">`open? [db]`
 Works the same way as sub `::open?`
@@ -278,11 +278,22 @@ True if localstorage is disabled for this module
 * [district-ui-web3-tx-costs](https://github.com/district0x/district-ui-web3-tx-costs)
 * [district-ui-web3-accounts](https://github.com/district0x/district-ui-web3-accounts)
 
-## Development
-```bash
-lein deps
-# Start ganache blockchain with 1s block time
-ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse
-# To run tests and rerun on changes
-lein doo chrome tests
+## Test
+
+### Browser
+
+1. Build: `npx shadow-cljs watch test-browser`
+2. Tests: http://d0x-vm:6502
+
+### CI (Headless Chrome, Karma)
+
+1. Build: `npx shadow-cljs compile test-ci`
+2. Tests:
 ```
+CHROME_BIN=`which chromium-browser` npx karma start karma.conf.js --single-run
+```
+
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`
