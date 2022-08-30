@@ -1,21 +1,21 @@
 # district-server-web3-watcher
 
-[![Build Status](https://travis-ci.org/district0x/district-server-web3-watcher.svg?branch=master)](https://travis-ci.org/district0x/district-server-web3-watcher)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/district0x/district-server-web3-watcher/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/district0x/district-server-web3-watcher/tree/master)
 
-Clojurescript-node.js [mount](https://github.com/tolitius/mount) module for a district server, that watches server connection to a blockchain. 
+Clojurescript-node.js [mount](https://github.com/tolitius/mount) module for a district server, that watches server connection to a blockchain.
 
 ## Installation
-Add `[district0x/district-server-web3-watcher "1.0.3"]` into your project.clj  
+Add `[district0x/district-server-web3-watcher "1.0.3"]` into your project.clj
 Include `[district.server.web3-watcher]` in your CLJS file, where you use `mount/start`
 
 **Warning:** district0x modules are still in early stages, therefore API can change in a future.
 
 ## Real-world example
-To see how district server modules play together in real-world app, you can take a look at [NameBazaar server folder](https://github.com/district0x/name-bazaar/tree/master/src/name_bazaar/server), 
+To see how district server modules play together in real-world app, you can take a look at [NameBazaar server folder](https://github.com/district0x/name-bazaar/tree/master/src/name_bazaar/server),
 where this is deployed in production.
 
 ## Usage
-You can pass following args to web3-watcher module: 
+You can pass following args to web3-watcher module:
 * `:interval` Interval at which it should check the connection. Default: 3s
 * `:confirmations` How many offline responses module needs to get before triggers `:on-offline`. Default: 3
 * `:on-online` Callback that is run when connection goes from offline to online
@@ -43,16 +43,20 @@ You can pass following args to web3-watcher module:
 
 If you wish to use custom modules instead of dependencies above while still using `district-server-web3-watcher`, you can easily do so by [mount's states swapping](https://github.com/tolitius/mount#swapping-states-with-states).
 
-## Development
-```bash
-# To start REPL and run tests
-lein deps
-lein repl
-(start-tests!)
+# Development (build, test)
 
-# In other terminal
-node tests-compiled/run-tests.js
+To try things in REPL:
+1. Watch `node-repl` target: `npx shadow-cljs watch node-repl`
+2. Run the compiled file: `node out/node-repl.js`
+3. Connect REPL client: `lein repl :connect 30333`
+4. To use the build, check `src/repl_helper.cljs`
 
-# To run tests without REPL
-lein doo node "tests" once
-```
+## Node.js
+
+1. Build: `npx shadow-cljs compile test-node`
+2. Tests: `node out/node-tests.js`
+
+## Build & release with `deps.edn` and `tools.build`
+
+1. Build: `clj -T:build jar`
+2. Release: `clj -T:build deploy`

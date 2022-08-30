@@ -1,6 +1,6 @@
 (ns district.server.web3-watcher
   (:require
-    [cljs-web3.core :as web3]
+    [cljs-web3-next.core :as web3]
     [district.server.config :refer [config]]
     [district.server.web3 :refer [web3]]
     [mount.core :as mount :refer [defstate]]))
