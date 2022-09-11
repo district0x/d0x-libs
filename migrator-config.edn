@@ -1,0 +1,6 @@
+{:server-libraries
+ [district0x/district-server-smart-contracts]
+ :browser-libraries
+ [district0x/district-ui-web3]
+ :shared-libraries
+ [district0x/cljs-web3-next]}
