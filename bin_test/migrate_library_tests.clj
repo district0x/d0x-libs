@@ -16,14 +16,6 @@
 (defn split-by-space [string]
   (clojure.string/split string #"\s"))
 
-(defn get-newest-file-in-path [path]
-  (->> path
-       str
-       (sh "ls" "-t" ,,,)
-       :out
-       split-by-space
-       first))
-
 (defn file-set-in [path]
   (->> path
       fs/list-dir
@@ -32,15 +24,32 @@
       (remove #{".git"})
       (into #{})))
 
-(defn set-up-git-repo-in-tmp
+(defn get-extracted-folder-name [tar-output]
+  (-> tar-output
+      :out
+      clojure.string/split-lines
+      last
+      clojure.string/trim
+      fs/components
+      first
+      str))
+
+(defn set-up-git-repo
   "Takes absolute path of .tar.gz archive that contains a Git repository.
    Returns absolute path of that archive extracted into system temp folder"
-  [archive-path]
-  (let [temp-dir (fs/create-temp-dir {:prefix "migrate-library-tests"})
-        _extraction-result (sh "tar" "-xf" (str archive-path) "-C" (str temp-dir))
-        newest-file (get-newest-file-in-path temp-dir)]
-    (str temp-dir "/" newest-file)
-    ))
+  [archive-path temp-path]
+  (let [extraction-result (sh "tar" "-xvf" (str archive-path) "-C" (str temp-path))
+        repo-name (get-extracted-folder-name extraction-result)
+        extracted-repo-path (str temp-path "/" repo-name)]
+    ; For some reason there are changes that git status doesn't show but git diff-index does
+    ; Due to these git subtree gives an error
+    ; These changes can be detected with
+    ;   git diff-index HEAD --exit-code --quiet <-- exits with code 1 when changes present
+    ;   git diff-index HEAD                     <-- produces visual output with changes
+    ; Because this is a test repo and no changes are expected, hard reset
+    ; can be done to avoid the issue
+    (sh "git" "reset" "--hard" "HEAD" :dir extracted-repo-path)
+    extracted-repo-path))
 
 (deftest migrate-library-tests
   (testing "checks library structure (deps.edn, shadow-cljs)"
@@ -48,11 +57,11 @@
     (is (true? (ml/library-structure-as-expected? "bin_test/fixtures/lib-ok"))))
 
   (testing "moves selected library to subfolder with git history"
-    (let [test-repo-path (set-up-git-repo-in-tmp "bin_test/fixtures/test-repo.tar.gz")
-          container-repo-path (set-up-git-repo-in-tmp "bin_test/fixtures/container-repo.tar.gz")]
-      (ml/move-merging-git-histories test-repo-path container-repo-path)
+    (let [temp-path (fs/create-temp-dir {:prefix "migrate-library-tests"})
+          test-repo-path (set-up-git-repo "bin_test/fixtures/test-repo.tar.gz" temp-path)
+          container-repo-path (set-up-git-repo "bin_test/fixtures/container-repo.tar.gz" temp-path)]
+      (ml/move-merging-git-histories test-repo-path container-repo-path "shared")
       (is (= 5 (count-commits container-repo-path))) ; 2 commits from container + 2 from test-repo + 1 merge
-      (is (= (file-set-in (str container-repo-path "/test-repo")) (file-set-in test-repo-path)))))
+      (is (= (file-set-in (str container-repo-path "/shared/test-repo")) (file-set-in test-repo-path)))))
 
-  (testing "adding aliases to deps.edn"
-    ()))
+  (testing "adding aliases to deps.edn"))
