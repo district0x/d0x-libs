@@ -44,11 +44,14 @@
         ; in the group at once E.g. to load all `server` libraries (under alias
         ; :server-all (in REPL) or to build `browser` bundle with all libraries
         ; (under alias :browser-all)
-        group-alias (symbol (str ":" group "-all"))
-        old-group-deps (or (get-in deps-map [group-alias :extra-deps]) {})
-        old-group-paths (or (get-in deps-map [group-alias :extra-paths]) [])
+        group-alias (keyword (str group "-all"))
+        old-group-deps (or (get-in deps-map [:aliases group-alias :extra-deps]) {})
+        old-group-paths (or (get-in deps-map [:aliases group-alias :extra-paths]) [])
         new-group-deps (merge old-group-deps new-extra-deps)
-        new-group-paths (distinct (into old-group-paths new-extra-paths))
+        new-group-paths (->> old-group-paths
+                             (into new-extra-paths)
+                             (distinct)
+                             (into []))
         updated-group {:extra-deps new-group-deps :extra-paths new-group-paths}]
     (-> deps-map
         (assoc-in [:aliases library-alias-key] library-alias-value)
