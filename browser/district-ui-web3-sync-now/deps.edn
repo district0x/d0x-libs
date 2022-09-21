@@ -13,7 +13,7 @@
   io.github.district0x/district-web3-utils {:mvn/version "1.1.0-SNAPSHOT"}
   district0x/district-ui-logging {:mvn/version "1.1.0"}
   district0x/district-ui-now {:mvn/version "1.0.2"}
-  com.github.district0x/re-frame-web3-fx {:mvn/version "1.1.0-SNAPSHOT"}}
+  io.github.district0x/re-frame-web3-fx {:mvn/version "1.1.0-SNAPSHOT"}}
 
  :install-deps true
  :aliases
