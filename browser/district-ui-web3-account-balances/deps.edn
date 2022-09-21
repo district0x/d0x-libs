@@ -7,8 +7,8 @@
   org.clojure/clojurescript {:mvn/version "1.11.60"}
   district0x/district-format {:mvn/version "1.0.6"}
   day8.re-frame/forward-events-fx {:mvn/version "0.0.6"}
-  district0x/district-ui-web3-balances {:mvn/version "1.1.0-SNAPSHOT" :exclusions [district0x/district-ui-smart-contracts]}
-  district0x/district-ui-web3-accounts {:mvn/version "1.1.0-SNAPSHOT"}
+  io.github.district0x/district-ui-web3-balances {:mvn/version "1.1.0-SNAPSHOT" :exclusions [district0x/district-ui-smart-contracts]}
+  io.github.district0x/district-ui-web3-accounts {:mvn/version "1.1.0-SNAPSHOT"}
   district0x/re-frame-spec-interceptors {:mvn/version "1.0.1"}
   re-frame/re-frame {:mvn/version "1.2.0"}
   mount/mount {:mvn/version "0.1.16"}}
