@@ -5,10 +5,8 @@
             [clojure.string :refer [trim]]
             [babashka.fs :as fs]
             [clojure.edn :as edn]
-            [clojure.pprint :as pp]))
-
-(defn log [& args]
-  (apply println args))
+            [clojure.pprint :as pp]
+            [script-helpers :refer [log read-edn write-edn] :as helpers]))
 
 (defn absolutize-path [path]
   (let [absolute-path? (clojure.string/starts-with? path "/")]
@@ -18,12 +16,6 @@
   (let [absolute-path (absolutize-path library-path)
         using-deps? (fs/exists? (str absolute-path "/deps.edn"))]
     using-deps?))
-
-(defn read-deps [deps-edn-path]
-  (edn/read-string (slurp deps-edn-path)))
-
-(defn write-deps [deps-map deps-edn-path]
-  (pp/pprint deps-map (clojure.java.io/writer deps-edn-path)))
 
 (defn add-aliases
   "Adds aliases to deps.edn map to allow building, loading and releasing subsets of
@@ -76,9 +68,9 @@
       (reset! merge-result (sh "git" "subtree" "add" (str "--prefix=" prefix) source-path "master")))
     (if (= 1 (:exit @merge-result))
       (throw (ex-info (str "Failed running `git subtree`: " (:err @merge-result)) @merge-result)))
-    (-> (read-deps deps-edn-path)
+    (-> (read-edn deps-edn-path)
         (add-aliases ,,, prefix source-name group)
-        (write-deps ,,, deps-edn-path))
+        (write-edn ,,, deps-edn-path))
     (log "Done updating deps.edn at" deps-edn-path)))
 
 (defn -main [& args]
