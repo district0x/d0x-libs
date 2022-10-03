@@ -6,7 +6,6 @@
             [babashka.fs :as fs]
             [clojure.edn :as edn]
             [clojure.pprint :as pp]
-
             [script-helpers :refer [log read-edn write-edn] :as helpers]))
 
 (defn contains-deps-edn? [path]
@@ -22,11 +21,13 @@
       false
       (= -1 (compare a-parts b-parts)))))
 
-(defn load-deps [path]
+(defn load-all-libs-in-subfolders
+  "Takes path and returns list of paths to deps.edn files in its direct subfolders"
+  [path]
   (let [library-paths (->> (fs/list-dir path)
-                          (filter fs/directory?)
-                          (filter contains-deps-edn?))
-        deps-paths (map #(str % "/deps.edn") library-paths)]))
+                           (filter fs/directory?)
+                           (filter contains-deps-edn?))]
+    (map #(str % "/deps.edn") library-paths)))
 
 (defn update-deps-if-outdated [library-version library-name deps-details]
   (let [deps-map (:edn deps-details)
@@ -47,6 +48,9 @@
   (or (find-first-dep (:library old-single-detail) new-deps-details) old-single-detail))
 
 (defn calculate-deps-updates
+  "Takes one or more modified libraries and a single version (newest). Returns
+  deps-details map with :deps (contents of deps.edn) updated for each library
+  that depends on an entry in `modified-libs` directly or transitively."
   [version modified-libs deps-details]
   (if (empty? modified-libs)
     deps-details
@@ -81,11 +85,47 @@
   if it stayed the same, gets filtered)
   "
   [version library deps-details]
-  (filter-changed-deps-details deps-details (calculate-deps-updates version [library] deps-details)))
+  (let [updated-deps-details (calculate-deps-updates version [library] deps-details)]
+    (filter-changed-deps-details deps-details updated-deps-details)))
+
+(defn guess-group-id [library-path]
+  ; Later it could try to read it from lib_version.clj or from a configuration file
+  "is.mad")
+
+(defn lib-name-from-path
+  "Takes deps.edn path and returs penultimate component of the path.
+  E.g. /one/two/three-is-lib/deps.edn => three-is-lib"
+  [library-path]
+  (-> library-path
+      fs/components
+      reverse
+      second
+      str))
+
+(defn collect-deps-details
+  ([deps-edn-path] (collect-deps-details deps-edn-path guess-group-id))
+  ([deps-edn-path group-id-fn]
+   {:library (symbol (str (guess-group-id deps-edn-path) "/" (lib-name-from-path deps-edn-path)))
+    :path (clojure.string/replace deps-edn-path #"/deps.edn$" "")
+    :edn (helpers/read-edn deps-edn-path)}))
+
+(defn write-deps-detail [detail]
+  (let [library (:library detail)
+        target-path (str (:path detail) "/deps.edn")
+        deps-edn (:edn detail)]
+    (println "WRITING UPDATES" library target-path deps-edn)
+    (helpers/write-edn deps-edn target-path)
+    target-path))
+
+(defn update-deps-at-path [updated-library new-version updatable-libraries-path]
+  (let [deps-details (map collect-deps-details (load-all-libs-in-subfolders updatable-libraries-path))
+        change-details (updated-deps new-version updated-library deps-details)]
+    (map write-deps-detail change-details)))
 
 (defn -main [& args]
-  (let [[library-name version updated-path] *command-line-args*]
-    (log "Updating dependencies. Starting from:" library-name version updated-path)))
+  (let [[library version updated-path] *command-line-args*]
+    (log "Updating dependencies. Starting from:" library version updated-path)
+    (update-deps-at-path library version updated-path)))
 
 ; To allow running as commandn line util but also required & used in other programs or REPL
 ; https://book.babashka.org/#main_file
