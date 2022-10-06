@@ -14,5 +14,6 @@
   (edn/read-string (str "[" (slurp deps-edn-path) "]")))
 
 (defn write-edn [deps-map deps-edn-path]
-  (binding [*print-readably* true] ; necessary to get quotes around strings in the written EDN
+  (binding [*print-readably* true ; necessary to get quotes around strings in the written EDN
+            *print-namespace-maps* false] ; to have {:mvn/version ...} instead of #:mvn{:version ...}
     (spit deps-edn-path (with-out-str (pp/pprint deps-map)))))

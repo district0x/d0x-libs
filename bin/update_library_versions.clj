@@ -11,8 +11,24 @@
 (defn contains-deps-edn? [path]
   (fs/exists? (str path "/deps.edn")))
 
+(def three-part-semver-regex
+  ; Supports 3 part version e.g. "1.2.3"
+  ; with optional last part (ignored), e.g. "1.2.3-SUPERDUPER"
+  ; And also supports 2 part, where the missing 1st will be considered zero
+  ;   - this is to
+  ; E.g."1.2" => [0 1 2]
+  #"(\d+)?\.?(\d+)\.(\d+)(-.*)?")
+
 (defn version->numeric [version]
-  (map #(Integer/parseInt %) (clojure.string/split version #"\.")))
+  (->> version
+       (re-matches three-part-semver-regex ,,,) ; "1.2.3-XXX" => ["1.2.3-XXX" "1" "2" "3" "-XXX"]
+       rest                  ; drop first (the whole match)
+       reverse               ; reverse to use (rest) again to drop but this time from the other end
+       rest                  ; drop last (which can be nil or for example -SNAPSHOT or similar)
+       reverse               ; restore original order
+       (map #(or % "0") ,,,) ; replace optional 1st semver part (nil) with 0
+       (map #(Integer/parseInt %) ,,,)
+       (into [])))
 
 (defn version< [version-a version-b]
   (let [a-parts (into [] (version->numeric version-a))
@@ -113,7 +129,6 @@
   (let [library (:library detail)
         target-path (str (:path detail) "/deps.edn")
         deps-edn (:edn detail)]
-    (println "WRITING UPDATES" library target-path deps-edn)
     (helpers/write-edn deps-edn target-path)
     target-path))
 

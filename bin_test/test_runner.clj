@@ -20,7 +20,7 @@
         (symbol $)))
 
 (def test-namespaces
-  (->> (fs/glob "./" "**/*_tests.clj")
+  (->> (fs/glob "./" "**/*_test.clj")
        (mapv test-file->test-ns)))
 
 (apply require test-namespaces)
