@@ -1,0 +1,16 @@
+{:dev-http {6502 {:root "build/browser-tests" :host "d0x-vm"}}
+ :nrepl {:port 30333}
+ :deps {:aliases [:dev]}
+ :js-options {:js-package-dirs ["build/node_modules"]}
+ :npm-deps {:install true}
+ :builds
+ {:test-node {:target :node-test
+         :ns-regexp "(.+)-tests"
+         :output-to "build/node-tests.js"
+         :autorun false}
+  :test-browser {:target :browser-test
+                 :ns-regexp "(.+)-tests"
+                 :test-dir "build/browser-tests"}
+  :test-ci {:target :karma
+            :ns-regexp "tests.(.+)"
+            :output-to "build/karma-tests.js"}}}
