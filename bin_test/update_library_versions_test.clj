@@ -25,12 +25,12 @@
                                                                                                          'is.mad/first-to-update {:mvn/version "2022.01.20"}}}}]
         updated-library-name "is.mad/first-to-update"
         updated-library-version "2022.09.22"
-        updated-deps [{:library 'is.mad/shared-low-level-a :path "shared/low-a" :edn {:paths ["src"] :deps {'is.mad/first-to-update {:mvn/version "2022.09.22"}}}}
+        expected-updated-deps [{:library 'is.mad/shared-low-level-a :path "shared/low-a" :edn {:paths ["src"] :deps {'is.mad/first-to-update {:mvn/version "2022.09.22"}}}}
                       {:library 'is.mad/server-low-level-b :path "server/low-b" :edn {:paths ["src"] :deps {'is.mad/shared-low-level-a {:mvn/version "2022.09.22"}}}}
                       {:library 'is.mad/server-mid-level-a :path "server/mid-a" :edn {:paths [] :deps {'is.mad/server-low-level-b {:mvn/version "2022.09.22"}
                                                                                                        'is.mad/first-to-update {:mvn/version "2022.09.22"}}}}]
-        result (ulv/updated-deps updated-library-version updated-library-name candidate-deps)]
-    (is (= updated-deps result))))
+        actual-updated-deps (ulv/updated-deps updated-library-version updated-library-name candidate-deps)]
+    (is (= expected-updated-deps actual-updated-deps))))
 
 (deftest update-deps-at-path-tests
   (let [library "is.mad/cljs-web3-next"
@@ -39,7 +39,7 @@
         deps-map {"first-lib" {:deps {(symbol library) {:mvn/version "2021.01.01"}}}
                   "second-depends-on-first" {:deps {'is.mad/first-lib {:mvn/version "2021.01.01"}}}}
         created-deps-paths (doall (map (fn [[lib-name deps]] (add-deps-to-path libs-root deps lib-name)) deps-map))
-        result (doall (ulv/update-deps-at-path library new-version libs-root))]
+        result (doall (ulv/update-deps-at-path library new-version libs-root :source-group-id (fn [x] "is.mad")))]
     (is (= (helpers/read-edn (first result)) {:deps {'is.mad/first-lib {:mvn/version new-version}}}))))
 
 (deftest version-number-support-tests
