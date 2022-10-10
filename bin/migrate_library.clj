@@ -6,6 +6,7 @@
             [babashka.fs :as fs]
             [clojure.edn :as edn]
             [clojure.pprint :as pp]
+            [clojure.tools.cli :as cli]
             [script-helpers :refer [log read-edn write-edn] :as helpers]))
 
 (defn absolutize-path [path]
@@ -54,7 +55,7 @@
   history) to repository at `target-path` using last component (folder) name as
   the subfolder (or prefix) in the target. Optionally the destination can be
   specified with 3rd argument, e.g. \"server/smart-contracts\". "
-  [source-path target-path group]
+  [source-path target-path group & {:keys [create-new-branch?] :or {create-new-branch? true}}]
   (let [source-name (str (last (fs/components source-path))) ; the-thing from /this/is/the-thing
         prefix (str group "/" source-name) ; e.g. browser/district-ui-web3
         merge-result (atom {})
@@ -63,7 +64,7 @@
     (with-sh-dir target-path
       (if has-changes?
         (throw (ex-info "Can't continue because repo has changes. Stash or reset them before trying again" {})))
-      (sh "git" "checkout" "-b" source-name) ; Create new branch where to put the history
+      (if create-new-branch? (sh "git" "checkout" "-b" source-name)) ; Create new branch where to put the history
       (log "Migrating" source-path "to" target-path "under" prefix)
       (reset! merge-result (sh "git" "subtree" "add" (str "--prefix=" prefix) source-path "master")))
     (if (= 1 (:exit @merge-result))
@@ -73,11 +74,68 @@
         (write-edn ,,, deps-edn-path))
     (log "Done updating deps.edn at" deps-edn-path)))
 
-(defn -main [& args]
-  (let [[library-path target-path group] *command-line-args*]
+(def cli-options
+  [[nil "--[no-]create-branch" "(default: true) create new branch with library name where to import"
+    :default true
+    :parse-fn #(do
+                 (println "parse-fn" % (type %))
+                 (= % "true"))]
+   ["-h" "--help" "print this help about usage"]])
+
+(defn usage [options-summary]
+  (->> ["migrate-library  | import individual ClojureScript library repo (with commit history) into a monorepo"
+        ""
+        "Usage: migrate_library.clj [options] library-path target-path group"
+        ""
+        "Options:"
+        options-summary
+        ""
+        "  library-path   filesystem or git URL path to the library (has to have deps.edn & shadow-cljs.edn)"
+        "  target-path    local filesystem location of a git repository where to import the history"
+        "  group          folder under which to put the imported library (normally one of server, browser, shared)"]
+       (clojure.string/join "\n")))
+
+(defn validate-args [library-path target-path group]
+  (let [errors (atom [])]
     (cond
-      (library-structure-as-expected? library-path) (move-merging-git-histories library-path target-path group)
-      :else (log "Library doesn't have the expected structure (needs deps.edn)"))))
+      (nil? library-path)
+      (swap! errors conj "Error: 1st arg `library-path` missing")
+
+      (not (fs/directory? library-path))
+      (swap! errors conj (str "Error: library-path `" library-path "` isn't a directory"))
+
+      (nil? target-path)
+      (swap! errors conj "Error: 2nd arg `target-path` missing")
+
+      (not (fs/directory? target-path))
+      (swap! errors conj (str "Error: target-path `" target-path "` isn't a directory"))
+
+      (nil? group)
+      (swap! errors conj "Error: 3rd arg `group` can't be empty"))
+    [(empty? @errors) @errors]))
+
+(defn -main [& args]
+  (let [[library-path target-path group] *command-line-args*
+        parsed-args (cli/parse-opts *command-line-args* cli-options)
+        [args-ok? args-errors] (validate-args library-path target-path group)
+        {:keys [errors options arguments summary]} parsed-args
+        all-errors (concat errors args-errors)]
+    (cond
+      (seq all-errors)
+      (do
+        (run! println all-errors)
+        (println (usage summary))
+        (System/exit -1))
+      (:help options)
+      (do
+        (println (usage summary))
+        (System/exit 0))
+      args-ok?
+      (move-merging-git-histories library-path target-path group :create-new-branch? (:create-branch options))
+      :else
+      (do
+        (println (usage summary))
+        (System/exit 0)))))
 
 ; To allow running as commandn line util but also required & used in other programs or REPL
 ; https://book.babashka.org/#main_file

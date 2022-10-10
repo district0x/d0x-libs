@@ -63,6 +63,6 @@
     (let [temp-path (fs/create-temp-dir {:prefix temp-prefix})
           test-repo-path (set-up-git-repo "bin_test/fixtures/test-repo.tar.gz" temp-path)
           container-repo-path (set-up-git-repo "bin_test/fixtures/container-repo.tar.gz" temp-path)]
-      (ml/move-merging-git-histories test-repo-path container-repo-path "shared")
+      (ml/move-merging-git-histories test-repo-path container-repo-path "shared" :create-new-branch? true)
       (is (= 5 (count-commits container-repo-path))) ; 2 commits from container + 2 from test-repo + 1 merge
       (is (= (file-set-in (str container-repo-path "/shared/test-repo")) (file-set-in test-repo-path))))))
