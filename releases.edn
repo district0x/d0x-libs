@@ -1,0 +1,6 @@
+[
+ {:created-at "2022-10-10 13:56:00"
+  :version "22.10.10"
+  :description ["First time trying this. Adding it manually"]
+  :libs [server-web3-smart-contracts cljs-web3-next]}
+ ]

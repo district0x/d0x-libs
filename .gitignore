@@ -8,3 +8,5 @@ yarn-error.log
 .shadow-cljs
 Session.vim
 build
+yarn.lock
+circle-continuation-config.yml
