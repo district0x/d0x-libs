@@ -76,10 +76,7 @@
 
 (def cli-options
   [[nil "--[no-]create-branch" "(default: true) create new branch with library name where to import"
-    :default true
-    :parse-fn #(do
-                 (println "parse-fn" % (type %))
-                 (= % "true"))]
+    :default true]
    ["-h" "--help" "print this help about usage"]])
 
 (defn usage [options-summary]
