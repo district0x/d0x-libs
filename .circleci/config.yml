@@ -11,13 +11,13 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Make bb available globally
-        command: ln -s bin/bb /usr/local/bin/bb
+          name: Make bb available globally
+          command: sudo ln -fs `pwd`/bin/bb /usr/local/bin/bb
       - run:
-        name: Generate config (test run setup)
-        command: ./bin/run_library_tests.clj circle-continuation-config.yml
+          name: Generate config
+          command: ./bin/run_library_tests.clj circle-continuation-config.yml
       - continuation/continue:
-        configuration_path: circle-continuation-config.yml
+          configuration_path: circle-continuation-config.yml
 
 workflows:
   setup:
