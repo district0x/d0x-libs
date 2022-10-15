@@ -1,0 +1,34 @@
+version: 2.1
+
+setup: true
+
+orbs:
+  continuation: circleci/continuation@0.3.1
+
+jobs:
+  setup:
+    working_directory: ~/ci
+    docker:
+      - image: 487920318758.dkr.ecr.us-west-2.amazonaws.com/cljs-web3-ci:latest
+        aws_auth:
+            aws_access_key_id: $AWS_ACCESS_KEY_ID
+            aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    executor: continuation/default
+    steps:
+      - checkout
+      - run:
+          name: Get the contents of monorepo-tools git submodule
+          command: git submodule update --init
+      - run:
+          name: Make bb available globally
+          command: sudo ln -fs `pwd`/bin/bb /usr/local/bin/bb
+      - run:
+          name: Generate config
+          command: bb run-tests circle-continuation-config.yml
+      - continuation/continue:
+          configuration_path: circle-continuation-config.yml
+
+workflows:
+  setup:
+    jobs:
+      - setup
