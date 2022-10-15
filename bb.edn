@@ -1,0 +1,19 @@
+{:paths ["monorepo-tools/src" "monorepo-tools/test"]
+ :tasks {migrate {:doc "Import existing CLJS (using shadow-cljs, deps.edn) library with history from git repo"
+                  :requires ([migrate-library])
+                  :task (apply migrate-library/-main *command-line-args*)}
+
+         ci-config {:doc "Generates config for CirlceCi dynamic config continuation steps"
+                    :requires ([generate-ci-config])
+                    :task (apply generate-ci-config/-main *command-line-args*)}
+
+         update-versions {:doc "Take changed library and bump versions of all affected by it through dependency"
+                          :requires ([update-library-versions])
+                          :task (apply update-library-versions/-main *command-line-args*)}
+
+         release {:doc "Try to shell out to clojure. Use: bb release VERSION LIBPATH" ; 20.10.9 shared/cljs-web3-next
+                  :task (clojure (format "-X:release :version '\"%s\"' :library '%s'" (first *command-line-args*) (second *command-line-args*)))}
+
+         mt-test {:doc "Run monorepo-tools tests"
+                  :requires ([test-runner])
+                  :task (test-runner/-main *command-line-args*)}}}
