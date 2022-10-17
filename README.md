@@ -27,3 +27,18 @@ bb mt-test         Run monorepo-tools tests
 2. Make sure you have [Babashka](https://github.com/babashka/babashka#installation) installed
   - it's enough to download the release and put `bb` executable on your PATH
 3. Check and use the tasks provided `bb tasks`
+
+## Updating the `monorepo-tools`
+
+There are 2 ways:
+1. Updating the submodule directory
+  - first add and commit and push the changes *being inside the monorepo-tools* folder
+  - then at the top level add and commit that the submodule now refers to
+2. Inside a separately cloned `monorepo-tools` folder
+  - add, commit and push like normal
+  - once inside `d0x-libs` update the reference that submodule refers using: `git submodule update --remote`
+  - then add, commit & push the change (so that others updating their `d0x-libs`) also start using new `monorepo-tools`
+3. If the changes are in separate branch of `monorepo-tools` (pushed to remote)
+  - `git submodule set-branch --branch fix-version-tracking monorepo-tools` (changing _fix-version-tracking_ for the branch name)
+  - `git submodule update --init --recursive --remote` to pull in the new code
+  - then add & commit changes on repo root level, in case you want to share the `d0x-libs` working against a branch of `monorepo-tools`
