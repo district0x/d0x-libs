@@ -3,8 +3,7 @@
     [district.ui.web3-accounts.events :as accounts-events]
     [district.ui.web3-accounts.subs :as accounts-subs]
     [re-frame.core :refer [subscribe dispatch]]
-    [reagent.core :as r]
-    [soda-ash.core :as ui]))
+    [reagent.core :as r]))
 
 (defn active-account []
   (let [accounts (subscribe [::accounts-subs/accounts])
@@ -16,16 +15,15 @@
            [:span.single-account
             single-account-props
             @active-acc]
-           [ui/Select
+           [:select
             (r/merge-props
-             {:select-on-blur false
-              :class "active-account-select"
-              :value @active-acc
-              :on-change (fn [e data]
-                           (dispatch [::accounts-events/set-active-account (aget data "value")]))
-              :fluid true
-              :options (doall (for [acc @accounts]
-                                {:value acc :text acc}))}
-             select-props)])]
+              {:class "active-account-select"
+               :value @active-acc
+               :on-change (fn [item]
+                            (let [val (-> item .-target .-value)]
+                              (dispatch [::accounts-events/set-active-account val])))}
+              select-props)
+            (map (fn [account]
+                   [:option {:key account :value account} account]) @accounts)])]
         [:div
          "Ethereum wallet not connected"]))))

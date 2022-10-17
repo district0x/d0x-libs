@@ -5,7 +5,7 @@ account. If user has multiple accounts, select field will be presented, otherwis
 This component uses [React Semantic UI](https://react.semantic-ui.com). 
 
 ## Installation
-Add `[district0x/district-ui-component-active-account "1.0.0"]` into your project.clj  
+Add [![Clojars Project](https://img.shields.io/clojars/v/district0x/district-ui-component-active-account.svg)](https://clojars.org/district0x/district-ui-component-active-account) into your project.clj  
 Include `[district.ui.component.active-account]` in your CLJS file
 
 ## Module dependencies

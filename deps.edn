@@ -6,7 +6,6 @@
   thheller/shadow-cljs {:mvn/version "2.19.3"}
   org.clojure/clojurescript {:mvn/version "1.11.60"}
   io.github.district0x/district-ui-web3-accounts {:mvn/version "1.1.0-SNAPSHOT"}
-  soda-ash/soda-ash {:mvn/version "0.83.0"}
   re-frame/re-frame {:mvn/version "1.2.0"}}
 
  :install-deps true
