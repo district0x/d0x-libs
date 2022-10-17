@@ -3,9 +3,9 @@
                           :requires ([migrate-library])
                           :task (apply migrate-library/-main *command-line-args*)}
 
-         run-tests {:doc "Generates config for CirlceCi dynamic config continuation steps"
-                            :requires ([run-library-tests])
-                            :task (apply run-library-tests/-main *command-line-args*)}
+         ci-config {:doc "Generates config for CirlceCi dynamic config continuation steps"
+                            :requires ([generate-ci-config])
+                            :task (apply generate-ci-config/-main *command-line-args*)}
 
          update-versions {:doc "Take changed library and bump versions of all affected by it through dependency"
                           :requires ([update-library-versions])

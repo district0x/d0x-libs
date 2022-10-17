@@ -24,7 +24,7 @@ jobs:
           command: sudo ln -fs `pwd`/bin/bb /usr/local/bin/bb
       - run:
           name: Generate config
-          command: bb run-tests circle-continuation-config.yml
+          command: bb ci-config circle-continuation-config.yml
       - continuation/continue:
           configuration_path: circle-continuation-config.yml
 
