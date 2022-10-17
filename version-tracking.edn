@@ -1,1 +1,3 @@
-[]
+[{:created-at "anything goes"
+  :version "22.10.17"
+  :libs ["server/district-server-smart-contracts" "server/district-server-web3"]}]
