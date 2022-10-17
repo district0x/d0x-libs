@@ -1,3 +1,4 @@
 [submodule "monorepo-tools"]
 	path = monorepo-tools
 	url = git@github.com:district0x/monorepo-tools.git
+	branch = fix-version-tracking
