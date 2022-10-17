@@ -1,0 +1,19 @@
+{:paths ["src" "test"],
+ :mvn/repos
+ {"central" {:url "https://repo1.maven.org/maven2/"},
+  "clojars" {:url "https://clojars.org/repo"}},
+ :deps
+ {org.clojure/clojure {:mvn/version "1.11.1"},
+  thheller/shadow-cljs {:mvn/version "2.20.5"}},
+ :install-deps true,
+ :aliases
+ {:district-server-smart-contracts
+  {:extra-deps
+   {district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"}},
+   :extra-paths ["server/district-server-smart-contracts/test"]},
+  :server-all
+  {:extra-deps
+   {district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"}},
+   :extra-paths ["server/district-server-smart-contracts/test"]}}}
