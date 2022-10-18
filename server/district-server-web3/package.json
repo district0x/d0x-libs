@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "jsedn": "0.4.1",
+    "shadow-cljs": "2.19.3",
+    "web3": "1.7.3"
+  }
+}
