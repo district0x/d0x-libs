@@ -12,7 +12,7 @@
                           :task (apply update-library-versions/-main *command-line-args*)}
 
          release {:doc "Try to shell out to clojure. Use: bb release VERSION LIBPATH" ; 20.10.9 shared/cljs-web3-next
-                  :task (clojure (format "-X:release :version '\"%s\"' :library '%s'" (first *command-line-args*) (second *command-line-args*)))}
+                  :task (clojure (format "-X release/-main :version '\"%s\"' :library '%s'" (first *command-line-args*) (second *command-line-args*)))}
 
          mt-test {:doc "Run monorepo-tools tests"
                   :requires ([test-runner])

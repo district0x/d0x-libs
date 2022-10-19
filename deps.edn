@@ -1,0 +1,30 @@
+{:paths [],
+ :mvn/repos
+ {"central" {:url "https://repo1.maven.org/maven2/"},
+  "clojars" {:url "https://clojars.org/repo"}},
+ :deps
+ {org.clojure/clojure {:mvn/version "1.11.1"},
+  thheller/shadow-cljs {:mvn/version "2.20.5"},
+  is.d0x/monorepo-tools {:local/root "./monorepo-tools"}},
+ :install-deps true,
+ :aliases
+ {:district-server-web3
+  {:extra-deps
+   {district0x/district-server-web3
+    {:local/root "server/district-server-web3"}},
+   :extra-paths ["server/district-server-web3/test"]},
+  :server-all
+  {:extra-deps
+   {district0x/district-server-web3
+    {:local/root "server/district-server-web3"}},
+   :extra-paths ["server/district-server-web3/test"]},
+  :cljs-web3-next
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]},
+  :shared-all
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]}}}
