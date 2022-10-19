@@ -12,18 +12,33 @@ The goals that guided this approach were:
   - having this monorepo structure allows via one pull-request run tests for various libraries
   - it also allows release them in bulk (e.g. `is.d0x/district-server`) or individually (e.g. `is.d0x/district-ui-web3`)
 
-The repository also contains some helpful tools, namely:
-1. `bin/migrate_library.clj` script to migrate existing library (along with its git commit history) to this monorepo
-2. `bin/start-repl` script to start repl making one or more libraries available for trying out
-3. `bin/run-tests` script to run tests for one or more libraries
-4. `bin/make-release` script to publish one or more libraries to Clojars
-
-> More documentation coming up as the libraries and tools get built
-
-## Tools used and included
-
-Some scripts included (e.g. `bin/migrate_library.clj`) use [babashka](https://github.com/babashka/babashka), which is _a native Clojure interpreter for scripting with fast startup_.
-To run the tests for these scripts (i.e. not tests for the libraries in the monorepo but tests for the helper tool scripts under `bin`) use:
+The babashka tasks (implemented in `monorepo-tools` and made available via `bb.edn`):
 ```
-./bin_test/test_runner.clj
+bb migrate         Import existing CLJS (using shadow-cljs, deps.edn) library with history from git repo
+bb run-tests       Generates config for CirlceCi dynamic config continuation steps
+bb update-versions Take changed library and bump versions of all affected by it through dependency
+bb mt-test         Run monorepo-tools tests
 ```
+
+## Getting started
+
+1. Clone the repository `git clone git@github.com:district0x/d0x-libs.git`
+  - set up `monorepo-tools` git submodule: `git submodule update --init`
+2. Make sure you have [Babashka](https://github.com/babashka/babashka#installation) installed
+  - it's enough to download the release and put `bb` executable on your PATH
+3. Check and use the tasks provided `bb tasks`
+
+## Updating the `monorepo-tools`
+
+There are 2 ways:
+1. Updating the submodule directory
+  - first add and commit and push the changes *being inside the monorepo-tools* folder
+  - then at the top level add and commit that the submodule now refers to
+2. Inside a separately cloned `monorepo-tools` folder
+  - add, commit and push like normal
+  - once inside `d0x-libs` update the reference that submodule refers using: `git submodule update --remote`
+  - then add, commit & push the change (so that others updating their `d0x-libs`) also start using new `monorepo-tools`
+3. If the changes are in separate branch of `monorepo-tools` (pushed to remote)
+  - `git submodule set-branch --branch fix-version-tracking monorepo-tools` (changing _fix-version-tracking_ for the branch name)
+  - `git submodule update --init --recursive --remote` to pull in the new code
+  - then add & commit changes on repo root level, in case you want to share the `d0x-libs` working against a branch of `monorepo-tools`
