@@ -30,7 +30,7 @@ bb mt-test         Run monorepo-tools tests
 
 ## Updating the `monorepo-tools`
 
-There are 2 ways:
+There are various ways:
 1. Updating the submodule directory
   - first add and commit and push the changes *being inside the monorepo-tools* folder
   - then at the top level add and commit that the submodule now refers to
@@ -42,3 +42,8 @@ There are 2 ways:
   - `git submodule set-branch --branch fix-version-tracking monorepo-tools` (changing _fix-version-tracking_ for the branch name)
   - `git submodule update --init --recursive --remote` to pull in the new code
   - then add & commit changes on repo root level, in case you want to share the `d0x-libs` working against a branch of `monorepo-tools`
+
+Or if you or someone else made changes to `monorepo-tools` (and you don't have any local changes) the easiest way is to run the following from your monorepo root
+```
+git submodule update --init --recursive --remote
+```

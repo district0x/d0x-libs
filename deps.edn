@@ -1,10 +1,11 @@
-{:paths ["src" "test"],
+{:paths [],
  :mvn/repos
  {"central" {:url "https://repo1.maven.org/maven2/"},
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
-  thheller/shadow-cljs {:mvn/version "2.20.5"}},
+  thheller/shadow-cljs {:mvn/version "2.20.5"}
+  is.d0x/monorepo-tools {:local/root "./monorepo-tools"}},
  :install-deps true,
  :aliases
  {:district-server-web3
