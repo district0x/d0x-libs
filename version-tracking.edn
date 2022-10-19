@@ -1,2 +1,3 @@
-[{:created-at "2022-10-19" :version "22.10.19" :libs ["server/district-server-web3" "shared/cljs-web3-next"] :description "Code Mode"}
+[{:created-at "2022-10-19" :version "22.10.19-SNAPSHOT" :libs ["server/district-server-web3" "shared/cljs-web3-next"] :description "Code Mode"}
+ {:created-at "2022-10-19" :version "22.10.19" :libs ["server/district-server-web3" "shared/cljs-web3-next"] :description "Code Mode"}
  {:created-at "2022-10-18" :version "22.10.18" :libs ["server/district-server-web3"] :description "Code Mode"}]
