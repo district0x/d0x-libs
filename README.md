@@ -1,5 +1,7 @@
 # d0x-libs: district0x libraries
 
+**NB** Currently CircleCI is configured to deploy under [is.mad](https://clojars.org/groups/is.mad) to Clojars. This is to avoid polluting the district0x namespace while we're doing the transition and polishing the nooks and crannies.
+
 This is a monorepo holding most of district0x ClojureScript libraries - for browser, server and shared (work with browser and server).
 
 The goals that guided this approach were:
