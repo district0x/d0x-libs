@@ -36,5 +36,17 @@
   :browser-all
   {:extra-deps
    {district0x/district-ui-component-active-account
-    {:local/root "browser/district-ui-component-active-account"}},
-   :extra-paths ["browser/district-ui-component-active-account/test"]}}}
+    {:local/root "browser/district-ui-component-active-account"},
+    district0x/district-ui-component-active-account-balance
+    {:local/root
+     "browser/district-ui-component-active-account-balance"}},
+   :extra-paths
+   ["browser/district-ui-component-active-account-balance/test"
+    "browser/district-ui-component-active-account/test"]},
+  :district-ui-component-active-account-balance
+  {:extra-deps
+   {district0x/district-ui-component-active-account-balance
+    {:local/root
+     "browser/district-ui-component-active-account-balance"}},
+   :extra-paths
+   ["browser/district-ui-component-active-account-balance/test"]}}}
