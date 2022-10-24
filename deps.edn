@@ -27,4 +27,26 @@
   {:extra-deps
    {io.github.district0x/cljs-web3-next
     {:local/root "shared/cljs-web3-next"}},
-   :extra-paths ["shared/cljs-web3-next/test"]}}}
+   :extra-paths ["shared/cljs-web3-next/test"]},
+  :district-ui-component-active-account
+  {:extra-deps
+   {district0x/district-ui-component-active-account
+    {:local/root "browser/district-ui-component-active-account"}},
+   :extra-paths ["browser/district-ui-component-active-account/test"]},
+  :browser-all
+  {:extra-deps
+   {district0x/district-ui-component-active-account
+    {:local/root "browser/district-ui-component-active-account"},
+    district0x/district-ui-component-active-account-balance
+    {:local/root
+     "browser/district-ui-component-active-account-balance"}},
+   :extra-paths
+   ["browser/district-ui-component-active-account-balance/test"
+    "browser/district-ui-component-active-account/test"]},
+  :district-ui-component-active-account-balance
+  {:extra-deps
+   {district0x/district-ui-component-active-account-balance
+    {:local/root
+     "browser/district-ui-component-active-account-balance"}},
+   :extra-paths
+   ["browser/district-ui-component-active-account-balance/test"]}}}

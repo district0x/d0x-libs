@@ -12,8 +12,13 @@
                           :task (apply update-library-versions/-main *command-line-args*)}
 
          release {:doc "Try to shell out to clojure. Use: bb release VERSION LIBPATH" ; 20.10.9 shared/cljs-web3-next
+                  ; The escaping is needed to make Clojure interpret version (20.10.1) as string instead of number (and therefore failing)
                   :task (clojure (format "-X release/-main :version '\"%s\"' :library '%s'" (first *command-line-args*) (second *command-line-args*)))}
 
          mt-test {:doc "Run monorepo-tools tests"
                   :requires ([test-runner])
-                  :task (test-runner/-main *command-line-args*)}}}
+                  :task (test-runner/-main *command-line-args*)}
+
+         find-candidates {:doc "Finds all library candidates form folder for for monorepo migration. Outputs script to be used with `bb migrate`"
+                          :requires [find-migrate-candidates]
+                          :task (apply find-migrate-candidates/-main *command-line-args*)}}}
