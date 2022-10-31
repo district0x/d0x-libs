@@ -18,6 +18,11 @@
    :extra-paths
    ["browser/district-ui-component-active-account-balance/test"
     "browser/district-ui-component-active-account/test"]},
+  :district-server-web3-events
+  {:extra-deps
+   {district0x/district-server-web3-events
+    {:local/root "server/district-server-web3-events"}},
+   :extra-paths ["server/district-server-web3-events/test"]},
   :district-ui-component-active-account-balance
   {:extra-deps
    {district0x/district-ui-component-active-account-balance
@@ -52,9 +57,12 @@
     district0x/district-server-db
     {:local/root "server/district-server-db"},
     district0x/district-server-smart-contracts
-    {:local/root "server/district-server-smart-contracts"}},
+    {:local/root "server/district-server-smart-contracts"},
+    district0x/district-server-web3-events
+    {:local/root "server/district-server-web3-events"}},
    :extra-paths
-   ["server/district-server-smart-contracts/test"
+   ["server/district-server-web3-events/test"
+    "server/district-server-smart-contracts/test"
     "server/district-server-db/test"
     "server/district-server-web3/test"]},
   :cljs-web3-next
