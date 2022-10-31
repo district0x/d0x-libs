@@ -8,32 +8,7 @@
   is.d0x/monorepo-tools {:local/root "./monorepo-tools"}},
  :install-deps true,
  :aliases
- {:district-server-web3
-  {:extra-deps
-   {district0x/district-server-web3
-    {:local/root "server/district-server-web3"}},
-   :extra-paths ["server/district-server-web3/test"]},
-  :server-all
-  {:extra-deps
-   {district0x/district-server-web3
-    {:local/root "server/district-server-web3"}},
-   :extra-paths ["server/district-server-web3/test"]},
-  :cljs-web3-next
-  {:extra-deps
-   {io.github.district0x/cljs-web3-next
-    {:local/root "shared/cljs-web3-next"}},
-   :extra-paths ["shared/cljs-web3-next/test"]},
-  :shared-all
-  {:extra-deps
-   {io.github.district0x/cljs-web3-next
-    {:local/root "shared/cljs-web3-next"}},
-   :extra-paths ["shared/cljs-web3-next/test"]},
-  :district-ui-component-active-account
-  {:extra-deps
-   {district0x/district-ui-component-active-account
-    {:local/root "browser/district-ui-component-active-account"}},
-   :extra-paths ["browser/district-ui-component-active-account/test"]},
-  :browser-all
+ {:browser-all
   {:extra-deps
    {district0x/district-ui-component-active-account
     {:local/root "browser/district-ui-component-active-account"},
@@ -43,10 +18,68 @@
    :extra-paths
    ["browser/district-ui-component-active-account-balance/test"
     "browser/district-ui-component-active-account/test"]},
+  :district-server-web3-events
+  {:extra-deps
+   {district0x/district-server-web3-events
+    {:local/root "server/district-server-web3-events"}},
+   :extra-paths ["server/district-server-web3-events/test"]},
   :district-ui-component-active-account-balance
   {:extra-deps
    {district0x/district-ui-component-active-account-balance
     {:local/root
      "browser/district-ui-component-active-account-balance"}},
    :extra-paths
-   ["browser/district-ui-component-active-account-balance/test"]}}}
+   ["browser/district-ui-component-active-account-balance/test"]},
+  :district-ui-component-active-account
+  {:extra-deps
+   {district0x/district-ui-component-active-account
+    {:local/root "browser/district-ui-component-active-account"}},
+   :extra-paths ["browser/district-ui-component-active-account/test"]},
+  :district-server-db
+  {:extra-deps
+   {district0x/district-server-db
+    {:local/root "server/district-server-db"}},
+   :extra-paths ["server/district-server-db/test"]},
+  :district-server-web3
+  {:extra-deps
+   {district0x/district-server-web3
+    {:local/root "server/district-server-web3"}},
+   :extra-paths ["server/district-server-web3/test"]},
+  :district-server-smart-contracts
+  {:extra-deps
+   {district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"}},
+   :extra-paths ["server/district-server-smart-contracts/test"]},
+  :server-all
+  {:extra-deps
+   {district0x/district-server-web3
+    {:local/root "server/district-server-web3"},
+    district0x/district-server-db
+    {:local/root "server/district-server-db"},
+    district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"},
+    district0x/district-server-web3-events
+    {:local/root "server/district-server-web3-events"},
+    district0x/district-server-web3-watcher
+    {:local/root "server/district-server-web3-watcher"}},
+   :extra-paths
+   ["server/district-server-web3-watcher/test"
+    "server/district-server-web3-events/test"
+    "server/district-server-smart-contracts/test"
+    "server/district-server-db/test"
+    "server/district-server-web3/test"]},
+  :district-server-web3-watcher
+  {:extra-deps
+   {district0x/district-server-web3-watcher
+    {:local/root "server/district-server-web3-watcher"}},
+   :extra-paths ["server/district-server-web3-watcher/test"]},
+  :cljs-web3-next
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]},
+  :shared-all
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]}}}
