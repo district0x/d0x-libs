@@ -16,8 +16,12 @@
   :server-all
   {:extra-deps
    {district0x/district-server-web3
-    {:local/root "server/district-server-web3"}},
-   :extra-paths ["server/district-server-web3/test"]},
+    {:local/root "server/district-server-web3"},
+    district0x/district-server-db
+    {:local/root "server/district-server-db"}},
+   :extra-paths
+   ["server/district-server-db/test"
+    "server/district-server-web3/test"]},
   :cljs-web3-next
   {:extra-deps
    {io.github.district0x/cljs-web3-next
@@ -49,4 +53,9 @@
     {:local/root
      "browser/district-ui-component-active-account-balance"}},
    :extra-paths
-   ["browser/district-ui-component-active-account-balance/test"]}}}
+   ["browser/district-ui-component-active-account-balance/test"]},
+  :district-server-db
+  {:extra-deps
+   {district0x/district-server-db
+    {:local/root "server/district-server-db"}},
+   :extra-paths ["server/district-server-db/test"]}}}
