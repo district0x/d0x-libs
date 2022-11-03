@@ -16,9 +16,12 @@
     {:local/root
      "browser/district-ui-component-active-account-balance"},
     district0x/district-ui-component-tx-button
-    {:local/root "browser/district-ui-component-tx-button"}},
+    {:local/root "browser/district-ui-component-tx-button"},
+    io.github.district0x/district-ui-smart-contracts
+    {:local/root "browser/district-ui-smart-contracts"}},
    :extra-paths
-   ["browser/district-ui-component-tx-button/test"
+   ["browser/district-ui-smart-contracts/test"
+    "browser/district-ui-component-tx-button/test"
     "browser/district-ui-component-active-account-balance/test"
     "browser/district-ui-component-active-account/test"]},
   :district-server-web3-events
@@ -81,6 +84,11 @@
    {district0x/district-server-web3-watcher
     {:local/root "server/district-server-web3-watcher"}},
    :extra-paths ["server/district-server-web3-watcher/test"]},
+  :district-ui-smart-contracts
+  {:extra-deps
+   {io.github.district0x/district-ui-smart-contracts
+    {:local/root "browser/district-ui-smart-contracts"}},
+   :extra-paths ["browser/district-ui-smart-contracts/test"]},
   :cljs-web3-next
   {:extra-deps
    {io.github.district0x/cljs-web3-next
