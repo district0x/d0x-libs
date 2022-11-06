@@ -25,9 +25,12 @@
     district0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"},
     district0x/district-ui-smart-contracts
-    {:local/root "browser/district-ui-smart-contracts"}},
+    {:local/root "browser/district-ui-smart-contracts"},
+    district0x/district-ui-web3
+    {:local/root "browser/district-ui-web3"}},
    :extra-paths
-   ["browser/district-ui-smart-contracts/test"
+   ["browser/district-ui-web3/test"
+    "browser/district-ui-smart-contracts/test"
     "browser/district-ui-reagent-render/test"
     "browser/district-ui-component-tx-button/test"
     "browser/district-ui-component-active-account-balance/test"]},
@@ -45,4 +48,9 @@
   {:extra-deps
    {district0x/district-ui-smart-contracts
     {:local/root "browser/district-ui-smart-contracts"}},
-   :extra-paths ["browser/district-ui-smart-contracts/test"]}}}
+   :extra-paths ["browser/district-ui-smart-contracts/test"]},
+  :district-ui-web3
+  {:extra-deps
+   {district0x/district-ui-web3
+    {:local/root "browser/district-ui-web3"}},
+   :extra-paths ["browser/district-ui-web3/test"]}}}
