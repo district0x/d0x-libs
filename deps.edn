@@ -19,6 +19,14 @@
   {:extra-deps
    {district0x/district-ui-component-active-account-balance
     {:local/root
-     "browser/district-ui-component-active-account-balance"}},
+     "browser/district-ui-component-active-account-balance"},
+    district0x/district-ui-component-tx-button
+    {:local/root "browser/district-ui-component-tx-button"}},
    :extra-paths
-   ["browser/district-ui-component-active-account-balance/test"]}}}
+   ["browser/district-ui-component-tx-button/test"
+    "browser/district-ui-component-active-account-balance/test"]},
+  :district-ui-component-tx-button
+  {:extra-deps
+   {district0x/district-ui-component-tx-button
+    {:local/root "browser/district-ui-component-tx-button"}},
+   :extra-paths ["browser/district-ui-component-tx-button/test"]}}}
