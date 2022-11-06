@@ -43,12 +43,15 @@
     {:local/root "browser/district-ui-web3-account-balances"},
     io.github.district0x/district-ui-web3-tx
     {:local/root "browser/district-ui-web3-tx"},
+    district0x/district-ui-web3-tx-log
+    {:local/root "browser/district-ui-web3-tx-log"},
     district0x/district-ui-component-tx-button
     {:local/root "browser/district-ui-component-tx-button"},
     io.github.district0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
    :extra-paths
-   ["browser/district-ui-web3-tx-id/test"
+   ["browser/district-ui-web3-tx-log/test"
+    "browser/district-ui-web3-tx-id/test"
     "browser/district-ui-web3-tx-costs/test"
     "browser/district-ui-web3-tx/test"
     "browser/district-ui-web3-sync-now/test"
@@ -66,6 +69,11 @@
    {district0x/district-ui-web3-account-balances
     {:local/root "browser/district-ui-web3-account-balances"}},
    :extra-paths ["browser/district-ui-web3-account-balances/test"]},
+  :district-ui-web3-tx-log
+  {:extra-deps
+   {district0x/district-ui-web3-tx-log
+    {:local/root "browser/district-ui-web3-tx-log"}},
+   :extra-paths ["browser/district-ui-web3-tx-log/test"]},
   :district-ui-component-tx-button
   {:extra-deps
    {district0x/district-ui-component-tx-button
