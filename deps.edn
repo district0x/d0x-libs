@@ -35,6 +35,8 @@
     {:local/root "browser/district-ui-web3-sync-now"},
     io.github.district0x/district-ui-web3-tx-costs
     {:local/root "browser/district-ui-web3-tx-costs"},
+    io.github.district0x/district-ui-web3-tx-id
+    {:local/root "browser/district-ui-web3-tx-id"},
     io.github.district0x/district-ui-web3-accounts
     {:local/root "browser/district-ui-web3-accounts"},
     district0x/district-ui-web3-account-balances
@@ -46,7 +48,8 @@
     io.github.district0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
    :extra-paths
-   ["browser/district-ui-web3-tx-costs/test"
+   ["browser/district-ui-web3-tx-id/test"
+    "browser/district-ui-web3-tx-costs/test"
     "browser/district-ui-web3-tx/test"
     "browser/district-ui-web3-sync-now/test"
     "browser/district-ui-web3-chain/test"
@@ -90,6 +93,11 @@
    {district0x/district-ui-web3
     {:local/root "browser/district-ui-web3"}},
    :extra-paths ["browser/district-ui-web3/test"]},
+  :district-ui-web3-tx-id
+  {:extra-deps
+   {io.github.district0x/district-ui-web3-tx-id
+    {:local/root "browser/district-ui-web3-tx-id"}},
+   :extra-paths ["browser/district-ui-web3-tx-id/test"]},
   :district-ui-reagent-render
   {:extra-deps
    {district0x/district-ui-reagent-render
