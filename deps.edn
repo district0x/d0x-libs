@@ -13,6 +13,11 @@
    {io.github.district0x/district-ui-web3-balances
     {:local/root "browser/district-ui-web3-balances"}},
    :extra-paths ["browser/district-ui-web3-balances/test"]},
+  :district-ui-web3-tx-costs
+  {:extra-deps
+   {io.github.district0x/district-ui-web3-tx-costs
+    {:local/root "browser/district-ui-web3-tx-costs"}},
+   :extra-paths ["browser/district-ui-web3-tx-costs/test"]},
   :browser-all
   {:extra-deps
    {district0x/district-ui-component-active-account-balance
@@ -28,6 +33,8 @@
     {:local/root "browser/district-ui-web3-balances"},
     io.github.district0x/district-ui-web3-sync-now
     {:local/root "browser/district-ui-web3-sync-now"},
+    io.github.district0x/district-ui-web3-tx-costs
+    {:local/root "browser/district-ui-web3-tx-costs"},
     io.github.district0x/district-ui-web3-accounts
     {:local/root "browser/district-ui-web3-accounts"},
     district0x/district-ui-web3-account-balances
@@ -39,7 +46,8 @@
     io.github.district0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
    :extra-paths
-   ["browser/district-ui-web3-tx/test"
+   ["browser/district-ui-web3-tx-costs/test"
+    "browser/district-ui-web3-tx/test"
     "browser/district-ui-web3-sync-now/test"
     "browser/district-ui-web3-chain/test"
     "browser/district-ui-web3-balances/test"
