@@ -29,9 +29,12 @@
     district0x/district-ui-web3
     {:local/root "browser/district-ui-web3"},
     district0x/district-ui-web3-account-balances
-    {:local/root "browser/district-ui-web3-account-balances"}},
+    {:local/root "browser/district-ui-web3-account-balances"},
+    io.github.district0x/district-ui-web3-accounts
+    {:local/root "browser/district-ui-web3-accounts"}},
    :extra-paths
-   ["browser/district-ui-web3-account-balances/test"
+   ["browser/district-ui-web3-accounts/test"
+    "browser/district-ui-web3-account-balances/test"
     "browser/district-ui-web3/test"
     "browser/district-ui-smart-contracts/test"
     "browser/district-ui-reagent-render/test"
@@ -61,4 +64,9 @@
   {:extra-deps
    {district0x/district-ui-web3-account-balances
     {:local/root "browser/district-ui-web3-account-balances"}},
-   :extra-paths ["browser/district-ui-web3-account-balances/test"]}}}
+   :extra-paths ["browser/district-ui-web3-account-balances/test"]},
+  :district-ui-web3-accounts
+  {:extra-deps
+   {io.github.district0x/district-ui-web3-accounts
+    {:local/root "browser/district-ui-web3-accounts"}},
+   :extra-paths ["browser/district-ui-web3-accounts/test"]}}}
