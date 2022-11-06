@@ -1,0 +1,4 @@
+{:tools-root "./monorepo-tools"
+ :artefact-group "is.mad"
+ :bundle-prefix "-district"
+ :groups ["browser" "server" "shared"]}

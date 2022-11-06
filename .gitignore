@@ -1,0 +1,11 @@
+.nrepl-history
+.nrepl-port
+node_modules
+package-lock.json
+out
+yarn-error.log
+.cpcache
+.shadow-cljs
+Session.vim
+build
+releases
