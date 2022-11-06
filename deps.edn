@@ -21,12 +21,20 @@
     {:local/root
      "browser/district-ui-component-active-account-balance"},
     district0x/district-ui-component-tx-button
-    {:local/root "browser/district-ui-component-tx-button"}},
+    {:local/root "browser/district-ui-component-tx-button"},
+    district0x/district-ui-reagent-render
+    {:local/root "browser/district-ui-reagent-render"}},
    :extra-paths
-   ["browser/district-ui-component-tx-button/test"
+   ["browser/district-ui-reagent-render/test"
+    "browser/district-ui-component-tx-button/test"
     "browser/district-ui-component-active-account-balance/test"]},
   :district-ui-component-tx-button
   {:extra-deps
    {district0x/district-ui-component-tx-button
     {:local/root "browser/district-ui-component-tx-button"}},
-   :extra-paths ["browser/district-ui-component-tx-button/test"]}}}
+   :extra-paths ["browser/district-ui-component-tx-button/test"]},
+  :district-ui-reagent-render
+  {:extra-deps
+   {district0x/district-ui-reagent-render
+    {:local/root "browser/district-ui-reagent-render"}},
+   :extra-paths ["browser/district-ui-reagent-render/test"]}}}
