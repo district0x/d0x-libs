@@ -18,22 +18,25 @@
    {district0x/district-ui-component-active-account-balance
     {:local/root
      "browser/district-ui-component-active-account-balance"},
-    district0x/district-ui-component-tx-button
-    {:local/root "browser/district-ui-component-tx-button"},
-    district0x/district-ui-reagent-render
-    {:local/root "browser/district-ui-reagent-render"},
     district0x/district-ui-smart-contracts
     {:local/root "browser/district-ui-smart-contracts"},
+    district0x/district-ui-reagent-render
+    {:local/root "browser/district-ui-reagent-render"},
     district0x/district-ui-web3
     {:local/root "browser/district-ui-web3"},
-    district0x/district-ui-web3-account-balances
-    {:local/root "browser/district-ui-web3-account-balances"},
+    io.github.district0x/district-ui-web3-balances
+    {:local/root "browser/district-ui-web3-balances"},
     io.github.district0x/district-ui-web3-accounts
     {:local/root "browser/district-ui-web3-accounts"},
-    io.github.district0x/district-ui-web3-balances
-    {:local/root "browser/district-ui-web3-balances"}},
+    district0x/district-ui-web3-account-balances
+    {:local/root "browser/district-ui-web3-account-balances"},
+    district0x/district-ui-component-tx-button
+    {:local/root "browser/district-ui-component-tx-button"},
+    io.github.district0x/district-ui-web3-chain
+    {:local/root "browser/district-ui-web3-chain"}},
    :extra-paths
-   ["browser/district-ui-web3-balances/test"
+   ["browser/district-ui-web3-chain/test"
+    "browser/district-ui-web3-balances/test"
     "browser/district-ui-web3-accounts/test"
     "browser/district-ui-web3-account-balances/test"
     "browser/district-ui-web3/test"
@@ -77,4 +80,9 @@
   {:extra-deps
    {district0x/district-ui-smart-contracts
     {:local/root "browser/district-ui-smart-contracts"}},
-   :extra-paths ["browser/district-ui-smart-contracts/test"]}}}
+   :extra-paths ["browser/district-ui-smart-contracts/test"]},
+  :district-ui-web3-chain
+  {:extra-deps
+   {io.github.district0x/district-ui-web3-chain
+    {:local/root "browser/district-ui-web3-chain"}},
+   :extra-paths ["browser/district-ui-web3-chain/test"]}}}
