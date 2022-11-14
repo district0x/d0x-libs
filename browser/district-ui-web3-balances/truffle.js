@@ -1,6 +1,6 @@
 'use strict';
 
-let smartContractsPaths = '/tests/smart_contracts_test.cljs';
+let smartContractsPaths = '/test/tests/smart_contracts_test.cljs';
 
 module.exports = {
   smart_contracts_path: __dirname + smartContractsPaths,
