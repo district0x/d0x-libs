@@ -124,11 +124,20 @@
    {district0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"}},
    :extra-paths ["browser/district-ui-reagent-render/test"]},
+  :district-server-smart-contracts
+  {:extra-deps
+   {district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"}},
+   :extra-paths ["server/district-server-smart-contracts/test"]},
   :server-all
   {:extra-deps
    {district0x/district-server-db
-    {:local/root "server/district-server-db"}},
-   :extra-paths ["server/district-server-db/test"]},
+    {:local/root "server/district-server-db"},
+    district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"}},
+   :extra-paths
+   ["server/district-server-smart-contracts/test"
+    "server/district-server-db/test"]},
   :district-ui-web3-accounts
   {:extra-deps
    {io.github.district0x/district-ui-web3-accounts
