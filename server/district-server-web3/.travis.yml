@@ -1,0 +1,7 @@
+language: clojure
+script: lein doo node "tests" once
+before_script:
+  - "echo 'Installing Ganache'"
+  - npm install -g ganache-cli
+  - "echo 'Running Ganache'"
+  - ganache-cli -p 8794 > /dev/null &
