@@ -1,0 +1,30 @@
+sudo: required
+dist: trusty
+language: clojure
+script: lein doo chrome "tests" once
+notifications:
+  email: false
+  slack:
+    on_success: always
+    on_failure: always
+    rooms:
+    - district0x:53vhalUfg0MitsQwzjP5PWdd#travis-ci
+addons:
+  chrome: stable
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- echo 'Installing Ganache'
+- npm install -g ganache-cli
+- echo 'Running Ganache'
+- ganache-cli -p 8549 -b 1 --noVMErrorsOnRPCResponse > /dev/null &
+env:
+  global:
+  - secure: Wc7J02B+0cwMLwVKbMFmXEEDNNS5yiZ+7nfto8uJq8W8lQZR8GhOB4xKxT+e3Q5fKmTz/eQs02G4L55+tT73C9YzJg6jrSnGmKuYZt5cIlOYHgpNN4vZhizggxpnM1QZiSCorAWwsUwxtx+1bmYDNJS9tGl8mdL4z9vpAaB5cXX+E2MBItSav9hvYmonBmkjOXaQfvGFHJRaFlbfwGKOl6y35ErLAkGZfP+rF3cVlgqbXW2DQ7eBWP/ICpLSazcCdx+pmG894uaBgwn7+1NxzzbHqCWbk67lBfcFV58w3ppUl6ht9G7UPZmTSnMyBvyB4ZwmNaC7fkQ5U0CLj3DDTfUJvAKhnlV4IIn5JoP6J2bKsHFcQ7z3oYNvb+dTTA9e3iEe8PwR7+n+pV7zxNnPkgVguzlaP727dtrK6wGplHynpZGmS+3tKYaa2IC22dwFDrzHXOajfdXaOJq8jCaAJa6yiBY9n88dDX3T3+y0zvyBG1uR+slWP8qR27wzphQndnycoX251UsjmnoDkhKqGMeDtUqP4lMJOjovGdA9n26NLAdnD7AOUOhuxZFfdGtuxpz/PDJYgm0yhtIHx6XDkJyDbRLgJnou6XEvQF3HZkaIpGQ69OPs0Z2GKfXr8j65zAQdCj0ubIy6mK8FsKNScFkUG28fM5+cjHRYA1BM6BY=
+  - secure: QFYS/ghOZkpiLBkenGNppX8YGS4L9rzwaCOYs2a1SU51G8GNz13+lp6a7L8QBu38Z1wYeQKRzOd+sumbdwO9m57aMsYscj5keDV+9wmh0O7IX/HBmbYxGplsTHATqJfuAETwGr5rXZyiyE88yhWtRUTlQWTYjX0wQ7PAYBicd3FfBd3eiCdEDN7ldu1JfuOE2CiDjkwg5Lw21xKrA+l4LDKIF5OC23AkYif3R+E9JwKAmIVEIRszG5YDylMAWyYkObFqEXuGC7X/IkVRB3XfmpvXW2bOh+cYn71llfbLLBFOb0qW++vY/V4Up8ECQI7LQQoCPMfS/Ro5phBy/9FKlxVEEPq/9FjvNuqC/ZMdma9d2QKrbJhsO3walpynD2/xduITkzyIhlGKrZV31VaLBKO+h/C4cQUZIFHfyXufNMdO5ArMEu2RKS3GQkVqNwd+k7MtpIB8v/NOxelmLm0WsuYLIOVNpyT3/ITg6Wcx0bInV8TtsS85wzfonrYXloox7/7SzZ1T34KOe8Qac69QD8wwwblcsxMsWBMiVscbIFaqvfWYIVEcx0uSHeP3BM0K7QloB0ieGYlmlCyBernjEPKIr96fHc5Lex8Xf4GySb44F5WVCi5vUQcVs8E6qlCtJompqcchHxuq7785xVJV38IJcC1ZnTZQYRXOs61M8Fw=
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: lein release :patch
+  on:
+    branch: master
