@@ -176,4 +176,14 @@
   {:extra-deps
    {io.github.district0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
-   :extra-paths ["browser/district-ui-web3-chain/test"]}}}
+   :extra-paths ["browser/district-ui-web3-chain/test"]},
+  :cljs-web3-next
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]},
+  :shared-all
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]}}}
