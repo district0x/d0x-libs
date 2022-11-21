@@ -1,5 +1,6 @@
 (ns tests.all
   (:require [cljs-web3-next.core :as web3]
+            [cljs-web3-next.eth :as w3eth]
             [cljs.test :refer [deftest is testing run-tests async use-fixtures]]
             [day8.re-frame.test :refer [run-test-async run-test-sync wait-for]]
             [district.ui.smart-contracts.events :as contracts-events]
@@ -146,21 +147,24 @@
     (run-test-async
      (wait-for [::contracts-events/contracts-loaded]
        (wait-for [::accounts-events/accounts-changed]
-         (let [initial-txs-count (count @txs)]
+         (let [initial-txs-count (count @txs)
+               non-owner-account (second @accounts)
+               owner-account (first @accounts)]
+           ; Will have to fail because only the owner can mint
            (dispatch [::events/send-tx {:instance @instance
                                         :fn :mint
-                                        :args [(first @accounts) (web3/to-wei "1" :ether)]
-                                        :tx-opts {:from (second @accounts)}
+                                        :args [owner-account (web3/to-wei "1" :ether)]
+                                        :tx-opts {:from non-owner-account}
                                         :on-tx-hash [::tx-hash]
                                         :on-tx-error [::tx-error]
                                         :on-tx-error-n [[::tx-error-n]]}])
-
            (wait-for [(all-events
                         [::events/tx-hash
                          ::events/add-tx
                          ::tx-hash]) ::events/tx-hash-error]
              (is (= (inc initial-txs-count) (count @txs)))
              (is (= (last @pending-txs) (last @txs)))
+
              (wait-for [(all-events
                           [::events/tx-error
                            ::tx-error

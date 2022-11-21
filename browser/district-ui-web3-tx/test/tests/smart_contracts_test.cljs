@@ -1,4 +1,4 @@
 (ns tests.smart-contracts-test)
 
 (def smart-contracts
-  {:mintable-token {:name "MintableToken" :address "0x60b1c1ae23b68b871c4dfb4c23792b8dbf8a0912"}})
+  {:mintable-token {:name "MintableToken" :address "0x555384605D2B6c71bE931B6e649baE1c4981AAad"}})
