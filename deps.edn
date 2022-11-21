@@ -148,9 +148,12 @@
     district0x/district-server-web3
     {:local/root "server/district-server-web3"},
     district0x/district-server-web3-events
-    {:local/root "server/district-server-web3-events"}},
+    {:local/root "server/district-server-web3-events"},
+    district0x/district-server-web3-watcher
+    {:local/root "server/district-server-web3-watcher"}},
    :extra-paths
-   ["server/district-server-web3-events/test"
+   ["server/district-server-web3-watcher/test"
+    "server/district-server-web3-events/test"
     "server/district-server-web3/test"
     "server/district-server-smart-contracts/test"
     "server/district-server-db/test"]},
@@ -159,6 +162,11 @@
    {io.github.district0x/district-ui-web3-accounts
     {:local/root "browser/district-ui-web3-accounts"}},
    :extra-paths ["browser/district-ui-web3-accounts/test"]},
+  :district-server-web3-watcher
+  {:extra-deps
+   {district0x/district-server-web3-watcher
+    {:local/root "server/district-server-web3-watcher"}},
+   :extra-paths ["server/district-server-web3-watcher/test"]},
   :district-ui-smart-contracts
   {:extra-deps
    {district0x/district-ui-smart-contracts
