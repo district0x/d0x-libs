@@ -109,6 +109,11 @@
    {district0x/district-ui-web3
     {:local/root "browser/district-ui-web3"}},
    :extra-paths ["browser/district-ui-web3/test"]},
+  :district-server-db
+  {:extra-deps
+   {district0x/district-server-db
+    {:local/root "server/district-server-db"}},
+   :extra-paths ["server/district-server-db/test"]},
   :district-ui-web3-tx-id
   {:extra-deps
    {io.github.district0x/district-ui-web3-tx-id
@@ -119,6 +124,11 @@
    {district0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"}},
    :extra-paths ["browser/district-ui-reagent-render/test"]},
+  :server-all
+  {:extra-deps
+   {district0x/district-server-db
+    {:local/root "server/district-server-db"}},
+   :extra-paths ["server/district-server-db/test"]},
   :district-ui-web3-accounts
   {:extra-deps
    {io.github.district0x/district-ui-web3-accounts
