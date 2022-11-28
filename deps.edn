@@ -77,6 +77,11 @@
    {district0x/district-ui-web3-account-balances
     {:local/root "browser/district-ui-web3-account-balances"}},
    :extra-paths ["browser/district-ui-web3-account-balances/test"]},
+  :district-server-web3-events
+  {:extra-deps
+   {district0x/district-server-web3-events
+    {:local/root "server/district-server-web3-events"}},
+   :extra-paths ["server/district-server-web3-events/test"]},
   :district-ui-web3-tx-log
   {:extra-deps
    {district0x/district-ui-web3-tx-log
@@ -109,6 +114,16 @@
    {district0x/district-ui-web3
     {:local/root "browser/district-ui-web3"}},
    :extra-paths ["browser/district-ui-web3/test"]},
+  :district-server-db
+  {:extra-deps
+   {district0x/district-server-db
+    {:local/root "server/district-server-db"}},
+   :extra-paths ["server/district-server-db/test"]},
+  :district-server-web3
+  {:extra-deps
+   {district0x/district-server-web3
+    {:local/root "server/district-server-web3"}},
+   :extra-paths ["server/district-server-web3/test"]},
   :district-ui-web3-tx-id
   {:extra-deps
    {io.github.district0x/district-ui-web3-tx-id
@@ -119,11 +134,39 @@
    {district0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"}},
    :extra-paths ["browser/district-ui-reagent-render/test"]},
+  :district-server-smart-contracts
+  {:extra-deps
+   {district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"}},
+   :extra-paths ["server/district-server-smart-contracts/test"]},
+  :server-all
+  {:extra-deps
+   {district0x/district-server-db
+    {:local/root "server/district-server-db"},
+    district0x/district-server-smart-contracts
+    {:local/root "server/district-server-smart-contracts"},
+    district0x/district-server-web3
+    {:local/root "server/district-server-web3"},
+    district0x/district-server-web3-events
+    {:local/root "server/district-server-web3-events"},
+    district0x/district-server-web3-watcher
+    {:local/root "server/district-server-web3-watcher"}},
+   :extra-paths
+   ["server/district-server-web3-watcher/test"
+    "server/district-server-web3-events/test"
+    "server/district-server-web3/test"
+    "server/district-server-smart-contracts/test"
+    "server/district-server-db/test"]},
   :district-ui-web3-accounts
   {:extra-deps
    {io.github.district0x/district-ui-web3-accounts
     {:local/root "browser/district-ui-web3-accounts"}},
    :extra-paths ["browser/district-ui-web3-accounts/test"]},
+  :district-server-web3-watcher
+  {:extra-deps
+   {district0x/district-server-web3-watcher
+    {:local/root "server/district-server-web3-watcher"}},
+   :extra-paths ["server/district-server-web3-watcher/test"]},
   :district-ui-smart-contracts
   {:extra-deps
    {district0x/district-ui-smart-contracts
@@ -133,4 +176,14 @@
   {:extra-deps
    {io.github.district0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
-   :extra-paths ["browser/district-ui-web3-chain/test"]}}}
+   :extra-paths ["browser/district-ui-web3-chain/test"]},
+  :cljs-web3-next
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]},
+  :shared-all
+  {:extra-deps
+   {io.github.district0x/cljs-web3-next
+    {:local/root "shared/cljs-web3-next"}},
+   :extra-paths ["shared/cljs-web3-next/test"]}}}
