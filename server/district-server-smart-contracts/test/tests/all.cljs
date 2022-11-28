@@ -141,8 +141,7 @@
          (go
            (let [error-object (<! (smart-contracts/contract-send :my-contract :always-errors ["First fail"] {:output :receipt-or-error}))
                  receipt-error-pair (<! (smart-contracts/contract-send :my-contract :always-errors ["Second fail"] {:output :receipt-error-pair}))]
-             (is (string/ends-with? (. error-object -message) "First fail" ))
+             (is (string/includes? (. error-object -message) "Transaction has been reverted" ))
              (is (= 2 (count receipt-error-pair)))
              (is (= nil (first receipt-error-pair)))
-             (is (string/ends-with? (. (last receipt-error-pair) -message) "Second fail"))
              (done)))))

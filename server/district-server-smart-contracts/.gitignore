@@ -10,3 +10,4 @@ yarn-error.log
 .cpcache
 .shadow-cljs
 Session.vim
+resources/public/contracts
