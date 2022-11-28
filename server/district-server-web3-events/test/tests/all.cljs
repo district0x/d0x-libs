@@ -123,7 +123,7 @@
                    (<! (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts))
 
                    (is (= (load-checkpoint-info checkpoint-file)
-                          {:last-processed-block (+ starting-block 2), :processed-log-indexes #{[0 0]}})
+                          {:last-processed-block (<! (web3-eth/get-block-number @web3)), :processed-log-indexes #{[0 0]}})
                        "Checkpoint file should be updated after replaying past events")
 
                  (<! (smart-contracts/contract-send :my-contract :fire-some-other-event [42] send-opts))
@@ -131,7 +131,7 @@
                  (<! (smart-contracts/contract-send :my-contract :fire-some-event [42] send-opts))
 
                  (is (= (load-checkpoint-info checkpoint-file)
-                        {:last-processed-block (+ starting-block 5), :processed-log-indexes #{[0 0]}})
+                        {:last-processed-block (<! (web3-eth/get-block-number @web3)), :processed-log-indexes #{[0 0]}})
                      "Checkpoint file should be updated after processing live events")
                   (done))))
 
