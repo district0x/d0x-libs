@@ -1,1 +1,26 @@
-[]
+[{:created-at "2022-12-05T00:51:21.373701",
+  :version "22.12.5",
+  :description "First release of all libraries",
+  :libs
+  ["browser/district-ui-web3-tx-log"
+   "browser/district-ui-web3-chain"
+   "browser/district-ui-web3-balances"
+   "browser/district-ui-web3-tx-log-core"
+   "browser/district-ui-web3-account-balances"
+   "browser/district-ui-web3-sync-now"
+   "browser/district-ui-web3"
+   "browser/district-ui-web3-tx"
+   "browser/district-ui-component-active-account-balance"
+   "browser/district-ui-web3-tx-costs"
+   "browser/district-ui-reagent-render"
+   "browser/district-ui-web3-accounts"
+   "browser/district-ui-component-tx-button"
+   "browser/district-ui-smart-contracts"
+   "browser/district-ui-web3-tx-id"
+   "server/district-server-smart-contracts"
+   "server/district-server-web3-watcher"
+   "server/district-server-db"
+   "server/district-server-web3-events"
+   "server/district-server-web3"
+   "shared/cljs-web3-next"],
+  :updated-at "2022-12-05T00:52:05.242473"}]

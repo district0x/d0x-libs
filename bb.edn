@@ -1,24 +1,37 @@
 {:paths ["monorepo-tools/src" "monorepo-tools/test"]
- :tasks {migrate {:doc "Import existing CLJS (using shadow-cljs, deps.edn) library with history from git repo"
+ :deps {org.babashka/cli {:mvn/version "0.4.39"}}
+
+ :tasks {migrate {:doc "Import existing Clojure library with git history. Use: bb migrate LIBRARY_PATH TARGET_REPO GROUP"
                   :requires ([migrate-library])
                   :task (apply migrate-library/-main *command-line-args*)}
 
-         ci-config {:doc "Generates config for CirlceCi dynamic config continuation steps"
+         ci-config {:doc "Generate CircleCI dynamic configuration. Use: bb ci-config YAML_FILE_NAME"
                     :requires ([generate-ci-config])
                     :task (apply generate-ci-config/-main *command-line-args*)}
 
-         update-versions {:doc "Take changed library and bump versions of all affected by it through dependency"
+         update-versions {:doc "Update (transitively) all depending libraries. Use: bb update-versions LIBRARY_SYM VERSION LIBS_TO_UPDATE_PATH"
                           :requires ([update-library-versions])
                           :task (apply update-library-versions/-main *command-line-args*)}
 
-         release {:doc "Try to shell out to clojure. Use: bb release VERSION LIBPATH" ; 20.10.9 shared/cljs-web3-next
-                  ; The escaping is needed to make Clojure interpret version (20.10.1) as string instead of number (and therefore failing)
-                  :task (clojure (format "-X release/-main :version '\"%s\"' :library '%s'" (first *command-line-args*) (second *command-line-args*)))}
+         mark-for-release {:doc "Include libraries to release (on merge) Use: bb mark-for-release LIB_PATH_OR_GLOB"
+                           :requires ([mark-for-release])
+                           :task (apply mark-for-release/-main *command-line-args*)}
 
-         mt-test {:doc "Run monorepo-tools tests"
+         release {:doc "Try to shell out to clojure. Use: bb release VERSION LIBPATH"
+                  ; This task runs via Clojure in JVM (due to it needing slipset/deps-deploy which doesn't work with Babashka)
+                  ; The escaping is needed to make Clojure interpret version (20.10.1) as string instead of number (and therefore failing)
+                  ; :task (clojure (format "-X release/-main :version '\"%s\"' :library '%s'" (first *command-line-args*) (second *command-line-args*)))
+                  :requires ([babashka.cli :as cli])
+                  :task (let [args-opts (cli/parse-args *command-line-args*)
+                              version (get-in args-opts [:args 0])
+                              library (get-in args-opts [:args 1])
+                              repo-root (get-in args-opts [:opts :repo-root])]
+                          (clojure (format "-X release/-main :version '\"%s\"' :library '%s' :repo-root '%s'" version library repo-root ())))}
+
+         mt-test {:doc "Run monorepo-tools tests. Use: bb mt-test [NAMESPACE_OR_PART]"
                   :requires ([test-runner])
                   :task (test-runner/-main *command-line-args*)}
 
-         find-candidates {:doc "Finds all library candidates form folder for for monorepo migration. Outputs script to be used with `bb migrate`"
+         find-candidates {:doc "Find conforming libraries to for monorepo migration. Use: bb find-candidates GROUP PATH"
                           :requires [find-migrate-candidates]
                           :task (apply find-migrate-candidates/-main *command-line-args*)}}}
