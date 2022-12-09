@@ -1,26 +1,7 @@
 # d0x-libs: district0x libraries
 
-**NB** Currently CircleCI is configured to deploy under [is.mad](https://clojars.org/groups/is.mad) to Clojars. This is to avoid polluting the district0x namespace while we're doing the transition and polishing the nooks and crannies.
-
 This is a monorepo holding most of district0x ClojureScript libraries - for browser, server and shared (work with browser and server).
-
-The goals that guided this approach were:
-1. Make it easier for developers use d0x libraries.
-  - by having them all in one place, repository-wide search helps to find the right code
-2. Simplify development
-  - refactoring becomes easier, as some libraries depend on others and renaming & checking that things work is easier with one codebase
-  - being able to run REPL and have all libraries (or a subset of them) available, allows faster prototyping and brings out the best parts of Clojure
-3. Simplify releases
-  - having this monorepo structure allows via one pull-request run tests for various libraries
-  - it also allows release them in bulk (e.g. `is.d0x/district-server`) or individually (e.g. `is.d0x/district-ui-web3`)
-
-The babashka tasks (implemented in `monorepo-tools` and made available via `bb.edn`):
-```
-bb migrate         Import existing CLJS (using shadow-cljs, deps.edn) library with history from git repo
-bb run-tests       Generates config for CirlceCi dynamic config continuation steps
-bb update-versions Take changed library and bump versions of all affected by it through dependency
-bb mt-test         Run monorepo-tools tests
-```
+It relies on [monorepo-tools](https://github.com/district0x/monorepo-tools) made accessible by git submodule `monorepo-tools` and bb tasks using it via `bb.edn`
 
 ## Getting started
 
@@ -28,9 +9,17 @@ bb mt-test         Run monorepo-tools tests
   - set up `monorepo-tools` git submodule: `git submodule update --init`
 2. Make sure you have [Babashka](https://github.com/babashka/babashka#installation) installed
   - it's enough to download the release and put `bb` executable on your PATH
-3. Check and use the tasks provided `bb tasks`
+3. Check and use the tasks provided by running `bb tasks`
+
+## Main workflows
+
+### Marking libraries for release
+
+After making changes to one or more of the libraries, to have them included in release (thus tested & published to Clojars when merged to `master`), use the `bb mark-for-release` task
 
 ## Updating the `monorepo-tools`
+
+Because `monorepo-tools` folder is a git submodule, all the techniques for working with git submodules apply here too.
 
 There are various ways:
 1. Updating the submodule directory
@@ -49,3 +38,15 @@ Or if you or someone else made changes to `monorepo-tools` (and you don't have a
 ```
 git submodule update --init --recursive --remote
 ```
+
+## Rationale
+
+The goals that guided this approach were:
+1. Make it easier for developers use d0x libraries.
+  - by having them all in one place, repository-wide search helps to find the right code
+2. Simplify development
+  - refactoring becomes easier, as some libraries depend on others and renaming & checking that things work is easier with one codebase
+  - being able to run REPL and have all libraries (or a subset of them) available, allows faster prototyping and brings out the best parts of Clojure
+3. Simplify releases
+  - having this monorepo structure allows via one pull-request run tests for various libraries
+  - it also allows release them in bulk (e.g. `is.d0x/district-server`) or individually (e.g. `is.d0x/district-ui-web3`)
