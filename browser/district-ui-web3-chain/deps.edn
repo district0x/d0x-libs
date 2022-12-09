@@ -8,7 +8,7 @@
   {:mvn/version "1.1.0-SNAPSHOT"},
   district0x/re-frame-interval-fx {:mvn/version "1.0.2"},
   thheller/shadow-cljs {:mvn/version "2.18.0"},
-  org.clojure/clojurescript {:mvn/version "1.11.4"},
+  org.clojure/clojurescript {:mvn/version  "1.11.60"},
   district0x/district-ui-window-focus {:mvn/version "1.0.0"},
   re-frame/re-frame {:mvn/version "1.2.0"},
   district0x/re-frame-spec-interceptors {:mvn/version "1.0.1"},

@@ -8,7 +8,7 @@
   {:mvn/version "1.1.0-SNAPSHOT"},
   day8.re-frame/http-fx {:mvn/version "0.2.4"},
   day8.re-frame/async-flow-fx {:mvn/version "0.3.0"},
-  org.clojure/clojurescript {:mvn/version "1.11.57"},
+  org.clojure/clojurescript {:mvn/version "1.11.60"},
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"},
   re-frame/re-frame {:mvn/version "1.2.0"},
   district0x/re-frame-spec-interceptors {:mvn/version "1.0.1"},

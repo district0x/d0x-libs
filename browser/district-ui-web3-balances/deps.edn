@@ -7,8 +7,7 @@
   io.github.district0x/re-frame-web3-fx
   {:mvn/version "1.1.0-SNAPSHOT"},
   day8.re-frame/async-flow-fx {:mvn/version "0.3.0"},
-  thheller/shadow-cljs {:mvn/version "2.19.3"},
-  org.clojure/clojurescript {:mvn/version "1.11.57"},
+  org.clojure/clojurescript {:mvn/version "1.11.60"},
   re-frame/re-frame {:mvn/version "1.2.0"},
   district0x/re-frame-spec-interceptors
   {:mvn/version "1.0.1",

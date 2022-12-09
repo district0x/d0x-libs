@@ -10,7 +10,7 @@
   district0x/re-frame-interval-fx {:mvn/version "1.0.2"},
   district0x/district-cljs-utils {:mvn/version "1.0.4"},
   thheller/shadow-cljs {:mvn/version "2.18.0"},
-  org.clojure/clojurescript {:mvn/version "1.11.4"},
+  org.clojure/clojurescript {:mvn/version "1.11.60"},
   district0x/re-frame-window-fx {:mvn/version "1.1.0"},
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"},
   io.github.district0x/eip55 {:mvn/version "0.1.0-SNAPSHOT"},
