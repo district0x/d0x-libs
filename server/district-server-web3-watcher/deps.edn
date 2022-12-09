@@ -1,24 +1,35 @@
-{:paths ["src" "test"]
- :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
-             "clojars" {:url "https://clojars.org/repo"}}
+{:paths ["src" "test"],
+ :mvn/repos
+ {"central" {:url "https://repo1.maven.org/maven2/"},
+  "clojars" {:url "https://clojars.org/repo"}},
  :deps
- {org.clojure/clojure {:mvn/version "1.11.1"}
-  thheller/shadow-cljs {:mvn/version "2.19.8"}
-  org.clojure/clojurescript {:mvn/version "1.11.60"}
-  district0x/district-server-web3 {:mvn/version "1.3.0-SNAPSHOT" :exclusions [io.github.district0x/cljs-web3-next]}
-  io.github.district0x/cljs-web3-next {:mvn/version "0.2.0-SNAPSHOT"}
-  mount/mount {:mvn/version "0.1.16"}
-  }
-
- :install-deps true
+ {org.clojure/clojure {:mvn/version "1.11.1"},
+  thheller/shadow-cljs {:mvn/version "2.19.8"},
+  org.clojure/clojurescript {:mvn/version "1.11.60"},
+  is.mad/district-server-web3 {:mvn/version "22.12.9"},
+  is.mad/cljs-web3-next {:mvn/version "22.12.9"},
+  mount/mount {:mvn/version "0.1.16"}},
+ :install-deps true,
  :aliases
  {:dev
   {:extra-deps
-   {com.cemerick/piggieback {:mvn/version "0.2.2"}
-    org.clojure/tools.nrepl {:mvn/version "0.2.13"}}}
-
-  :build {:deps {io.github.clojure/tools.build {:git/tag "v0.8.3" :git/sha "0d20256"}
-                 slipset/deps-deploy {:mvn/version "RELEASE"}}
-          :ns-default build}
-  :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}}
-           :exec-fn deps-deploy.deps-deploy/deploy}}}
+   {com.cemerick/piggieback {:mvn/version "0.2.2"},
+    org.clojure/tools.nrepl {:mvn/version "0.2.13"}}},
+  :build
+  {:deps
+   {io.github.clojure/tools.build
+    {:git/tag "v0.8.3", :git/sha "0d20256"},
+    slipset/deps-deploy {:mvn/version "RELEASE"}},
+   :ns-default build},
+  :deploy
+  {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}},
+   :exec-fn deps-deploy.deps-deploy/deploy},
+  :local-deps
+  {:override-deps
+   {is.mad/district-server-web3
+    {:local/root "../district-server-web3"},
+    is.mad/cljs-web3-next
+    {:local/root "../../shared/cljs-web3-next"}}},
+  :shadow-cljs
+  {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
+   :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}
