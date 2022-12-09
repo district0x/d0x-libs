@@ -4,7 +4,7 @@
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
-  is.mad/district-ui-web3-tx {:mvn/version "22.12.9"},
+  is.mad/district-ui-web3-tx {:mvn/version "LATEST"},
   thheller/shadow-cljs {:mvn/version "2.18.0"},
   org.clojure/clojurescript {:mvn/version "1.11.4"},
   district0x/district-ui-conversion-rates {:mvn/version "1.0.1"},
@@ -12,7 +12,7 @@
   day8.re-frame/forward-events-fx {:mvn/version "0.0.6"},
   district0x/bignumber {:mvn/version "1.0.3"},
   mount/mount {:mvn/version "0.1.16"},
-  is.mad/cljs-web3-next {:mvn/version "22.12.9"}},
+  is.mad/cljs-web3-next {:mvn/version "LATEST"}},
  :install-deps true,
  :aliases
  {:dev
@@ -30,9 +30,9 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.mad/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
-    is.mad/district-ui-web3-tx
-    {:local/root "../district-ui-web3-tx"}}},
+   {is.mad/district-ui-web3-tx {:local/root "../district-ui-web3-tx"},
+    is.mad/cljs-web3-next
+    {:local/root "../../shared/cljs-web3-next"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

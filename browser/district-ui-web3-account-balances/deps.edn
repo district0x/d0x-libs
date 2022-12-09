@@ -4,14 +4,14 @@
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
-  is.mad/district-ui-web3-accounts {:mvn/version "22.12.9"},
+  is.mad/district-ui-web3-accounts {:mvn/version "LATEST"},
   thheller/shadow-cljs {:mvn/version "2.19.8"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
   re-frame/re-frame {:mvn/version "1.2.0"},
   district0x/re-frame-spec-interceptors {:mvn/version "1.0.1"},
   day8.re-frame/forward-events-fx {:mvn/version "0.0.6"},
   mount/mount {:mvn/version "0.1.16"},
-  is.mad/district-ui-web3-balances {:mvn/version "22.12.9"},
+  is.mad/district-ui-web3-balances {:mvn/version "LATEST"},
   district0x/district-format {:mvn/version "1.0.6"}},
  :install-deps true,
  :aliases
@@ -34,10 +34,10 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.mad/district-ui-web3-balances
-    {:local/root "../district-ui-web3-balances"},
-    is.mad/district-ui-web3-accounts
-    {:local/root "../district-ui-web3-accounts"}}},
+   {is.mad/district-ui-web3-accounts
+    {:local/root "../district-ui-web3-accounts"},
+    is.mad/district-ui-web3-balances
+    {:local/root "../district-ui-web3-balances"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

@@ -5,7 +5,7 @@
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
   thheller/shadow-cljs {:mvn/version "2.19.3"},
-  is.mad/cljs-web3-next {:mvn/version "22.12.9"},
+  is.mad/cljs-web3-next {:mvn/version "LATEST"},
   mount/mount {:mvn/version "0.1.16"},
   day8.re-frame/test {:mvn/version "0.1.5"}},
  :install-deps true,

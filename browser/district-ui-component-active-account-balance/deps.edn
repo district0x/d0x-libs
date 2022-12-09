@@ -7,7 +7,7 @@
   thheller/shadow-cljs {:mvn/version "2.19.8"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
   district0x/district-format {:mvn/version "1.0.6"},
-  is.mad/district-ui-web3-account-balances {:mvn/version "22.12.9"},
+  is.mad/district-ui-web3-account-balances {:mvn/version "LATEST"},
   re-frame/re-frame {:mvn/version "1.2.0"}},
  :install-deps true,
  :aliases
@@ -24,7 +24,10 @@
   {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}},
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
-  {:override-deps
+  {:replace-deps
+   {is.mad/district-ui-web3-account-balances
+    {:local/root "../district-ui-web3-account-balances"}},
+   :override-deps
    {is.mad/district-ui-web3-account-balances
     {:local/root "../district-ui-web3-account-balances"}}},
   :shadow-cljs

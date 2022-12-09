@@ -14,9 +14,9 @@
   district0x/re-frame-spec-interceptors {:mvn/version "1.0.1"},
   day8.re-frame/forward-events-fx {:mvn/version "0.0.6"},
   mount/mount {:mvn/version "0.1.16"},
-  is.mad/district-ui-web3 {:mvn/version "22.12.9"},
+  is.mad/district-ui-web3 {:mvn/version "LATEST"},
   district0x/district-ui-logging {:mvn/version "1.1.0"},
-  is.mad/cljs-web3-next {:mvn/version "22.12.9"}},
+  is.mad/cljs-web3-next {:mvn/version "LATEST"}},
  :aliases
  {:dev
   {:extra-deps
@@ -35,8 +35,9 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.mad/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
-    is.mad/district-ui-web3 {:local/root "../district-ui-web3"}}},
+   {is.mad/district-ui-web3 {:local/root "../district-ui-web3"},
+    is.mad/cljs-web3-next
+    {:local/root "../../shared/cljs-web3-next"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}
