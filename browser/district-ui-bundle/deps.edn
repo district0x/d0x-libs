@@ -1,0 +1,50 @@
+{:paths ["src" "test"],
+ :mvn/repos
+ {"central" {:url "https://repo1.maven.org/maven2/"},
+  "clojars" {:url "https://clojars.org/repo"}},
+ :deps
+ {is.mad/district-ui-web3-sync-now {:mvn/version "LATEST"},
+  is.mad/district-ui-web3-tx-log {:mvn/version "LATEST"},
+  is.mad/district-ui-component-tx-button {:mvn/version "LATEST"},
+  is.mad/district-ui-web3-tx {:mvn/version "LATEST"},
+  is.mad/district-ui-web3-tx-id {:mvn/version "LATEST"},
+  is.mad/ddistrict-ui-web3-accounts {:mvn/version "LATEST"},
+  is.mad/ddistrict-ui-web3-balances {:mvn/version "LATEST"},
+  is.mad/district-ui-reagent-render {:mvn/version "LATEST"},
+  is.mad/district-ui-web3-chain {:mvn/version "LATEST"},
+  is.mad/ddistrict-ui-web3-account-balances {:mvn/version "LATEST"},
+  is.mad/district-ui-web3-tx-log-core {:mvn/version "LATEST"},
+  is.mad/district-ui-web3 {:mvn/version "LATEST"},
+  is.mad/district-ui-smart-contracts {:mvn/version "LATEST"},
+  is.mad/district-ui-component-active-account-balance
+  {:mvn/version "LATEST"},
+  is.mad/district-ui-web3-tx-costs {:mvn/version "LATEST"}},
+ :aliases
+ {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
+  :local-deps
+  {:override-deps
+   {is.mad/district-ui-web3-sync-now
+    {:local/root "../district-ui-web3-sync-now"},
+    is.mad/district-ui-web3-tx-log
+    {:local/root "../district-ui-web3-tx-log"},
+    is.mad/district-ui-component-tx-button
+    {:local/root "../district-ui-component-tx-button"},
+    is.mad/district-ui-web3-tx {:local/root "../district-ui-web3-tx"},
+    is.mad/district-ui-web3-tx-id
+    {:local/root "../district-ui-web3-tx-id"},
+    is.mad/district-ui-reagent-render
+    {:local/root "../district-ui-reagent-render"},
+    is.mad/district-ui-web3-chain
+    {:local/root "../district-ui-web3-chain"},
+    is.mad/district-ui-web3-tx-log-core
+    {:local/root "../district-ui-web3-tx-log-core"},
+    is.mad/district-ui-web3 {:local/root "../district-ui-web3"},
+    is.mad/district-ui-smart-contracts
+    {:local/root "../district-ui-smart-contracts"},
+    is.mad/district-ui-component-active-account-balance
+    {:local/root "../district-ui-component-active-account-balance"},
+    is.mad/district-ui-web3-tx-costs
+    {:local/root "../district-ui-web3-tx-costs"}}},
+  :shadow-cljs
+  {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
+   :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}
