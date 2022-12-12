@@ -1,4 +1,4 @@
-{:paths ["src" "test"],
+{:paths ["src"],
  :mvn/repos
  {"central" {:url "https://repo1.maven.org/maven2/"},
   "clojars" {:url "https://clojars.org/repo"}},
@@ -12,7 +12,8 @@
   mount/mount {:mvn/version "0.1.16"}},
  :install-deps true,
  :aliases
- {:dev
+ {:test {:extra-paths ["test"]}
+  :dev
   {:extra-deps
    {com.cemerick/piggieback {:mvn/version "0.2.2"},
     org.clojure/tools.nrepl {:mvn/version "0.2.13"}}},

@@ -1,4 +1,4 @@
-{:paths ["src" "test"],
+{:paths ["src"],
  :mvn/repos
  {"central" {:url "https://repo1.maven.org/maven2/"},
   "clojars" {:url "https://clojars.org/repo"}},
@@ -9,7 +9,8 @@
   is.mad/district-server-web3-events {:mvn/version "LATEST"},
   is.mad/district-server-web3-watcher {:mvn/version "LATEST"}},
  :aliases
- {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
+ {:test {:extra-paths ["test"]}
+  :dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
   :local-deps
   {:override-deps
    {is.mad/district-server-db {:local/root "../district-server-db"},
