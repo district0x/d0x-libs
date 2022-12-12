@@ -1,4 +1,33 @@
-[{:created-at "2022-12-10T16:20:54.208276",
+[{:created-at "2022-12-12T09:12:00.159372",
+  :version "22.12.12-SNAPSHOT",
+  :description "Relasing bundles and libraries in order",
+  :libs
+  ["server/district-server-smart-contracts"
+   "server/district-server-web3-watcher"
+   "server/district-server-db"
+   "server/district-server-web3-events"
+   "server/district-server-bundle"
+   "server/district-server-web3"
+   "browser/district-ui-web3-tx-log"
+   "browser/district-ui-web3-chain"
+   "browser/district-ui-web3-balances"
+   "browser/district-ui-web3-tx-log-core"
+   "browser/district-ui-bundle"
+   "browser/district-ui-web3-account-balances"
+   "browser/district-ui-web3-sync-now"
+   "browser/district-ui-web3"
+   "browser/district-ui-web3-tx"
+   "browser/district-ui-component-active-account-balance"
+   "browser/district-ui-web3-tx-costs"
+   "browser/district-ui-reagent-render"
+   "browser/district-ui-web3-accounts"
+   "browser/district-ui-component-tx-button"
+   "browser/district-ui-smart-contracts"
+   "browser/district-ui-web3-tx-id"
+   "shared/district-shared-bundle"
+   "shared/cljs-web3-next"],
+  :updated-at "2022-12-12T09:12:06.469302"}
+ {:created-at "2022-12-10T16:20:54.208276",
   :version "22.12.9",
   :description "First release of the library bundles",
   :libs
