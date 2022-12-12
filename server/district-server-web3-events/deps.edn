@@ -3,17 +3,17 @@
  {"central" {:url "https://repo1.maven.org/maven2/"},
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
- {district0x/district-server-config {:mvn/version "1.0.1"},
+ {is.d0x/district-server-web3 {:mvn/version "LATEST"},
+  district0x/district-server-config {:mvn/version "1.0.1"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
-  is.mad/district-server-web3 {:mvn/version "LATEST"},
   district0x/async-helpers {:mvn/version "0.1.3"},
+  is.d0x/district-server-smart-contracts {:mvn/version "LATEST"},
   com.taoensso/timbre {:mvn/version "4.10.0"},
-  is.mad/district-server-smart-contracts {:mvn/version "LATEST"},
   mount/mount {:mvn/version "0.1.16"},
-  medley/medley {:mvn/version "1.4.0"},
-  is.mad/cljs-web3-next {:mvn/version "LATEST"}},
+  is.d0x/cljs-web3-next {:mvn/version "LATEST"},
+  medley/medley {:mvn/version "1.4.0"}},
  :aliases
- {:test {:extra-paths ["test"]}
+ {:test {:extra-paths ["test"]},
   :dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
   :build
   {:deps
@@ -29,11 +29,11 @@
     "target/district-server-web3-events-1.2.0-SNAPSHOT.jar"}},
   :local-deps
   {:override-deps
-   {is.mad/district-server-web3
+   {is.d0x/district-server-web3
     {:local/root "../district-server-web3"},
-    is.mad/district-server-smart-contracts
+    is.d0x/district-server-smart-contracts
     {:local/root "../district-server-smart-contracts"},
-    is.mad/cljs-web3-next
+    is.d0x/cljs-web3-next
     {:local/root "../../shared/cljs-web3-next"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},

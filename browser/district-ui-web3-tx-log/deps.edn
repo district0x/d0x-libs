@@ -4,18 +4,18 @@
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
-  is.mad/district-ui-web3-accounts {:mvn/version "LATEST"},
-  is.mad/district-ui-web3-tx {:mvn/version "LATEST"},
+  is.d0x/district-ui-web3-tx-costs {:mvn/version "LATEST"},
+  is.d0x/district-ui-web3-accounts {:mvn/version "LATEST"},
+  is.d0x/district-ui-web3-tx {:mvn/version "LATEST"},
   thheller/shadow-cljs {:mvn/version "2.19.8"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
   toyokumo/semantic-ui-reagent {:mvn/version "0.2.0"},
   district0x/district-ui-router {:mvn/version "1.0.8"},
   re-frame/re-frame {:mvn/version "1.2.0"},
+  is.d0x/district-ui-web3-tx-log-core {:mvn/version "LATEST"},
   io.github.district0x/district-web3-utils
   {:mvn/version "1.1.0-SNAPSHOT"},
-  is.mad/district-ui-web3-tx-log-core {:mvn/version "LATEST"},
   mount/mount {:mvn/version "0.1.16"},
-  is.mad/district-ui-web3-tx-costs {:mvn/version "LATEST"},
   akiroz.re-frame/storage {:mvn/version "0.1.4"}},
  :install-deps true,
  :aliases
@@ -37,12 +37,12 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.mad/district-ui-web3-accounts
+   {is.d0x/district-ui-web3-accounts
     {:local/root "../district-ui-web3-accounts"},
-    is.mad/district-ui-web3-tx {:local/root "../district-ui-web3-tx"},
-    is.mad/district-ui-web3-tx-log-core
+    is.d0x/district-ui-web3-tx {:local/root "../district-ui-web3-tx"},
+    is.d0x/district-ui-web3-tx-log-core
     {:local/root "../district-ui-web3-tx-log-core"},
-    is.mad/district-ui-web3-tx-costs
+    is.d0x/district-ui-web3-tx-costs
     {:local/root "../district-ui-web3-tx-costs"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},

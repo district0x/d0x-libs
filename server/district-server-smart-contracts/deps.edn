@@ -6,13 +6,13 @@
  {org.clojure/clojure {:mvn/version "1.11.1"},
   thheller/shadow-cljs {:mvn/version "2.19.8"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
-  is.mad/cljs-web3-next {:mvn/version "LATEST"},
+  is.d0x/cljs-web3-next {:mvn/version "LATEST"},
   district0x/district-server-config {:mvn/version "1.0.1"},
-  is.mad/district-server-web3 {:mvn/version "LATEST"},
+  is.d0x/district-server-web3 {:mvn/version "LATEST"},
   mount/mount {:mvn/version "0.1.16"}},
  :install-deps true,
  :aliases
- {:test {:extra-paths ["test"]}
+ {:test {:extra-paths ["test"]},
   :dev
   {:extra-deps
    {com.cemerick/piggieback {:mvn/version "0.2.2"},
@@ -28,8 +28,8 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.mad/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
-    is.mad/district-server-web3
+   {is.d0x/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
+    is.d0x/district-server-web3
     {:local/root "../district-server-web3"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
