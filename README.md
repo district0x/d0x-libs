@@ -3,7 +3,7 @@
 This is a monorepo holding most of district0x ClojureScript libraries - for browser, server and shared (work with browser and server).
 It relies on [monorepo-tools](https://github.com/district0x/monorepo-tools) made accessible by git submodule `monorepo-tools` and bb tasks using it via `bb.edn`
 
-## Getting started
+## Initial setup
 
 1. Clone the repository `git clone git@github.com:district0x/d0x-libs.git`
   - set up `monorepo-tools` git submodule: `git submodule update --init`
@@ -13,15 +13,30 @@ It relies on [monorepo-tools](https://github.com/district0x/monorepo-tools) made
 
 ## Main workflows
 
-### Marking libraries for release
+One of the motivations to group all the libraries under a monorepo was to simplify code changes, simplify & dry up build process and make it easier to discover what's available.
+When working with libraries in the monorepo, normally it goes like this
+1. Make changes on one or more libraries (by editing their source code)
+2. Release these libraries (and the other affected by them through a direct or transient dependency)
 
-After making changes to one or more of the libraries, to have them included in release (thus tested & published to Clojars when merged to `master`), use the `bb mark-for-release` task
+To facilitate these some useful _babashka_ tasks are avilable:
+1. Manually include one or more libraries for the next release
+```bash
+bb mark-for-release        # help will be printed out about the usage
+bb mark-for-release server # all libraries under server/ get included in version-tracking.edn
+bb mark-for-release server/district-server-web3 # only one particular library gets released
+```
+2. After making changes to a library you want to release it AND also all the other libraries affected via dependency relationship
+  - the following example says _"is.mad/cljs-web-next got changed so release it with *22.12.13-SNAPSHOT* version on next merge and also all libraries under browser/ that got affected"_
+```bash
+bb update-versions is.mad/cljs-web3-next 22.12.13-SNAPSHOT /home/madis/code/district0x/d0x-libs/browser
+```
 
 ## Updating the `monorepo-tools`
 
 Because `monorepo-tools` folder is a git submodule, all the techniques for working with git submodules apply here too.
+*TL;DR* `git submodule update --init --recursive --remote`
 
-There are various ways:
+There are various ways (all standard for working with _git submodules_):
 1. Updating the submodule directory
   - first add and commit and push the changes *being inside the monorepo-tools* folder
   - then at the top level add and commit that the submodule now refers to
@@ -33,11 +48,6 @@ There are various ways:
   - `git submodule set-branch --branch fix-version-tracking monorepo-tools` (changing _fix-version-tracking_ for the branch name)
   - `git submodule update --init --recursive --remote` to pull in the new code
   - then add & commit changes on repo root level, in case you want to share the `d0x-libs` working against a branch of `monorepo-tools`
-
-Or if you or someone else made changes to `monorepo-tools` (and you don't have any local changes) the easiest way is to run the following from your monorepo root
-```
-git submodule update --init --recursive --remote
-```
 
 ## Rationale
 
