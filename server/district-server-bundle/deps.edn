@@ -1,0 +1,27 @@
+{:paths ["src"],
+ :mvn/repos
+ {"central" {:url "https://repo1.maven.org/maven2/"},
+  "clojars" {:url "https://clojars.org/repo"}},
+ :deps
+ {is.mad/district-server-db {:mvn/version "LATEST"},
+  is.mad/district-server-smart-contracts {:mvn/version "LATEST"},
+  is.mad/district-server-web3 {:mvn/version "LATEST"},
+  is.mad/district-server-web3-events {:mvn/version "LATEST"},
+  is.mad/district-server-web3-watcher {:mvn/version "LATEST"}},
+ :aliases
+ {:test {:extra-paths ["test"]}
+  :dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
+  :local-deps
+  {:override-deps
+   {is.mad/district-server-db {:local/root "../district-server-db"},
+    is.mad/district-server-smart-contracts
+    {:local/root "../district-server-smart-contracts"},
+    is.mad/district-server-web3
+    {:local/root "../district-server-web3"},
+    is.mad/district-server-web3-events
+    {:local/root "../district-server-web3-events"},
+    is.mad/district-server-web3-watcher
+    {:local/root "../district-server-web3-watcher"}}},
+  :shadow-cljs
+  {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
+   :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

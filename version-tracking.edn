@@ -1,6 +1,15 @@
-[{:created-at "2022-12-09T17:59:46.389696",
+[{:created-at "2022-12-10T16:20:54.208276",
   :version "22.12.9",
-  :description "Release with deps.edn depending on libs from is.mad and aliases for local code",
+  :description "First release of the library bundles",
+  :libs
+  ["shared/district-shared-bundle"
+   "server/district-server-bundle"
+   "browser/district-ui-bundle"],
+  :updated-at "2022-12-10T16:21:17.154928"}
+ {:created-at "2022-12-09T17:59:46.389696",
+  :version "22.12.9",
+  :description
+  "Release with deps.edn depending on libs from is.mad and aliases for local code",
   :libs
   ["server/district-server-smart-contracts"
    "server/district-server-web3-watcher"

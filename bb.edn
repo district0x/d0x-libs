@@ -1,5 +1,6 @@
 {:paths ["monorepo-tools/src" "monorepo-tools/test"]
- :deps {org.babashka/cli {:mvn/version "0.4.39"}}
+ :deps {org.babashka/cli {:mvn/version "0.4.39"}
+        com.stuartsierra/dependency {:mvn/version "1.0.0"}}
 
  :tasks {migrate {:doc "Import existing Clojure library with git history. Use: bb migrate LIBRARY_PATH TARGET_REPO GROUP"
                   :requires ([migrate-library])
