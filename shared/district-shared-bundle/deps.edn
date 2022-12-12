@@ -2,12 +2,12 @@
  :mvn/repos
  {"central" {:url "https://repo1.maven.org/maven2/"},
   "clojars" {:url "https://clojars.org/repo"}},
- :deps {is.mad/cljs-web3-next {:mvn/version "LATEST"}},
+ :deps {is.d0x/cljs-web3-next {:mvn/version "LATEST"}},
  :aliases
  {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
   :local-deps
   {:override-deps
-   {is.mad/cljs-web3-next {:local/root "../cljs-web3-next"}}},
+   {is.d0x/cljs-web3-next {:local/root "../cljs-web3-next"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

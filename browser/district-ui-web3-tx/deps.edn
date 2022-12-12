@@ -19,10 +19,10 @@
   day8.re-frame/forward-events-fx {:mvn/version "0.0.6"},
   district0x/bignumber {:mvn/version "1.0.3"},
   mount/mount {:mvn/version "0.1.16"},
-  is.mad/district-ui-web3 {:mvn/version "LATEST"},
+  is.d0x/cljs-web3-next {:mvn/version "LATEST"},
   camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.1"},
   akiroz.re-frame/storage {:mvn/version "0.1.4"},
-  is.mad/cljs-web3-next {:mvn/version "LATEST"}},
+  is.d0x/district-ui-web3 {:mvn/version "LATEST"}},
  :install-deps true,
  :aliases
  {:dev
@@ -42,8 +42,8 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.mad/district-ui-web3 {:local/root "../district-ui-web3"},
-    is.mad/cljs-web3-next
+   {is.d0x/district-ui-web3 {:local/root "../district-ui-web3"},
+    is.d0x/cljs-web3-next
     {:local/root "../../shared/cljs-web3-next"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},

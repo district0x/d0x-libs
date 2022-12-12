@@ -12,7 +12,7 @@
   mount/mount {:mvn/version "0.1.16"}},
  :install-deps true,
  :aliases
- {:test {:extra-paths ["test"]}
+ {:test {:extra-paths ["test"]},
   :dev
   {:extra-deps
    {com.cemerick/piggieback {:mvn/version "0.2.2"},
