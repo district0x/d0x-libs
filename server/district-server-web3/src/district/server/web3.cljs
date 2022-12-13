@@ -20,6 +20,8 @@
 (defonce on-ping-error (atom nil))
 (defonce retrying? (atom false))
 
+(defn say-hello [] (println "Hello!"))
+
 (defstate web3
   :start (start (merge (:web3 @config)
                        (:web3 (mount/args))))
