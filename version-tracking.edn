@@ -1,5 +1,18 @@
-[{:created-at "2022-12-13T09:34:09.124921",
+[{:created-at "2022-12-13 09:42:09",
+  :version "22.12.13-SNAPSHOT",
+  :description "placeholder",
+  :libs
+  ["shared/cljs-web3-next"
+   "browser/district-ui-web3-chain"
+   "browser/district-ui-web3-sync-now"
+   "browser/district-ui-web3"
+   "browser/district-ui-web3-tx"
+   "browser/district-ui-web3-tx-costs"
+   "browser/district-ui-web3-accounts"
+   "browser/district-ui-smart-contracts"
+   "browser/district-ui-web3-tx-id"]}
+ {:created-at "2022-12-13T09:34:09.124921",
   :version "22.12.13-SNAPSHOT",
   :description "Just some words",
-  :libs ["shared/cljs-web3-next"],
+  :libs [],
   :updated-at "2022-12-13T09:34:09.125121"}]

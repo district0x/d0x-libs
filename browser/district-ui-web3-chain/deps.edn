@@ -14,7 +14,7 @@
   district0x/re-frame-spec-interceptors {:mvn/version "1.0.1"},
   day8.re-frame/forward-events-fx {:mvn/version "0.0.6"},
   mount/mount {:mvn/version "0.1.16"},
-  is.d0x/cljs-web3-next {:mvn/version "LATEST"},
+  is.d0x/cljs-web3-next {:mvn/version "22.12.13-SNAPSHOT"},
   is.d0x/district-ui-web3 {:mvn/version "LATEST"}},
  :install-deps true,
  :aliases
