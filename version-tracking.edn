@@ -1,4 +1,9 @@
-[{:created-at "2022-12-12T10:20:21.160478",
+[{:created-at "2022-12-19T08:18:53.422295",
+  :version "22.12.19-SNAPSHOT",
+  :description "First release district-parsers",
+  :libs ["shared/district-parsers"],
+  :updated-at "2022-12-19T08:18:53.427023"}
+ {:created-at "2022-12-12T10:20:21.160478",
   :version "22.12.12-SNAPSHOT",
   :description "First release under is.d0x",
   :libs
