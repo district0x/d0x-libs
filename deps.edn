@@ -139,6 +139,11 @@
    {district0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"}},
    :extra-paths ["browser/district-ui-reagent-render/test"]},
+  :cljs-solidity-sha3
+  {:extra-deps
+   {district0x/cljs-solidity-sha3
+    {:local/root "shared/cljs-solidity-sha3"}},
+   :extra-paths ["shared/cljs-solidity-sha3/test"]},
   :district-server-smart-contracts
   {:extra-deps
    {district0x/district-server-smart-contracts
@@ -206,9 +211,12 @@
     io.github.district0x/district-web3-utils
     {:local/root "shared/district-web3-utils"},
     io.github.district0x/district-validation
-    {:local/root "shared/district-validation"}},
+    {:local/root "shared/district-validation"},
+    district0x/cljs-solidity-sha3
+    {:local/root "shared/cljs-solidity-sha3"}},
    :extra-paths
-   ["shared/district-validation/test"
+   ["shared/cljs-solidity-sha3/test"
+    "shared/district-validation/test"
     "shared/district-web3-utils/test"
     "shared/district-parsers/test"
     "shared/cljs-web3-next/test"]}}}
