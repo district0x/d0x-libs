@@ -23,7 +23,7 @@
                      x)
                    :ether)
       (catch :default e
-        (js/console.log e)
+        (js/console.error e)
         nil))))
 
 (def eth->wei-number (comp bn/number eth->wei))

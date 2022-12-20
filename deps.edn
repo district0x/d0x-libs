@@ -167,6 +167,11 @@
    {io.github.district0x/district-ui-web3-accounts
     {:local/root "browser/district-ui-web3-accounts"}},
    :extra-paths ["browser/district-ui-web3-accounts/test"]},
+  :district-web3-utils
+  {:extra-deps
+   {io.github.district0x/district-web3-utils
+    {:local/root "shared/district-web3-utils"}},
+   :extra-paths ["shared/district-web3-utils/test"]},
   :district-server-web3-watcher
   {:extra-deps
    {district0x/district-server-web3-watcher
@@ -192,6 +197,10 @@
    {io.github.district0x/cljs-web3-next
     {:local/root "shared/cljs-web3-next"},
     district0x/district-parsers
-    {:local/root "shared/district-parsers"}},
+    {:local/root "shared/district-parsers"},
+    io.github.district0x/district-web3-utils
+    {:local/root "shared/district-web3-utils"}},
    :extra-paths
-   ["shared/district-parsers/test" "shared/cljs-web3-next/test"]}}}
+   ["shared/district-web3-utils/test"
+    "shared/district-parsers/test"
+    "shared/cljs-web3-next/test"]}}}
