@@ -18,6 +18,11 @@
    {io.github.district0x/district-ui-web3-tx-costs
     {:local/root "browser/district-ui-web3-tx-costs"}},
    :extra-paths ["browser/district-ui-web3-tx-costs/test"]},
+  :district-parsers
+  {:extra-deps
+   {district0x/district-parsers
+    {:local/root "shared/district-parsers"}},
+   :extra-paths ["shared/district-parsers/test"]},
   :browser-all
   {:extra-deps
    {district0x/district-ui-web3-tx-log-core
@@ -185,5 +190,8 @@
   :shared-all
   {:extra-deps
    {io.github.district0x/cljs-web3-next
-    {:local/root "shared/cljs-web3-next"}},
-   :extra-paths ["shared/cljs-web3-next/test"]}}}
+    {:local/root "shared/cljs-web3-next"},
+    district0x/district-parsers
+    {:local/root "shared/district-parsers"}},
+   :extra-paths
+   ["shared/district-parsers/test" "shared/cljs-web3-next/test"]}}}
