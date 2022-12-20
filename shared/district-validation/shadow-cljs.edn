@@ -2,7 +2,11 @@
  :nrepl {:port 30333}
  :deps {:aliases [:dev]}
  :builds
- {:test-browser {:target :browser-test
+ {:test-node {:target :node-test
+         :ns-regexp "tests.(.+)"
+         :output-to "out/node-tests.js"
+         :autorun false}
+  :test-browser {:target :browser-test
                  :ns-regexp "tests.(.+)"
                  :test-dir "out/browser-tests"}
   :test-ci {:target :karma

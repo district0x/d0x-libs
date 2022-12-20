@@ -144,6 +144,11 @@
    {district0x/district-server-smart-contracts
     {:local/root "server/district-server-smart-contracts"}},
    :extra-paths ["server/district-server-smart-contracts/test"]},
+  :district-validation
+  {:extra-deps
+   {io.github.district0x/district-validation
+    {:local/root "shared/district-validation"}},
+   :extra-paths ["shared/district-validation/test"]},
   :server-all
   {:extra-deps
    {district0x/district-server-db
@@ -199,8 +204,11 @@
     district0x/district-parsers
     {:local/root "shared/district-parsers"},
     io.github.district0x/district-web3-utils
-    {:local/root "shared/district-web3-utils"}},
+    {:local/root "shared/district-web3-utils"},
+    io.github.district0x/district-validation
+    {:local/root "shared/district-validation"}},
    :extra-paths
-   ["shared/district-web3-utils/test"
+   ["shared/district-validation/test"
+    "shared/district-web3-utils/test"
     "shared/district-parsers/test"
     "shared/cljs-web3-next/test"]}}}
