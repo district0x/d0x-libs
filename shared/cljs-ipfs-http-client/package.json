@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "axios": "0.27.2",
-    "buffer": "6.0.3"
+    "buffer": "6.0.3",
+    "form-data": "4.0.0"
   },
   "devDependencies": {
     "karma": "6.3.0",
