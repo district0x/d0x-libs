@@ -4,17 +4,15 @@
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
-  io.github.district0x/re-frame-web3-fx
-  {:mvn/version "1.1.0-SNAPSHOT"},
   district0x/district-ui-now {:mvn/version "1.0.2"},
+  is.d0x/district-web3-utils {:mvn/version "LATEST"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
   re-frame/re-frame {:mvn/version "1.2.0"},
   day8.re-frame/forward-events-fx {:mvn/version "0.0.6"},
-  io.github.district0x/district-web3-utils
-  {:mvn/version "1.1.0-SNAPSHOT"},
   mount/mount {:mvn/version "0.1.16"},
   is.d0x/cljs-web3-next {:mvn/version "LATEST"},
   is.d0x/district-ui-web3 {:mvn/version "LATEST"},
+  is.d0x/re-frame-web3-fx {:mvn/version "LATEST"},
   district0x/district-ui-logging {:mvn/version "1.1.0"}},
  :install-deps true,
  :aliases
@@ -32,9 +30,11 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.d0x/district-ui-web3 {:local/root "../district-ui-web3"},
-    is.d0x/cljs-web3-next
-    {:local/root "../../shared/cljs-web3-next"}}},
+   {is.d0x/re-frame-web3-fx {:local/root "../re-frame-web3-fx"},
+    is.d0x/district-web3-utils
+    {:local/root "../../shared/district-web3-utils"},
+    is.d0x/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
+    is.d0x/district-ui-web3 {:local/root "../district-ui-web3"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

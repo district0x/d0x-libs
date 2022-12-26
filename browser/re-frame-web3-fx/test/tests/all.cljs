@@ -12,10 +12,17 @@
             [district0x.re-frame.web3-fx]
             [tests.contract-helpers :as test-contract-helpers]
             [re-frame.core :refer [reg-event-fx console dispatch trim-v reg-sub subscribe]]
-            ["web3" :as Web3])
+            ["web3" :as Web3]
+            ["@truffle/hdwallet-provider" :as HDWalletProvider])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
-(def ganache-url "localhost:8549")
+(def ganache-url "d0x-vm:8549")
+
+(def truffle-testnet-seed "easy leave proof verb wait patient fringe laptop intact opera slab shine")
+
+(defn wallet-provider [url]
+  (new HDWalletProvider (clj->js {:mnemonic {:phrase truffle-testnet-seed} :providerOrUrl url})))
+
 (def web3 (atom nil))
 
 (def gas-limit 4500000)
@@ -359,44 +366,48 @@
   (run-test-async
     (let [accounts (subscribe [::accounts])]
       (dispatch [::load-accounts])
-
       (wait-for [::accounts-loaded ::error]
-                (is (not (empty? @accounts)))
-                (dispatch [::transfer-ether {:from (first @accounts)
-                                             :to (second @accounts)
-                                             :amount (web3-core/to-wei "200" :ether)}])
+                (is (<= 4 (count @accounts)) "At least 2 accounts needed for the following tests")
 
-                (testing "Expect error because user doesn't have that much ether"
-                  (wait-for [::error ::ether-transferred]
-
-                  (dispatch [::load-ether-balances [(second @accounts)]])
-
-                    (wait-for [::ether-balance-loaded ::error]
-                      (let [balance @(subscribe [::balance (second @accounts)])]
-
-                        (dispatch [::transfer-ether {:from (first @accounts)
-                                                     :to (second @accounts)
-                                                     :amount (web3-core/to-wei "1" :gwei)}])
-
-                        (wait-for [::ether-transferred ::error]
-                          (dispatch [::load-ether-balances [(second @accounts)]])
-
-                          (wait-for [::ether-balance-loaded ::error]
-                            (is (< balance @(subscribe [::balance (second @accounts)])))))))))))))
+                (dispatch [::load-ether-balances [(first @accounts) (nth @accounts 3)]])
+                (wait-for [::ether-balance-loaded ::error]
+                          (let [account-1 (first @accounts)
+                                account-2 (nth @accounts 3)
+                                balance-1 @(subscribe [::balance account-1])
+                                balance-2 @(subscribe [::balance account-2])
+                                too-much-to-transfer (+ 1 (js/parseInt balance-1))]
+                            (testing "Failed transfer (because insufficient ETH)"
+                              (dispatch [::transfer-ether {:from account-1 :to account-2 :amount too-much-to-transfer}])
+                              (wait-for [::error ::ether-transferred]
+                                        (dispatch [::load-ether-balances [account-1 account-2]])
+                                        (wait-for [::ether-balance-loaded ::error]
+                                                  (let [balance-1-after @(subscribe [::balance account-1])
+                                                        balance-2-after @(subscribe [::balance account-2])
+                                                        amount-to-transfer 100]
+                                                    (is (= balance-2-after balance-2))
+                                                    (dispatch [::transfer-ether {:from account-1 :to account-2 :amount amount-to-transfer}])
+                                                    (wait-for [::ether-transferred ::error]
+                                                              (dispatch [::load-ether-balances [account-1 account-2]])
+                                                              (wait-for [::ether-balance-loaded ::error]
+                                                                        (let [balance-1-final @(subscribe [::balance account-1])
+                                                                              balance-2-final (js/parseInt @(subscribe [::balance account-2]))
+                                                                              expected-final-balance (+ amount-to-transfer (js/parseInt balance-2-after))]
+                                                    (is (= balance-2-after balance-2))
+                                                                          (is (= expected-final-balance balance-2-final)))))))))))))))
 
 
 (deftest contract-tests-http
-  (reset! web3 (web3-core/create-web3 (str "http://" ganache-url)))
+  (reset! web3 (web3-core/create-web3 (wallet-provider (str "http://" ganache-url)) (str "http://" ganache-url)))
   (contract-tests))
 
 (deftest contract-tests-ws
-  (reset! web3 (web3-core/create-web3 (str "ws://" ganache-url)))
+  (reset! web3 (web3-core/create-web3 (wallet-provider (str "ws://" ganache-url)) (str "ws://" ganache-url)))
   (contract-tests))
 
 (deftest ether-tests-http
-  (reset! web3 (web3-core/create-web3 (str "http://" ganache-url)))
+  (reset! web3 (web3-core/create-web3 (wallet-provider (str "http://" ganache-url)) (str "http://" ganache-url)))
   (ether-tests))
 
 (deftest ether-tests-ws
-  (reset! web3 (web3-core/create-web3 (str "ws://" ganache-url)))
+  (reset! web3 (web3-core/create-web3 (wallet-provider (str "ws://" ganache-url)) (str "ws://" ganache-url)))
   (ether-tests))

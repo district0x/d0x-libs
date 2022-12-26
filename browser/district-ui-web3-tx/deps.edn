@@ -4,8 +4,6 @@
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
-  io.github.district0x/re-frame-web3-fx
-  {:mvn/version "1.1.0-SNAPSHOT"},
   day8.re-frame/http-fx {:mvn/version "0.1.6"},
   district0x/re-frame-interval-fx {:mvn/version "1.0.2"},
   district0x/district-cljs-utils {:mvn/version "1.0.4"},
@@ -22,7 +20,8 @@
   is.d0x/cljs-web3-next {:mvn/version "LATEST"},
   camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.1"},
   akiroz.re-frame/storage {:mvn/version "0.1.4"},
-  is.d0x/district-ui-web3 {:mvn/version "LATEST"}},
+  is.d0x/district-ui-web3 {:mvn/version "LATEST"},
+  is.d0x/re-frame-web3-fx {:mvn/version "LATEST"}},
  :install-deps true,
  :aliases
  {:dev
@@ -42,9 +41,9 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.d0x/district-ui-web3 {:local/root "../district-ui-web3"},
-    is.d0x/cljs-web3-next
-    {:local/root "../../shared/cljs-web3-next"}}},
+   {is.d0x/re-frame-web3-fx {:local/root "../re-frame-web3-fx"},
+    is.d0x/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
+    is.d0x/district-ui-web3 {:local/root "../district-ui-web3"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}
