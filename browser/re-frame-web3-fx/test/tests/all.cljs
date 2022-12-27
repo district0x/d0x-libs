@@ -16,7 +16,7 @@
             ["@truffle/hdwallet-provider" :as HDWalletProvider])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
-(def ganache-url "d0x-vm:8549")
+(def ganache-url "localhost:8549")
 
 (def truffle-testnet-seed "easy leave proof verb wait patient fringe laptop intact opera slab shine")
 
