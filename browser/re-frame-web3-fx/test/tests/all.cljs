@@ -373,9 +373,16 @@
                 (wait-for [::ether-balance-loaded ::error]
                           (let [account-1 (first @accounts)
                                 account-2 (nth @accounts 3)
+                                balance-2-atom (atom nil)
                                 balance-1 @(subscribe [::balance account-1])
                                 balance-2 @(subscribe [::balance account-2])
                                 too-much-to-transfer (+ 1 (js/parseInt balance-1))]
+                            ; For some reason the balance-2 was nil at the time of making the assertion
+                            ; This is to make the test more resilient
+                            (if (= nil balance-2)
+                              (web3-eth/get-balance @web3 account-2 "latest" (fn [err balance] (reset! balance-2-atom balance)))
+                              (reset! balance-2-atom balance-2))
+
                             (testing "Failed transfer (because insufficient ETH)"
                               (dispatch [::transfer-ether {:from account-1 :to account-2 :amount too-much-to-transfer}])
                               (wait-for [::error ::ether-transferred]
@@ -384,7 +391,7 @@
                                                   (let [balance-1-after @(subscribe [::balance account-1])
                                                         balance-2-after @(subscribe [::balance account-2])
                                                         amount-to-transfer 100]
-                                                    (is (= balance-2-after balance-2))
+                                                    (is (= balance-2-after @balance-2-atom))
                                                     (dispatch [::transfer-ether {:from account-1 :to account-2 :amount amount-to-transfer}])
                                                     (wait-for [::ether-transferred ::error]
                                                               (dispatch [::load-ether-balances [account-1 account-2]])
