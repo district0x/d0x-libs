@@ -13,7 +13,8 @@
             [tests.contract-helpers :as test-contract-helpers]
             [re-frame.core :refer [reg-event-fx console dispatch trim-v reg-sub subscribe]]
             ["web3" :as Web3]
-            ["@truffle/hdwallet-provider" :as HDWalletProvider])
+            ["@truffle/hdwallet-provider" :as HDWalletProvider]
+            ["ganache" :as ganache])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (def ganache-url "localhost:8549")
@@ -21,7 +22,10 @@
 (def truffle-testnet-seed "easy leave proof verb wait patient fringe laptop intact opera slab shine")
 
 (defn wallet-provider [url]
-  (new HDWalletProvider (clj->js {:mnemonic {:phrase truffle-testnet-seed} :providerOrUrl url})))
+  ; (new HDWalletProvider (clj->js {:mnemonic {:phrase truffle-testnet-seed} :providerOrUrl url}))
+  ; (new HDWalletProvider (clj->js {:providerOrUrl url}))
+  (.provider ganache)
+  )
 
 (def web3 (atom nil))
 
