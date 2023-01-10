@@ -1,0 +1,26 @@
+{:paths ["src" "test"],
+ :mvn/repos
+ {"central" {:url "https://repo1.maven.org/maven2/"},
+  "clojars" {:url "https://clojars.org/repo"}},
+ :deps
+ {thheller/shadow-cljs {:mvn/version "2.19.8"},
+  org.clojure/clojure {:mvn/version "1.11.1"},
+  org.clojure/clojurescript {:mvn/version "1.11.60"},
+  is.d0x/cljs-web3-next {:mvn/version "LATEST"}}
+ :aliases
+ {:dev {:extra-deps {day8.re-frame/test {:mvn/version "0.1.5"}}},
+  :build
+  {:deps
+   {io.github.clojure/tools.build {:tag "v0.8.1", :sha "7d40500"},
+    slipset/deps-deploy {:mvn/version "RELEASE"}},
+   :ns-default build},
+  :deploy
+  {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}},
+   :exec-fn deps-deploy.deps-deploy/deploy},
+  :local-deps
+  {:override-deps
+   {is.d0x/cljs-web3-next
+    {:local/root "../../shared/cljs-web3-next"}}},
+  :shadow-cljs
+  {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
+   :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

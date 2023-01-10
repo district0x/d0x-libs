@@ -25,7 +25,9 @@
    :extra-paths ["shared/district-parsers/test"]},
   :browser-all
   {:extra-deps
-   {district0x/district-ui-web3-tx-log-core
+   {io.github.district0x/re-frame-web3-fx
+    {:local/root "browser/re-frame-web3-fx"},
+    district0x/district-ui-web3-tx-log-core
     {:local/root "browser/district-ui-web3-tx-log-core"},
     district0x/district-ui-component-active-account-balance
     {:local/root
@@ -57,7 +59,8 @@
     io.github.district0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
    :extra-paths
-   ["browser/district-ui-web3-tx-log-core/test"
+   ["browser/re-frame-web3-fx/test"
+    "browser/district-ui-web3-tx-log-core/test"
     "browser/district-ui-web3-tx-log/test"
     "browser/district-ui-web3-tx-id/test"
     "browser/district-ui-web3-tx-costs/test"
@@ -104,6 +107,11 @@
      "browser/district-ui-component-active-account-balance"}},
    :extra-paths
    ["browser/district-ui-component-active-account-balance/test"]},
+  :cljs-ipfs-http-client
+  {:extra-deps
+   {district0x/cljs-ipfs-http-client
+    {:local/root "shared/cljs-ipfs-http-client"}},
+   :extra-paths ["shared/cljs-ipfs-http-client/test"]},
   :district-ui-web3-tx
   {:extra-deps
    {io.github.district0x/district-ui-web3-tx
@@ -213,10 +221,18 @@
     io.github.district0x/district-validation
     {:local/root "shared/district-validation"},
     district0x/cljs-solidity-sha3
-    {:local/root "shared/cljs-solidity-sha3"}},
+    {:local/root "shared/cljs-solidity-sha3"},
+    district0x/cljs-ipfs-http-client
+    {:local/root "shared/cljs-ipfs-http-client"}},
    :extra-paths
-   ["shared/cljs-solidity-sha3/test"
+   ["shared/cljs-ipfs-http-client/test"
+    "shared/cljs-solidity-sha3/test"
     "shared/district-validation/test"
     "shared/district-web3-utils/test"
     "shared/district-parsers/test"
-    "shared/cljs-web3-next/test"]}}}
+    "shared/cljs-web3-next/test"]},
+  :re-frame-web3-fx
+  {:extra-deps
+   {io.github.district0x/re-frame-web3-fx
+    {:local/root "browser/re-frame-web3-fx"}},
+   :extra-paths ["browser/re-frame-web3-fx/test"]}}}

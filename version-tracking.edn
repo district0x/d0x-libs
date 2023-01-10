@@ -1,7 +1,15 @@
-[{:created-at "2022-12-20T09:47:52.823633",
-  :version "22.12.20-SNAPSHOT",
+[{:created-at "2022-12-21T05:07:08.659504",
+  :version "23.1.10-SNAPSHOT",
+  :description "Migrate 2 more libraries to monorepo",
+  :libs ["shared/cljs-ipfs-http-client" "browser/re-frame-web3-fx"],
+  :updated-at "2022-12-27T17:38:08.659682"}
+ {:created-at "2022-12-20T09:47:52.823633",
+  :version "23.1.6-SNAPSHOT",
   :description "Migrating more libs",
-  :libs ["shared/district-web3-utils" "shared/district-validation" "shared/cljs-solidity-sha3"],
+  :libs
+  ["shared/district-web3-utils"
+   "shared/district-validation"
+   "shared/cljs-solidity-sha3"],
   :updated-at "2022-12-20T09:47:52.824039"}
  {:created-at "2022-12-19T08:18:53.422295",
   :version "22.12.19-SNAPSHOT",
