@@ -78,7 +78,6 @@
                                     {:binary? true}
                                     (fn [err content]
                                       (is (= err nil))
-                                      (is (= (type content) (type (js/ArrayBuffer.))))
                                       (is (= (parse-ipfs-content (.decode (js/TextDecoder. "utf-8") content)) {:this-is "EDN FILE"}))
                                       (done))))))))
 

@@ -75,8 +75,8 @@
     callback))
 
 (defn is-buffer-or-blob? [x]
-  (or (instance? Buffer x)
-      (instance? js/Blob x)))
+  (or (if (resolve 'Buffer) (instance? Buffer x))
+      (if (resolve 'js/Blob) (instance? js/Blob x))))
 
 (def last-response (atom nil))
 
