@@ -1,6 +1,6 @@
 [{:created-at "2023-01-11 04:20:28",
   :version "23.1.10-SNAPSHOT",
-  :description "placeholder",
+  :description "placeholder X",
   :libs ["browser/re-frame-ipfs-fx"]}
  {:created-at "2022-12-21T05:07:08.659504",
   :version "23.1.10-SNAPSHOT",
