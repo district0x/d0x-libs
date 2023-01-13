@@ -1,4 +1,8 @@
-[{:created-at "2022-12-21T05:07:08.659504",
+[{:created-at "2023-01-11 04:20:28",
+  :version "23.1.10-SNAPSHOT",
+  :description "placeholder",
+  :libs ["browser/re-frame-ipfs-fx"]}
+ {:created-at "2022-12-21T05:07:08.659504",
   :version "23.1.10-SNAPSHOT",
   :description "Migrate 2 more libraries to monorepo",
   :libs ["shared/cljs-ipfs-http-client" "browser/re-frame-web3-fx"],

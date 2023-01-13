@@ -6,7 +6,7 @@
  {thheller/shadow-cljs {:mvn/version "2.19.8"},
   org.clojure/clojure {:mvn/version "1.11.1"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
-  is.d0x/cljs-web3-next {:mvn/version "LATEST"}}
+  is.d0x/cljs-web3-next {:mvn/version "LATEST"}},
  :aliases
  {:dev {:extra-deps {day8.re-frame/test {:mvn/version "0.1.5"}}},
   :build
