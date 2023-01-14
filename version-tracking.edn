@@ -1,4 +1,11 @@
-[{:created-at "2023-01-11 04:20:28",
+[{:created-at "2023-01-13T18:35:18.243688",
+  :version "23.1.13",
+  :description "Releasing ui-component-active-account and ipfs-fx 1st time",
+  :libs
+  ["browser/district-ui-component-active-account-balance"
+   "browser/re-frame-ipfs-fx"],
+  :updated-at "2023-01-13T18:35:36.857875"}
+ {:created-at "2023-01-11 04:20:28",
   :version "23.1.10-SNAPSHOT",
   :description "placeholder X",
   :libs ["browser/re-frame-ipfs-fx"]}

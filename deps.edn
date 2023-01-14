@@ -36,6 +36,8 @@
     {:local/root "browser/re-frame-ipfs-fx"},
     district0x/district-ui-smart-contracts
     {:local/root "browser/district-ui-smart-contracts"},
+    district0x/district-ui-component-active-account
+    {:local/root "browser/district-ui-component-active-account"},
     district0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"},
     district0x/district-ui-web3
@@ -61,7 +63,8 @@
     io.github.district0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
    :extra-paths
-   ["browser/re-frame-ipfs-fx/test"
+   ["browser/district-ui-component-active-account/test"
+    "browser/re-frame-ipfs-fx/test"
     "browser/re-frame-web3-fx/test"
     "browser/district-ui-web3-tx-log-core/test"
     "browser/district-ui-web3-tx-log/test"
@@ -110,6 +113,11 @@
      "browser/district-ui-component-active-account-balance"}},
    :extra-paths
    ["browser/district-ui-component-active-account-balance/test"]},
+  :district-ui-component-active-account
+  {:extra-deps
+   {district0x/district-ui-component-active-account
+    {:local/root "browser/district-ui-component-active-account"}},
+   :extra-paths ["browser/district-ui-component-active-account/test"]},
   :cljs-ipfs-http-client
   {:extra-deps
    {district0x/cljs-ipfs-http-client

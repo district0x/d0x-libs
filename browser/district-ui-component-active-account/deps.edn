@@ -3,7 +3,7 @@
              "clojars" {:url "https://clojars.org/repo"}}
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"}
-  thheller/shadow-cljs {:mvn/version "2.19.3"}
+  thheller/shadow-cljs {:mvn/version "2.19.8"}
   org.clojure/clojurescript {:mvn/version "1.11.60"}
   io.github.district0x/district-ui-web3-accounts {:mvn/version "1.1.0-SNAPSHOT"}
   re-frame/re-frame {:mvn/version "1.2.0"}}
@@ -19,4 +19,6 @@
                  slipset/deps-deploy {:mvn/version "RELEASE"}}
           :ns-default build}
   :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}}
-           :exec-fn deps-deploy.deps-deploy/deploy}}}
+           :exec-fn deps-deploy.deps-deploy/deploy}
+  :shadow-cljs {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
+   :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}
