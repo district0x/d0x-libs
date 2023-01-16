@@ -1,0 +1,10 @@
+{:dev-http {6502 {:roots ["public" "out/browser-app"] :host "d0x-vm"}}
+ :nrepl {:port 30333}
+ :deps {:aliases [:dev]}
+ :builds
+ {:browser-app {:target :browser
+                :devtools {:repl-init-ns app}
+                ; :main app/main
+                :modules {:main {:entries [app] :init-fn app/main}}
+                :output-dir "out/browser-app"
+                :asset-path "/"}}}
