@@ -1,6 +1,44 @@
-[{:created-at "2023-01-13T18:35:18.243688",
+[{:created-at "2023-01-20T13:26:40.105215",
+  :version "23.1.20-SNAPSHOT",
+  :description "Doing re-release of all libraries with the same date (shared-bundle was missing)",
+  :libs
+  ["shared/district-validation"
+   "shared/district-web3-utils"
+   "shared/district-shared-bundle"
+   "shared/cljs-web3-next"
+   "shared/district-parsers"
+   "shared/cljs-ipfs-http-client"
+   "shared/cljs-solidity-sha3"
+   "server/district-server-smart-contracts"
+   "server/district-server-web3-watcher"
+   "server/district-server-db"
+   "server/district-server-web3-events"
+   "server/district-server-bundle"
+   "server/district-server-web3"
+   "browser/district-ui-web3-tx-log"
+   "browser/re-frame-web3-fx"
+   "browser/district-ui-web3-chain"
+   "browser/district-ui-web3-balances"
+   "browser/district-ui-web3-tx-log-core"
+   "browser/district-ui-bundle"
+   "browser/district-ui-component-active-account"
+   "browser/district-ui-web3-account-balances"
+   "browser/district-ui-web3-sync-now"
+   "browser/district-ui-web3"
+   "browser/district-ui-web3-tx"
+   "browser/district-ui-component-active-account-balance"
+   "browser/district-ui-web3-tx-costs"
+   "browser/district-ui-reagent-render"
+   "browser/re-frame-ipfs-fx"
+   "browser/district-ui-web3-accounts"
+   "browser/district-ui-component-tx-button"
+   "browser/district-ui-smart-contracts"
+   "browser/district-ui-web3-tx-id"],
+  :updated-at "2023-01-20T13:27:01.359497"}
+ {:created-at "2023-01-13T18:35:18.243688",
   :version "23.1.13",
-  :description "Releasing ui-component-active-account and ipfs-fx 1st time",
+  :description
+  "Releasing ui-component-active-account and ipfs-fx 1st time",
   :libs
   ["browser/district-ui-component-active-account-balance"
    "browser/re-frame-ipfs-fx"],
