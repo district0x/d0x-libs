@@ -1,5 +1,5 @@
 [{:created-at "2023-01-20T13:26:40.105215",
-  :version "23.1.20-SNAPSHOT",
+  :version "23.1.23-SNAPSHOT",
   :description "Doing re-release of all libraries with the same date (shared-bundle was missing)",
   :libs
   ["shared/district-validation"

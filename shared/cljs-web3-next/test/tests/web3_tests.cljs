@@ -9,29 +9,25 @@
             [cljs-web3-next.utils :as web3-utils]
             [cljs-web3-next.helpers :as web3-helpers]
             [cljs-web3-next.personal :as web3-personal]
-            ; [cljs.nodejs :as nodejs] ; caused loading error `ReferenceError: require is not defined`
             [clojure.string :as string]
             [oops.core :refer [ocall oget oset! oapply+]]
             [cljs.core.async :refer [<! chan put! timeout]]
             [tests.smart-contracts-test :refer [smart-contracts]]
-            [district.shared.async-helpers :as async-helpers]
-            ["web3" :as Web3]))
+            [district.shared.async-helpers :as async-helpers]))
 
 (async-helpers/extend-promises-as-channels!)
 
-(def abi (oget (js/JSON.parse (slurpit "./resources/public/contracts/build/MyContract.json")) "abi"))
+(def abi
+  (clj->js (oget (js/JSON.parse
+                   (slurpit "./resources/public/contracts/build/MyContract.json")) "abi")))
 
-(defn running-in-browser? []
-  (and (exists? js/window) (exists? js/document))) ; Based on https://github.com/flexdinesh/browser-or-node/blob/master/src/index.js#L2
+(def ganache-url "ws://localhost:8549")
 
-(defn get-web3-provider [in-browser?]
-  (if in-browser?
-(web3-core/ws-provider "ws://localhost:8549")
-    (web3-core/ws-provider "ws://localhost:8549")))
+(defn get-web3 []
+  (web3-core/create-web3 nil ganache-url))
 
 (deftest test-web3 []
-  (let [provider (get-web3-provider (running-in-browser?))
-        web3 (new Web3 provider)]
+  (let [web3 (get-web3)]
     (async done
            (go
              (let [connected? (<! (web3-eth/is-listening? web3))
@@ -69,7 +65,6 @@
                    past-events (<! (web3-eth/get-past-events my-contract :SetCounterEvent {:from-block 0 :to-block "latest"}))
                    final-logs (<! (web3-eth/get-past-logs web3 {:address [address] :topics [event-signature] :from-block block-number :to-block "latest"}))
                    new-logs (- (count final-logs) (count initial-logs))]
-
 
                (is (= "7" seven))
                (is (= "1337" (str chain-id)))
@@ -126,8 +121,7 @@
   (is (web3-core/address? "0x8888f1f195afa192cfee860698584c030f4c9db1"))
   (is (not (web3-core/address? "0x8888F1f195afa192cfee860698584c030f4c9db1")))
 
-  (let [provider (get-web3-provider (running-in-browser?))
-     web3 (new Web3 provider)]
+  (let [web3 (get-web3)]
     (is (= (web3-utils/solidity-sha3 web3 "Some string to be hashed")
           "0xed973b234cf2238052c9ac87072c71bcf33abc1bbd721018e0cca448ef79b379"))
 
@@ -137,8 +131,7 @@
 
 (deftest test-web3-evm
   []
-  (let [provider (get-web3-provider (running-in-browser?))
-        web3 (new Web3 provider)]
+  (let [web3 (get-web3)]
 
     (async done
       (go
