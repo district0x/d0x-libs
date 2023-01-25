@@ -14,11 +14,13 @@
   is.d0x/district-ui-web3-tx {:mvn/version "LATEST"},
   is.d0x/district-ui-web3-tx-log-core {:mvn/version "LATEST"},
   is.d0x/district-ui-smart-contracts {:mvn/version "LATEST"},
-  is.d0x/district-ui-component-active-account-balance
-  {:mvn/version "LATEST"},
+  is.d0x/district-ui-component-active-account-balance {:mvn/version "LATEST"},
   is.d0x/district-ui-web3-sync-now {:mvn/version "LATEST"},
   is.d0x/district-ui-web3 {:mvn/version "LATEST"},
   is.d0x/district-ui-web3-balances {:mvn/version "LATEST"}},
+  is.d0x/district-ui-component-active-account {:mvn/version "LATEST"},
+  is.d0x/re-frame-ipfs-fx {:mvn/version "LATEST"},
+  is.d0x/re-frame-web3-fx {:mvn/version "LATEST"}
  :aliases
  {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
   :local-deps
@@ -50,7 +52,10 @@
     {:local/root "../district-ui-web3-sync-now"},
     is.d0x/district-ui-web3 {:local/root "../district-ui-web3"},
     is.d0x/district-ui-web3-balances
-    {:local/root "../district-ui-web3-balances"}}},
+    {:local/root "../district-ui-web3-balances"}}
+    is.d0x/re-frame-ipfs-fx {:local/root "../re-frame-ipfs-fx"},
+    is.d0x/re-frame-web3-fx {:local/root "../re-frame-web3-fx"},
+    is.d0x/district-ui-component-active-account {:mvn/version "../district-ui-component-active-account"}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

@@ -10,7 +10,7 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_INFO,
         browserNoActivityTimeout: 60000,
-        browserDisconnectTimeout: 60000
+        browserDisconnectTimeout: 60000,
         client: {
             args: ["shadow.test.karma.init"],
             singleRun: true
