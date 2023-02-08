@@ -1,8 +1,18 @@
 (ns district.sendgrid
-  (:require [ajax.core :refer [POST]]))
+  (:require
+    ["xhr2" :as xhr2]
+    [cljs-http.client :as http]
+    [cljs.core.async :as async]))
+
+; cljs-http uses google Closure goog.net.XhrIo which works on browsers but
+; needs XMLHttpRequest on Node.js
+; Solution from: https://github.com/r0man/cljs-http/issues/94
+(set! js/XMLHttpRequest xhr2)
 
 (defonce ^:private sendgrid-public-api "https://api.sendgrid.com/v3/mail/send")
 
+; Sendgrid API documentation:
+;   https://docs.sendgrid.com/api-reference/mail-send/mail-send
 (defn send-email
   [{:keys [:from :to :subject :content :substitutions :on-success :on-error :template-id :api-key :body :headers
            :print-mode?]}]
@@ -17,7 +27,9 @@
         (println "Subject:" subject)
         (println "Content:" content)
         (println "Substitutions:" substitutions))
-      (let [body (merge {:from {:email from}
+      (let [headers (merge {"Authorization" (str "Bearer " api-key)
+                            "Content-Type" "application/json"} headers)
+            body (merge {:from {:email from}
                          :personalizations [{:to [{:email to}]
                                              ;; Substitutions are in format e.g ":header", so (str :header) works well
                                              :substitutions (into {} (map (fn [[k v]] [(str k) v]) substitutions))}]
@@ -26,10 +38,8 @@
                                     :value content}]
                          :template_id template-id}
                         body)]
-        (POST sendgrid-public-api
-              {:headers (merge {"Authorization" (str "Bearer " api-key)
-                                "Content-Type" "application/json"}
-                               headers)
-               :body (js/JSON.stringify (clj->js body))
-               :handler on-success
-               :error-handler on-error})))))
+        (async/take! (http/post sendgrid-public-api {:headers headers} {:json-params body})
+                     (fn [res] (if (= true (:success res))
+                                 (on-success res)
+                                 (on-error res))))
+        ))))
