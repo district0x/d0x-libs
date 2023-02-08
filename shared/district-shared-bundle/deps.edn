@@ -2,22 +2,25 @@
  :mvn/repos
  {"central" {:url "https://repo1.maven.org/maven2/"},
   "clojars" {:url "https://clojars.org/repo"}},
- :deps {is.d0x/cljs-web3-next {:mvn/version "LATEST"}
-        is.d0x/cljs-ipfs-http-client {:mvn/version "LATEST"}
-        is.d0x/cljs-solidity-sha3 {:mvn/version "LATEST"}
-        is.d0x/district-parsers {:mvn/version "LATEST"}
-        is.d0x/district-validation  {:mvn/version  "LATEST"}
-        is.d0x/district-web3-utils  {:mvn/version  "LATEST"}},
+ :deps
+ {is.d0x/cljs-web3-next {:mvn/version "LATEST"},
+  is.d0x/cljs-ipfs-http-client {:mvn/version "LATEST"},
+  is.d0x/cljs-solidity-sha3 {:mvn/version "LATEST"},
+  is.d0x/district-parsers {:mvn/version "LATEST"},
+  is.d0x/district-validation {:mvn/version "LATEST"},
+  is.d0x/district-web3-utils {:mvn/version "LATEST"}},
  :aliases
  {:dev {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}},
   :local-deps
   {:override-deps
-   {is.d0x/cljs-web3-next {:local/root "../cljs-web3-next"}
-    is.d0x/cljs-ipfs-http-client {:local/root "../cljs-ipfs-http-client"}
-    is.d0x/cljs-solidity-sha3 {:local/root "../cljs-solidity-sha3"}
-    is.d0x/district-parsers {:local/root "../district-parsers"}
-    is.d0x/district-validation  {:local/root  "../district-validation"}
-    is.d0x/district-web3-utils  {:local/root  "../district-web3-utils"}}},
+   {is.d0x/cljs-web3-next {:local/root "../cljs-web3-next"},
+    is.d0x/cljs-ipfs-http-client
+    {:local/root "../cljs-ipfs-http-client"},
+    is.d0x/cljs-solidity-sha3 {:local/root "../cljs-solidity-sha3"},
+    is.d0x/district-parsers {:local/root "../district-parsers"},
+    is.d0x/district-validation {:local/root "../district-validation"},
+    is.d0x/district-web3-utils
+    {:local/root "../district-web3-utils"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

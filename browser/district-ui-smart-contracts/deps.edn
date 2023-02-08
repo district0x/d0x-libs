@@ -34,9 +34,9 @@
    :exec-fn deps-deploy.deps-deploy/deploy},
   :local-deps
   {:override-deps
-   {is.d0x/re-frame-web3-fx {:local/root "../re-frame-web3-fx"},
-    is.d0x/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
-    is.d0x/district-ui-web3 {:local/root "../district-ui-web3"}}},
+   {is.d0x/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
+    is.d0x/district-ui-web3 {:local/root "../district-ui-web3"},
+    is.d0x/re-frame-web3-fx {:local/root "../re-frame-web3-fx"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}
