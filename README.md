@@ -1,6 +1,6 @@
 # district-sendgrid
 
-[![Build Status](https://travis-ci.org/district0x/district-sendgrid.svg?branch=master)](https://travis-ci.org/district0x/district-sendgrid)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/district0x/district-sendgrid/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/district0x/district-sendgrid/tree/master)
 
 Helper functions for sending emails via Sendgrid API.
 
