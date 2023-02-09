@@ -1,6 +1,6 @@
 [{:created-at "2023-02-09T06:54:29.820472",
   :version "23.2.9",
-  :description "Import 2 more libraries",
+  :description "Import 2 more libraries...",
   :libs ["shared/district-sendgrid" "browser/district-ui-router" "shared/district-shared-bundle" "browser/district-ui-bundle"],
   :updated-at "2023-02-09T06:54:50.63636"}
  {:created-at "2023-01-20T13:26:40.105215",
