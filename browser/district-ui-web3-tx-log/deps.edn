@@ -40,11 +40,11 @@
     {:local/root "../district-ui-web3-tx-costs"},
     is.d0x/district-ui-web3-accounts
     {:local/root "../district-ui-web3-accounts"},
+    is.d0x/district-web3-utils
+    {:local/root "../../shared/district-web3-utils"},
     is.d0x/district-ui-web3-tx {:local/root "../district-ui-web3-tx"},
     is.d0x/district-ui-web3-tx-log-core
-    {:local/root "../district-ui-web3-tx-log-core"},
-    is.d0x/district-web3-utils
-    {:local/root "../../shared/district-web3-utils"}}},
+    {:local/root "../district-ui-web3-tx-log-core"}}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
    :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

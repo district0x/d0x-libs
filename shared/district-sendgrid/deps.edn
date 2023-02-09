@@ -1,17 +1,19 @@
-{:paths ["src" "test"],
+{:paths ["src"],
  :mvn/repos
  {"central" {:url "https://repo1.maven.org/maven2/"},
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {org.clojure/clojure {:mvn/version "1.11.1"},
   thheller/shadow-cljs {:mvn/version "2.19.8"},
-  org.clojure/clojurescript {:mvn/version "1.11.60"},
-  is.d0x/district-ui-web3-accounts {:mvn/version "LATEST"},
-  re-frame/re-frame {:mvn/version "1.2.0"}},
+  org.clojure/clojurescript {:mvn/version "1.11.60"}
+  org.clojure/core.async {:mvn/version "1.6.673"}
+  cljs-http/cljs-http {:mvn/version "0.1.46"}},
  :install-deps true,
  :aliases
- {:dev
-  {:extra-deps
+ {:test {:extra-paths ["test"]},
+  :dev
+  {:extra-paths ["test"]
+   :extra-deps
    {com.cemerick/piggieback {:mvn/version "0.2.2"},
     org.clojure/tools.nrepl {:mvn/version "0.2.13"}}},
   :build
@@ -23,10 +25,7 @@
   :deploy
   {:replace-deps {slipset/deps-deploy {:mvn/version "RELEASE"}},
    :exec-fn deps-deploy.deps-deploy/deploy},
+  :local-deps {:override-deps {}},
   :shadow-cljs
   {:extra-deps {thheller/shadow-cljs {:mvn/version "2.19.8"}},
-   :main-opts ["-m" "shadow.cljs.devtools.cli"]},
-  :local-deps
-  {:override-deps
-   {is.d0x/district-ui-web3-accounts
-    {:local/root "../district-ui-web3-accounts"}}}}}
+   :main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

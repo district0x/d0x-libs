@@ -10,60 +10,63 @@
  :aliases
  {:district-ui-web3-balances
   {:extra-deps
-   {io.github.district0x/district-ui-web3-balances
+   {is.d0x/district-ui-web3-balances
     {:local/root "browser/district-ui-web3-balances"}},
    :extra-paths ["browser/district-ui-web3-balances/test"]},
+  :district-sendgrid
+  {:extra-deps
+   {is.d0x/district-sendgrid {:local/root "shared/district-sendgrid"}},
+   :extra-paths ["shared/district-sendgrid/test"]},
   :district-ui-web3-tx-costs
   {:extra-deps
-   {io.github.district0x/district-ui-web3-tx-costs
+   {is.d0x/district-ui-web3-tx-costs
     {:local/root "browser/district-ui-web3-tx-costs"}},
    :extra-paths ["browser/district-ui-web3-tx-costs/test"]},
   :district-parsers
   {:extra-deps
-   {district0x/district-parsers
-    {:local/root "shared/district-parsers"}},
+   {is.d0x/district-parsers {:local/root "shared/district-parsers"}},
    :extra-paths ["shared/district-parsers/test"]},
   :browser-all
   {:extra-deps
-   {io.github.district0x/re-frame-web3-fx
-    {:local/root "browser/re-frame-web3-fx"},
-    district0x/district-ui-web3-tx-log-core
+   {is.d0x/district-ui-web3-tx-costs
+    {:local/root "browser/district-ui-web3-tx-costs"},
+    is.d0x/district-ui-web3-tx-id
+    {:local/root "browser/district-ui-web3-tx-id"},
+    is.d0x/district-ui-reagent-render
+    {:local/root "browser/district-ui-reagent-render"},
+    is.d0x/district-ui-web3-account-balances
+    {:local/root "browser/district-ui-web3-account-balances"},
+    is.d0x/district-ui-web3-accounts
+    {:local/root "browser/district-ui-web3-accounts"},
+    is.d0x/district-ui-web3-tx-log
+    {:local/root "browser/district-ui-web3-tx-log"},
+    is.d0x/district-ui-component-tx-button
+    {:local/root "browser/district-ui-component-tx-button"},
+    is.d0x/district-ui-web3-chain
+    {:local/root "browser/district-ui-web3-chain"},
+    is.d0x/district-ui-web3-tx
+    {:local/root "browser/district-ui-web3-tx"},
+    is.d0x/district-ui-router
+    {:local/root "browser/district-ui-router"},
+    is.d0x/district-ui-web3-tx-log-core
     {:local/root "browser/district-ui-web3-tx-log-core"},
-    district0x/district-ui-component-active-account-balance
+    is.d0x/district-ui-smart-contracts
+    {:local/root "browser/district-ui-smart-contracts"},
+    is.d0x/district-ui-component-active-account-balance
     {:local/root
      "browser/district-ui-component-active-account-balance"},
-    district0x/re-frame-ipfs-fx
-    {:local/root "browser/re-frame-ipfs-fx"},
-    district0x/district-ui-smart-contracts
-    {:local/root "browser/district-ui-smart-contracts"},
-    district0x/district-ui-component-active-account
+    is.d0x/district-ui-component-active-account
     {:local/root "browser/district-ui-component-active-account"},
-    district0x/district-ui-reagent-render
-    {:local/root "browser/district-ui-reagent-render"},
-    district0x/district-ui-web3
-    {:local/root "browser/district-ui-web3"},
-    io.github.district0x/district-ui-web3-balances
-    {:local/root "browser/district-ui-web3-balances"},
-    io.github.district0x/district-ui-web3-sync-now
+    is.d0x/re-frame-ipfs-fx {:local/root "browser/re-frame-ipfs-fx"},
+    is.d0x/district-ui-web3-sync-now
     {:local/root "browser/district-ui-web3-sync-now"},
-    io.github.district0x/district-ui-web3-tx-costs
-    {:local/root "browser/district-ui-web3-tx-costs"},
-    io.github.district0x/district-ui-web3-tx-id
-    {:local/root "browser/district-ui-web3-tx-id"},
-    io.github.district0x/district-ui-web3-accounts
-    {:local/root "browser/district-ui-web3-accounts"},
-    district0x/district-ui-web3-account-balances
-    {:local/root "browser/district-ui-web3-account-balances"},
-    io.github.district0x/district-ui-web3-tx
-    {:local/root "browser/district-ui-web3-tx"},
-    district0x/district-ui-web3-tx-log
-    {:local/root "browser/district-ui-web3-tx-log"},
-    district0x/district-ui-component-tx-button
-    {:local/root "browser/district-ui-component-tx-button"},
-    io.github.district0x/district-ui-web3-chain
-    {:local/root "browser/district-ui-web3-chain"}},
+    is.d0x/district-ui-web3 {:local/root "browser/district-ui-web3"},
+    is.d0x/re-frame-web3-fx {:local/root "browser/re-frame-web3-fx"},
+    is.d0x/district-ui-web3-balances
+    {:local/root "browser/district-ui-web3-balances"}},
    :extra-paths
-   ["browser/district-ui-component-active-account/test"
+   ["browser/district-ui-router/test"
+    "browser/district-ui-component-active-account/test"
     "browser/re-frame-ipfs-fx/test"
     "browser/re-frame-web3-fx/test"
     "browser/district-ui-web3-tx-log-core/test"
@@ -83,107 +86,106 @@
     "browser/district-ui-component-active-account-balance/test"]},
   :district-ui-web3-tx-log-core
   {:extra-deps
-   {district0x/district-ui-web3-tx-log-core
+   {is.d0x/district-ui-web3-tx-log-core
     {:local/root "browser/district-ui-web3-tx-log-core"}},
    :extra-paths ["browser/district-ui-web3-tx-log-core/test"]},
   :district-ui-web3-account-balances
   {:extra-deps
-   {district0x/district-ui-web3-account-balances
+   {is.d0x/district-ui-web3-account-balances
     {:local/root "browser/district-ui-web3-account-balances"}},
    :extra-paths ["browser/district-ui-web3-account-balances/test"]},
   :district-server-web3-events
   {:extra-deps
-   {district0x/district-server-web3-events
+   {is.d0x/district-server-web3-events
     {:local/root "server/district-server-web3-events"}},
    :extra-paths ["server/district-server-web3-events/test"]},
   :district-ui-web3-tx-log
   {:extra-deps
-   {district0x/district-ui-web3-tx-log
+   {is.d0x/district-ui-web3-tx-log
     {:local/root "browser/district-ui-web3-tx-log"}},
    :extra-paths ["browser/district-ui-web3-tx-log/test"]},
   :district-ui-component-tx-button
   {:extra-deps
-   {district0x/district-ui-component-tx-button
+   {is.d0x/district-ui-component-tx-button
     {:local/root "browser/district-ui-component-tx-button"}},
    :extra-paths ["browser/district-ui-component-tx-button/test"]},
   :district-ui-component-active-account-balance
   {:extra-deps
-   {district0x/district-ui-component-active-account-balance
+   {is.d0x/district-ui-component-active-account-balance
     {:local/root
      "browser/district-ui-component-active-account-balance"}},
    :extra-paths
    ["browser/district-ui-component-active-account-balance/test"]},
   :district-ui-component-active-account
   {:extra-deps
-   {district0x/district-ui-component-active-account
+   {is.d0x/district-ui-component-active-account
     {:local/root "browser/district-ui-component-active-account"}},
    :extra-paths ["browser/district-ui-component-active-account/test"]},
   :cljs-ipfs-http-client
   {:extra-deps
-   {district0x/cljs-ipfs-http-client
+   {is.d0x/cljs-ipfs-http-client
     {:local/root "shared/cljs-ipfs-http-client"}},
    :extra-paths ["shared/cljs-ipfs-http-client/test"]},
   :district-ui-web3-tx
   {:extra-deps
-   {io.github.district0x/district-ui-web3-tx
+   {is.d0x/district-ui-web3-tx
     {:local/root "browser/district-ui-web3-tx"}},
    :extra-paths ["browser/district-ui-web3-tx/test"]},
   :district-ui-web3-sync-now
   {:extra-deps
-   {io.github.district0x/district-ui-web3-sync-now
+   {is.d0x/district-ui-web3-sync-now
     {:local/root "browser/district-ui-web3-sync-now"}},
    :extra-paths ["browser/district-ui-web3-sync-now/test"]},
   :district-ui-web3
   {:extra-deps
-   {district0x/district-ui-web3
-    {:local/root "browser/district-ui-web3"}},
+   {is.d0x/district-ui-web3 {:local/root "browser/district-ui-web3"}},
    :extra-paths ["browser/district-ui-web3/test"]},
   :district-server-db
   {:extra-deps
-   {district0x/district-server-db
+   {is.d0x/district-server-db
     {:local/root "server/district-server-db"}},
    :extra-paths ["server/district-server-db/test"]},
   :district-server-web3
   {:extra-deps
-   {district0x/district-server-web3
+   {is.d0x/district-server-web3
     {:local/root "server/district-server-web3"}},
    :extra-paths ["server/district-server-web3/test"]},
   :district-ui-web3-tx-id
   {:extra-deps
-   {io.github.district0x/district-ui-web3-tx-id
+   {is.d0x/district-ui-web3-tx-id
     {:local/root "browser/district-ui-web3-tx-id"}},
    :extra-paths ["browser/district-ui-web3-tx-id/test"]},
   :district-ui-reagent-render
   {:extra-deps
-   {district0x/district-ui-reagent-render
+   {is.d0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"}},
    :extra-paths ["browser/district-ui-reagent-render/test"]},
   :cljs-solidity-sha3
   {:extra-deps
-   {district0x/cljs-solidity-sha3
+   {is.d0x/cljs-solidity-sha3
     {:local/root "shared/cljs-solidity-sha3"}},
    :extra-paths ["shared/cljs-solidity-sha3/test"]},
   :district-server-smart-contracts
   {:extra-deps
-   {district0x/district-server-smart-contracts
+   {is.d0x/district-server-smart-contracts
     {:local/root "server/district-server-smart-contracts"}},
    :extra-paths ["server/district-server-smart-contracts/test"]},
   :district-validation
   {:extra-deps
-   {io.github.district0x/district-validation
+   {is.d0x/district-validation
     {:local/root "shared/district-validation"}},
    :extra-paths ["shared/district-validation/test"]},
   :server-all
   {:extra-deps
-   {district0x/district-server-db
+   {is.d0x/district-server-db
     {:local/root "server/district-server-db"},
-    district0x/district-server-smart-contracts
+    is.d0x/district-server-smart-contracts
     {:local/root "server/district-server-smart-contracts"},
-    district0x/district-server-web3
+    is.d0x/district-server-web3
     {:local/root "server/district-server-web3"},
-    district0x/district-server-web3-events
+    is.d0x/district-server-web3-events
     {:local/root "server/district-server-web3-events"},
-    district0x/district-server-web3-watcher
+    is.d0x/district-server-web3-watcher
     {:local/root "server/district-server-web3-watcher"}},
    :extra-paths
    ["server/district-server-web3-watcher/test"
@@ -191,57 +193,60 @@
     "server/district-server-web3/test"
     "server/district-server-smart-contracts/test"
     "server/district-server-db/test"]},
+  :district-ui-router
+  {:extra-deps
+   {is.d0x/district-ui-router
+    {:local/root "browser/district-ui-router"}},
+   :extra-paths ["browser/district-ui-router/test"]},
   :district-ui-web3-accounts
   {:extra-deps
-   {io.github.district0x/district-ui-web3-accounts
+   {is.d0x/district-ui-web3-accounts
     {:local/root "browser/district-ui-web3-accounts"}},
    :extra-paths ["browser/district-ui-web3-accounts/test"]},
   :district-web3-utils
   {:extra-deps
-   {io.github.district0x/district-web3-utils
+   {is.d0x/district-web3-utils
     {:local/root "shared/district-web3-utils"}},
    :extra-paths ["shared/district-web3-utils/test"]},
   :district-server-web3-watcher
   {:extra-deps
-   {district0x/district-server-web3-watcher
+   {is.d0x/district-server-web3-watcher
     {:local/root "server/district-server-web3-watcher"}},
    :extra-paths ["server/district-server-web3-watcher/test"]},
   :district-ui-smart-contracts
   {:extra-deps
-   {district0x/district-ui-smart-contracts
+   {is.d0x/district-ui-smart-contracts
     {:local/root "browser/district-ui-smart-contracts"}},
    :extra-paths ["browser/district-ui-smart-contracts/test"]},
   :district-ui-web3-chain
   {:extra-deps
-   {io.github.district0x/district-ui-web3-chain
+   {is.d0x/district-ui-web3-chain
     {:local/root "browser/district-ui-web3-chain"}},
    :extra-paths ["browser/district-ui-web3-chain/test"]},
   :re-frame-ipfs-fx
   {:extra-deps
-   {district0x/re-frame-ipfs-fx
-    {:local/root "browser/re-frame-ipfs-fx"}},
+   {is.d0x/re-frame-ipfs-fx {:local/root "browser/re-frame-ipfs-fx"}},
    :extra-paths ["browser/re-frame-ipfs-fx/test"]},
   :cljs-web3-next
   {:extra-deps
-   {io.github.district0x/cljs-web3-next
-    {:local/root "shared/cljs-web3-next"}},
+   {is.d0x/cljs-web3-next {:local/root "shared/cljs-web3-next"}},
    :extra-paths ["shared/cljs-web3-next/test"]},
   :shared-all
   {:extra-deps
-   {io.github.district0x/cljs-web3-next
-    {:local/root "shared/cljs-web3-next"},
-    district0x/district-parsers
-    {:local/root "shared/district-parsers"},
-    io.github.district0x/district-web3-utils
+   {is.d0x/cljs-web3-next {:local/root "shared/cljs-web3-next"},
+    is.d0x/district-parsers {:local/root "shared/district-parsers"},
+    is.d0x/district-web3-utils
     {:local/root "shared/district-web3-utils"},
-    io.github.district0x/district-validation
+    is.d0x/district-validation
     {:local/root "shared/district-validation"},
-    district0x/cljs-solidity-sha3
+    is.d0x/cljs-solidity-sha3
     {:local/root "shared/cljs-solidity-sha3"},
-    district0x/cljs-ipfs-http-client
-    {:local/root "shared/cljs-ipfs-http-client"}},
+    is.d0x/cljs-ipfs-http-client
+    {:local/root "shared/cljs-ipfs-http-client"},
+    is.d0x/district-sendgrid {:local/root "shared/district-sendgrid"}},
    :extra-paths
-   ["shared/cljs-ipfs-http-client/test"
+   ["shared/district-sendgrid/test"
+    "shared/cljs-ipfs-http-client/test"
     "shared/cljs-solidity-sha3/test"
     "shared/district-validation/test"
     "shared/district-web3-utils/test"
@@ -249,6 +254,5 @@
     "shared/cljs-web3-next/test"]},
   :re-frame-web3-fx
   {:extra-deps
-   {io.github.district0x/re-frame-web3-fx
-    {:local/root "browser/re-frame-web3-fx"}},
+   {is.d0x/re-frame-web3-fx {:local/root "browser/re-frame-web3-fx"}},
    :extra-paths ["browser/re-frame-web3-fx/test"]}}}
