@@ -15,8 +15,7 @@
    :extra-paths ["browser/district-ui-web3-balances/test"]},
   :district-sendgrid
   {:extra-deps
-   {is.d0x/district-sendgrid
-    {:local/root "shared/district-sendgrid"}},
+   {is.d0x/district-sendgrid {:local/root "shared/district-sendgrid"}},
    :extra-paths ["shared/district-sendgrid/test"]},
   :district-ui-web3-tx-costs
   {:extra-deps
@@ -25,50 +24,49 @@
    :extra-paths ["browser/district-ui-web3-tx-costs/test"]},
   :district-parsers
   {:extra-deps
-   {is.d0x/district-parsers
-    {:local/root "shared/district-parsers"}},
+   {is.d0x/district-parsers {:local/root "shared/district-parsers"}},
    :extra-paths ["shared/district-parsers/test"]},
   :browser-all
   {:extra-deps
-   {is.d0x/re-frame-web3-fx
-    {:local/root "browser/re-frame-web3-fx"},
-    is.d0x/district-ui-web3-tx-log-core
-    {:local/root "browser/district-ui-web3-tx-log-core"},
-    is.d0x/district-ui-component-active-account-balance
-    {:local/root
-     "browser/district-ui-component-active-account-balance"},
-    is.d0x/re-frame-ipfs-fx
-    {:local/root "browser/re-frame-ipfs-fx"},
-    is.d0x/district-ui-smart-contracts
-    {:local/root "browser/district-ui-smart-contracts"},
-    is.d0x/district-ui-component-active-account
-    {:local/root "browser/district-ui-component-active-account"},
-    is.d0x/district-ui-reagent-render
-    {:local/root "browser/district-ui-reagent-render"},
-    is.d0x/district-ui-web3
-    {:local/root "browser/district-ui-web3"},
-    is.d0x/district-ui-web3-balances
-    {:local/root "browser/district-ui-web3-balances"},
-    is.d0x/district-ui-web3-sync-now
-    {:local/root "browser/district-ui-web3-sync-now"},
-    is.d0x/district-ui-web3-tx-costs
+   {is.d0x/district-ui-web3-tx-costs
     {:local/root "browser/district-ui-web3-tx-costs"},
     is.d0x/district-ui-web3-tx-id
     {:local/root "browser/district-ui-web3-tx-id"},
-    is.d0x/district-ui-web3-accounts
-    {:local/root "browser/district-ui-web3-accounts"},
+    is.d0x/district-ui-reagent-render
+    {:local/root "browser/district-ui-reagent-render"},
     is.d0x/district-ui-web3-account-balances
     {:local/root "browser/district-ui-web3-account-balances"},
-    is.d0x/district-ui-web3-tx
-    {:local/root "browser/district-ui-web3-tx"},
+    is.d0x/district-ui-web3-accounts
+    {:local/root "browser/district-ui-web3-accounts"},
     is.d0x/district-ui-web3-tx-log
     {:local/root "browser/district-ui-web3-tx-log"},
     is.d0x/district-ui-component-tx-button
     {:local/root "browser/district-ui-component-tx-button"},
     is.d0x/district-ui-web3-chain
-    {:local/root "browser/district-ui-web3-chain"}},
+    {:local/root "browser/district-ui-web3-chain"},
+    is.d0x/district-ui-web3-tx
+    {:local/root "browser/district-ui-web3-tx"},
+    is.d0x/district-ui-router
+    {:local/root "browser/district-ui-router"},
+    is.d0x/district-ui-web3-tx-log-core
+    {:local/root "browser/district-ui-web3-tx-log-core"},
+    is.d0x/district-ui-smart-contracts
+    {:local/root "browser/district-ui-smart-contracts"},
+    is.d0x/district-ui-component-active-account-balance
+    {:local/root
+     "browser/district-ui-component-active-account-balance"},
+    is.d0x/district-ui-component-active-account
+    {:local/root "browser/district-ui-component-active-account"},
+    is.d0x/re-frame-ipfs-fx {:local/root "browser/re-frame-ipfs-fx"},
+    is.d0x/district-ui-web3-sync-now
+    {:local/root "browser/district-ui-web3-sync-now"},
+    is.d0x/district-ui-web3 {:local/root "browser/district-ui-web3"},
+    is.d0x/re-frame-web3-fx {:local/root "browser/re-frame-web3-fx"},
+    is.d0x/district-ui-web3-balances
+    {:local/root "browser/district-ui-web3-balances"}},
    :extra-paths
-   ["browser/district-ui-component-active-account/test"
+   ["browser/district-ui-router/test"
+    "browser/district-ui-component-active-account/test"
     "browser/re-frame-ipfs-fx/test"
     "browser/re-frame-web3-fx/test"
     "browser/district-ui-web3-tx-log-core/test"
@@ -140,8 +138,7 @@
    :extra-paths ["browser/district-ui-web3-sync-now/test"]},
   :district-ui-web3
   {:extra-deps
-   {is.d0x/district-ui-web3
-    {:local/root "browser/district-ui-web3"}},
+   {is.d0x/district-ui-web3 {:local/root "browser/district-ui-web3"}},
    :extra-paths ["browser/district-ui-web3/test"]},
   :district-server-db
   {:extra-deps
@@ -196,6 +193,11 @@
     "server/district-server-web3/test"
     "server/district-server-smart-contracts/test"
     "server/district-server-db/test"]},
+  :district-ui-router
+  {:extra-deps
+   {is.d0x/district-ui-router
+    {:local/root "browser/district-ui-router"}},
+   :extra-paths ["browser/district-ui-router/test"]},
   :district-ui-web3-accounts
   {:extra-deps
    {is.d0x/district-ui-web3-accounts
@@ -223,20 +225,16 @@
    :extra-paths ["browser/district-ui-web3-chain/test"]},
   :re-frame-ipfs-fx
   {:extra-deps
-   {is.d0x/re-frame-ipfs-fx
-    {:local/root "browser/re-frame-ipfs-fx"}},
+   {is.d0x/re-frame-ipfs-fx {:local/root "browser/re-frame-ipfs-fx"}},
    :extra-paths ["browser/re-frame-ipfs-fx/test"]},
   :cljs-web3-next
   {:extra-deps
-   {is.d0x/cljs-web3-next
-    {:local/root "shared/cljs-web3-next"}},
+   {is.d0x/cljs-web3-next {:local/root "shared/cljs-web3-next"}},
    :extra-paths ["shared/cljs-web3-next/test"]},
   :shared-all
   {:extra-deps
-   {is.d0x/cljs-web3-next
-    {:local/root "shared/cljs-web3-next"},
-    is.d0x/district-parsers
-    {:local/root "shared/district-parsers"},
+   {is.d0x/cljs-web3-next {:local/root "shared/cljs-web3-next"},
+    is.d0x/district-parsers {:local/root "shared/district-parsers"},
     is.d0x/district-web3-utils
     {:local/root "shared/district-web3-utils"},
     is.d0x/district-validation
@@ -245,8 +243,7 @@
     {:local/root "shared/cljs-solidity-sha3"},
     is.d0x/cljs-ipfs-http-client
     {:local/root "shared/cljs-ipfs-http-client"},
-    is.d0x/district-sendgrid
-    {:local/root "shared/district-sendgrid"}},
+    is.d0x/district-sendgrid {:local/root "shared/district-sendgrid"}},
    :extra-paths
    ["shared/district-sendgrid/test"
     "shared/cljs-ipfs-http-client/test"
@@ -257,6 +254,5 @@
     "shared/cljs-web3-next/test"]},
   :re-frame-web3-fx
   {:extra-deps
-   {is.d0x/re-frame-web3-fx
-    {:local/root "browser/re-frame-web3-fx"}},
+   {is.d0x/re-frame-web3-fx {:local/root "browser/re-frame-web3-fx"}},
    :extra-paths ["browser/re-frame-web3-fx/test"]}}}
