@@ -12,7 +12,7 @@
   Parameter:
   web3 - web3 instance"
   [web3]
-  (oget web3 "personal"))
+  (oget web3 "eth" "personal"))
 
 
 (def list-accounts
@@ -148,7 +148,6 @@
   String   - Data to sign. If String it will be converted using
              web3.utils.utf8ToHex.
   String   - Address to sign data with.
-  String   - The password of the account to sign data with.
   Function - (optional) Optional callback, returns an error object as first
                         parameter and the result as second.
 
