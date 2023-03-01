@@ -6,9 +6,9 @@
 
 (defn authorize []
   (try
-    (let [eth-send (aget js/window "ethereum" "send")]
+    (let [eth-send (aget js/window "ethereum" "request")]
      (if eth-send
-       (eth-send "eth_requestAccounts")
+       (eth-send #js {:method "eth_requestAccounts"})
        (js/Promise.reject "No ethereum send fn")))
     (catch js/Error e
       (js/Promise.reject (str "Error when calling eth_requestAccounts" e)))))
