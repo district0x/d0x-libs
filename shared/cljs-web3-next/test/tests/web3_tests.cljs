@@ -139,18 +139,12 @@
               block (js->clj (<! (web3-eth/get-block web3 block-number false)) :keywordize-keys true)]
           (web3-evm/snapshot! web3
             (fn [_err res]
-              (println "SNAPSHOT err" _err)
-              (println "SNAPSHOT res" res)
               (let [snapshot-id res]
                 (web3-evm/increase-time! web3 [3600]
                   (fn [_err res]
-                    (println "INCREASE TIME err" _err)
-                    (println "INCREASE TIME res" res)
                     (is (>= res 3600))
                     (web3-evm/mine-block! web3
                       (fn [_err _res]
-                        (println "MINE BLOCK err" _err)
-                        (println "MINE BLOCK res" _res)
                         (go
                           (let [new-block-number (<! (web3-eth/get-block-number web3))
                                 new-block (js->clj (<! (web3-eth/get-block web3 new-block-number false)) :keywordize-keys true)]
@@ -158,8 +152,6 @@
                             (is (<= (+ 3600 (:timestamp block)) (:timestamp new-block)))
                             (web3-evm/revert! web3 [snapshot-id]
                               (fn [_err _res]
-                                (println "REVERT err" _err)
-                                (println "REVERT res" _res)
                                 (go
                                   (let [new-block-number (<! (web3-eth/get-block-number web3))
                                        new-block (js->clj (<! (web3-eth/get-block web3 new-block-number false)) :keywordize-keys true)]
