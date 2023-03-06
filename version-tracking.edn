@@ -1,7 +1,17 @@
-[{:created-at "2023-02-09T06:54:29.820472",
+[{:created-at "2023-03-01T15:42:46.624815",
+  :version "23.3.1",
+  :description "Minor fixes to cljs-web3-next",
+  :libs ["shared/cljs-web3-next",
+         "browser/district-ui-web3"],
+  :updated-at "2023-03-01T15:42:46.625332"}
+ {:created-at "2023-02-09T06:54:29.820472",
   :version "23.2.9",
   :description "Import 2 more libraries...",
-  :libs ["shared/district-sendgrid" "browser/district-ui-router" "shared/district-shared-bundle" "browser/district-ui-bundle"],
+  :libs
+  ["shared/district-sendgrid"
+   "browser/district-ui-router"
+   "shared/district-shared-bundle"
+   "browser/district-ui-bundle"],
   :updated-at "2023-02-09T06:54:50.63636"}
  {:created-at "2023-01-20T13:26:40.105215",
   :version "23.1.26",
