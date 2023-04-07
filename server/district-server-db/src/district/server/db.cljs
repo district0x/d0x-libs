@@ -40,18 +40,18 @@
   (into {} (map (fn [[k v]] [(f k) v]) m)))
 
 
-(defn run! [sql-map]
-  (let [[query & values] (sql/format sql-map)]
+(defn run! [sql-map & [{:keys [:format-opts]}]]
+  (let [[query & values] (apply sql/format sql-map (reduce into [] format-opts))]
     (js->clj (.run (.prepare @db query) (clj->js (or values []))) :keywordize-keys true)))
 
 
-(defn get [sql-map]
-  (let [[query & values] (sql/format sql-map)]
+(defn get [sql-map & [{:keys [:format-opts]}]]
+  (let [[query & values] (apply sql/format sql-map (reduce into [] format-opts))]
     (map-keys *transform-result-keys-fn* (js->clj (.get (.prepare @db query) (clj->js (or values [])))))))
 
 
-(defn all [sql-map]
-  (let [[query & values] (sql/format sql-map)]
+(defn all [sql-map & [{:keys [:format-opts]}]]
+  (let [[query & values] (apply sql/format sql-map (reduce into [] format-opts))]
     (map (partial map-keys *transform-result-keys-fn*)
          (js->clj (.all (.prepare @db query) (clj->js (or values [])))))))
 
