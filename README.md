@@ -22,8 +22,16 @@ Example command:
 bb migrate ../district-server-config . server
 ```
 
-> Sidenote: before pushing & releasing for the first time a manual release is needed so that the dependencies on CI build & release can be resolved. This release can have any version number (smaller/older than the "real" one to be made by CI)
-> Command to use (change library): `bb release 0.0.1 server/district-server-config`
+To update the libraries that depend on the to be released library, use:
+1. Change the `deps.edn` files to use the `is.d0x` (or the value in `monorepo-config.edn` under `:artefact-group`) of the libraries that depend on the new library
+2. Run `./monorepo-tools/src/transform_deps.clj . server is.d0x LATEST`
+  - replacing `server` with the group you're interested in (where the new library was put under)
+
+When multiple inter-dependent libraries get deployed, the order of their deployment is determined by calculating a directed acyclic graph between the dependencies. To make it possible the first time, a manual release of the new library should be made under the `is.d0x` group artefact id.
+For that:
+1. Change `lib_versions.clj` in the original library to have `is.d0x` as the group artefact
+2. Release it manually: `bb release 0.0.1 server/district-server-config`
+  - `0.0.1` is arbitrary version number. It could be anything smaller/earlier than the "real" version to be deployed
 
 ### Working with libraries already in the monorepo
 
