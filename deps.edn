@@ -34,6 +34,8 @@
     {:local/root "browser/district-ui-web3-tx-id"},
     is.d0x/district-ui-reagent-render
     {:local/root "browser/district-ui-reagent-render"},
+    is.d0x/district-ui-router
+    {:local/root "browser/district-ui-router"},
     is.d0x/district-ui-web3-account-balances
     {:local/root "browser/district-ui-web3-account-balances"},
     is.d0x/district-ui-web3-accounts
@@ -46,8 +48,6 @@
     {:local/root "browser/district-ui-web3-chain"},
     is.d0x/district-ui-web3-tx
     {:local/root "browser/district-ui-web3-tx"},
-    is.d0x/district-ui-router
-    {:local/root "browser/district-ui-router"},
     is.d0x/district-ui-web3-tx-log-core
     {:local/root "browser/district-ui-web3-tx-log-core"},
     is.d0x/district-ui-smart-contracts
@@ -165,6 +165,11 @@
    {is.d0x/cljs-solidity-sha3
     {:local/root "shared/cljs-solidity-sha3"}},
    :extra-paths ["shared/cljs-solidity-sha3/test"]},
+  :district-server-config
+  {:extra-deps
+   {is.d0x/district-server-config
+    {:local/root "server/district-server-config"}},
+   :extra-paths ["server/district-server-config/test"]},
   :district-server-smart-contracts
   {:extra-deps
    {is.d0x/district-server-smart-contracts
@@ -186,9 +191,12 @@
     is.d0x/district-server-web3-events
     {:local/root "server/district-server-web3-events"},
     is.d0x/district-server-web3-watcher
-    {:local/root "server/district-server-web3-watcher"}},
+    {:local/root "server/district-server-web3-watcher"},
+    is.d0x/district-server-config
+    {:local/root "server/district-server-config"}},
    :extra-paths
-   ["server/district-server-web3-watcher/test"
+   ["server/district-server-config/test"
+    "server/district-server-web3-watcher/test"
     "server/district-server-web3-events/test"
     "server/district-server-web3/test"
     "server/district-server-smart-contracts/test"

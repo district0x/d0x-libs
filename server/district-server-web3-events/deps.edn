@@ -4,9 +4,9 @@
   "clojars" {:url "https://clojars.org/repo"}},
  :deps
  {is.d0x/district-server-web3 {:mvn/version "LATEST"},
-  district0x/district-server-config {:mvn/version "1.0.1"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
   district0x/async-helpers {:mvn/version "0.1.3"},
+  is.d0x/district-server-config {:mvn/version "LATEST"},
   is.d0x/district-server-smart-contracts {:mvn/version "LATEST"},
   com.taoensso/timbre {:mvn/version "4.10.0"},
   mount/mount {:mvn/version "0.1.16"},
@@ -31,6 +31,8 @@
   {:override-deps
    {is.d0x/district-server-web3
     {:local/root "../district-server-web3"},
+    is.d0x/district-server-config
+    {:local/root "../district-server-config"},
     is.d0x/district-server-smart-contracts
     {:local/root "../district-server-smart-contracts"},
     is.d0x/cljs-web3-next

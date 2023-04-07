@@ -1,4 +1,14 @@
-[{:created-at "2023-03-13T10:58:16.941441",
+[{:created-at "2023-04-07T11:20:35.825484",
+  :version "23.4.7",
+  :description "Migrate district-server-config to monorepo",
+  :libs
+  ["server/district-server-config"
+   "server/district-server-db"
+   "server/district-server-smart-contracts"
+   "server/district-server-web3-events"
+   "server/district-server-web3"],
+  :updated-at "2023-04-07T11:20:35.826565"}
+ {:created-at "2023-03-13T10:58:16.941441",
   :version "23.3.13",
   :description "Allow format options in db",
   :libs ["server/district-server-db"],
@@ -6,8 +16,7 @@
  {:created-at "2023-03-01T15:42:46.624815",
   :version "23.3.1",
   :description "Minor fixes to cljs-web3-next",
-  :libs ["shared/cljs-web3-next",
-         "browser/district-ui-web3"],
+  :libs ["shared/cljs-web3-next" "browser/district-ui-web3"],
   :updated-at "2023-03-01T15:42:46.625332"}
  {:created-at "2023-02-09T06:54:29.820472",
   :version "23.2.9",

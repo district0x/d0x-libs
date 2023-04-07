@@ -7,7 +7,7 @@
   thheller/shadow-cljs {:mvn/version "2.19.8"},
   org.clojure/clojurescript {:mvn/version "1.11.60"},
   is.d0x/cljs-web3-next {:mvn/version "LATEST"},
-  district0x/district-server-config {:mvn/version "1.0.1"},
+  is.d0x/district-server-config {:mvn/version "LATEST"},
   is.d0x/district-server-web3 {:mvn/version "LATEST"},
   mount/mount {:mvn/version "0.1.16"}},
  :install-deps true,
@@ -29,6 +29,8 @@
   :local-deps
   {:override-deps
    {is.d0x/cljs-web3-next {:local/root "../../shared/cljs-web3-next"},
+    is.d0x/district-server-config
+    {:local/root "../district-server-config"},
     is.d0x/district-server-web3
     {:local/root "../district-server-web3"}}},
   :shadow-cljs

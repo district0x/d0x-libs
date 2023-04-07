@@ -13,6 +13,28 @@ It relies on [monorepo-tools](https://github.com/district0x/monorepo-tools) made
 
 ## Main workflows
 
+### Migrating existing libraries to the monorepo
+
+`bb migrate` is the task that brings commit history (with some path re-writing to keep `git blame` and similar tools working) to (this) monorepo. After migrating the library will be placed in one of the group sub-folders - `browser`, `server` or `shared` and it will look as if the history had been started there (originl commit times, authors and changesets).
+
+Example command:
+```shell
+bb migrate ../district-server-config . server
+```
+
+To update the libraries that depend on the to be released library, use:
+1. Change the `deps.edn` files to use the `is.d0x` (or the value in `monorepo-config.edn` under `:artefact-group`) of the libraries that depend on the new library
+2. Run `./monorepo-tools/src/transform_deps.clj . server is.d0x LATEST`
+  - replacing `server` with the group you're interested in (where the new library was put under)
+
+When multiple inter-dependent libraries get deployed, the order of their deployment is determined by calculating a directed acyclic graph between the dependencies. To make it possible the first time, a manual release of the new library should be made under the `is.d0x` group artefact id.
+For that:
+1. Change `lib_versions.clj` in the original library to have `is.d0x` as the group artefact
+2. Release it manually: `bb release 0.0.1 server/district-server-config`
+  - `0.0.1` is arbitrary version number. It could be anything smaller/earlier than the "real" version to be deployed
+
+### Working with libraries already in the monorepo
+
 One of the motivations to group all the libraries under a monorepo was to simplify code changes, simplify & dry up build process and make it easier to discover what's available.
 When working with libraries in the monorepo, normally it goes like this
 1. Make changes on one or more libraries (by editing their source code)
