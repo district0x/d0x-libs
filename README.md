@@ -13,6 +13,20 @@ It relies on [monorepo-tools](https://github.com/district0x/monorepo-tools) made
 
 ## Main workflows
 
+### Migrating existing libraries to the monorepo
+
+`bb migrate` is the task that brings commit history (with some path re-writing to keep `git blame` and similar tools working) to (this) monorepo. After migrating the library will be placed in one of the group sub-folders - `browser`, `server` or `shared` and it will look as if the history had been started there (originl commit times, authors and changesets).
+
+Example command:
+```shell
+bb migrate ../district-server-config . server
+```
+
+> Sidenote: before pushing & releasing for the first time a manual release is needed so that the dependencies on CI build & release can be resolved. This release can have any version number (smaller/older than the "real" one to be made by CI)
+> Command to use (change library): `bb release 0.0.1 server/district-server-config`
+
+### Working with libraries already in the monorepo
+
 One of the motivations to group all the libraries under a monorepo was to simplify code changes, simplify & dry up build process and make it easier to discover what's available.
 When working with libraries in the monorepo, normally it goes like this
 1. Make changes on one or more libraries (by editing their source code)
