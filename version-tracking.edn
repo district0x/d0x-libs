@@ -1,4 +1,9 @@
-[{:created-at "2023-04-07T11:20:35.825484",
+[{:created-at "2023-05-03T16:55:29.204147",
+  :version "23.5.3",
+  :description "Allow invoking the 'receive' fallback function",
+  :libs ["browser/re-frame-web3-fx"],
+  :updated-at "2023-05-03T16:55:29.204631"}
+ {:created-at "2023-04-07T11:20:35.825484",
   :version "23.4.7",
   :description "Migrate district-server-config to monorepo",
   :libs

@@ -410,7 +410,9 @@
                     :on-success :on-error] :as method-args} (remove nil? fns)]
       (if instance
         (if tx-opts
-          (dispatch-on-tx-promi-event (web3-eth/contract-send instance method args tx-opts)
+          (dispatch-on-tx-promi-event (if (nil? method)
+                                        (web3-eth/send-transaction! web3 (merge tx-opts {:to (-> instance .-options .-address)}))
+                                        (web3-eth/contract-send instance method args tx-opts))
                                       (select-keys method-args tx-result-re-events))
           (web3-eth/contract-call instance method args {} (dispach-fn on-success on-error)))
         (apply method (concat [web3] args [(dispach-fn on-success on-error)]))))))
