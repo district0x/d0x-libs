@@ -1,7 +1,23 @@
 [{:created-at "2023-05-03T16:55:29.204147",
   :version "23.5.3",
   :description "Allow invoking the 'receive' fallback function",
-  :libs ["browser/re-frame-web3-fx"],
+  :libs
+  ["browser/district-ui-bundle"
+   "browser/district-ui-component-active-account"
+   "browser/district-ui-component-active-account-balance"
+   "browser/district-ui-component-tx-button"
+   "browser/district-ui-smart-contracts"
+   "browser/district-ui-web3-account-balances"
+   "browser/district-ui-web3-accounts"
+   "browser/district-ui-web3-balances"
+   "browser/district-ui-web3-chain"
+   "browser/district-ui-web3-sync-now"
+   "browser/district-ui-web3-tx"
+   "browser/district-ui-web3-tx-costs"
+   "browser/district-ui-web3-tx-id"
+   "browser/district-ui-web3-tx-log"
+   "browser/district-ui-web3-tx-log-core"
+   "browser/re-frame-web3-fx"],
   :updated-at "2023-05-03T16:55:29.204631"}
  {:created-at "2023-04-07T11:20:35.825484",
   :version "23.4.7",
