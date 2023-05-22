@@ -108,7 +108,8 @@
              (.unsubscribe event-emitter (fn []))
              (done)))))
 
-(deftest test-replay-past-events-in-order
+(defn test-replay-past-events-in-order
+  [chunks-parallelism]
   (async done
          (go
            (let [events {:my-contract/on-counter-incremented [:my-contract :onCounterIncremented]}
@@ -129,19 +130,27 @@
                                                                                            (->> (map (juxt :block-number :transaction-index :log-index) chunk-logs)
                                                                                                 (swap! on-chunk-test concat)))
                                                                                :on-finish (fn []
-                                                                                            (log/debug "Finished replaying past events"))}))
+                                                                                            (log/debug "Finished replaying past events"))
+                                                                               :chunks-parallelism chunks-parallelism}))
                  cleanup-tx (<! (smart-contracts/contract-send :my-contract :set-counter [1] {:gas 5000000}))]
              (is (= @captured-events @on-chunk-test [[(+ block-number 1) 0 1] [(+ block-number 2) 0 0] [(+ block-number 2) 0 1]])
                  "It should filter by from-block and from-tx-lidx")
 
              (done)))))
 
+(deftest test-replay-past-events-in-order-parallel
+  (test-replay-past-events-in-order 10))
+
+(deftest test-replay-past-events-in-order-sequential
+  (test-replay-past-events-in-order 1))
+
 (deftest test-contract-send-output-interface
   (async done
          (go
            (let [error-object (<! (smart-contracts/contract-send :my-contract :always-errors ["First fail"] {:output :receipt-or-error}))
                  receipt-error-pair (<! (smart-contracts/contract-send :my-contract :always-errors ["Second fail"] {:output :receipt-error-pair}))]
-             (is (string/includes? (. error-object -message) "Transaction has been reverted" ))
+             (is (string/ends-with? (. error-object -message) "First fail" ))
              (is (= 2 (count receipt-error-pair)))
              (is (= nil (first receipt-error-pair)))
+             (is (string/ends-with? (. (last receipt-error-pair) -message) "Second fail"))
              (done)))))

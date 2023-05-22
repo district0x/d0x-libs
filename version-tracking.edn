@@ -1,4 +1,12 @@
-[{:created-at "2023-05-03T16:55:29.204147",
+[{:created-at "2023-05-22T12:14:08.1815",
+  :version "23.5.22",
+  :description "Implements re-try if failed to retrieve smart contract events",
+  :libs
+  ["server/district-server-smart-contracts"
+   "server/district-server-web3-events"
+   "server/district-server-bundle"],
+  :updated-at "2023-05-22T12:15:07.171711"}
+ {:created-at "2023-05-03T16:55:29.204147",
   :version "23.5.3",
   :description "Allow invoking the 'receive' fallback function",
   :libs
