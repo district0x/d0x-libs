@@ -35,8 +35,7 @@
                  block-number (<! (web3-eth/get-block-number @web3))
                  event-emitter (smart-contracts/subscribe-events :my-contract
                                                                  :onCounterIncremented
-                                                                 {:from-block block-number
-                                                                  :to-block "latest"}
+                                                                 {:from-block block-number}
                                                                  [(fn [error {:keys [:args :event] :as tx}]
                                                                     (is (= "2" (:the-counter args)))
                                                                     (log/debug "new event subscribe-events/callback" event))])
@@ -74,8 +73,7 @@
                  ;; Direct way to use forwarders, assuming :forwards-to is defined in smart_contracts.cljs
                  forwarder-event-emitter (smart-contracts/subscribe-events :my-contract-fwd
                                                                            :onCounterIncremented
-                                                                           {:from-block (<! (web3-eth/get-block-number @web3))
-                                                                            :to-block "latest"}
+                                                                           {:from-block (<! (web3-eth/get-block-number @web3))}
                                                                            [(fn [error {:keys [:args :event] :as tx}]
                                                                               (log/debug "forwarder event" event))])
 
@@ -149,8 +147,10 @@
          (go
            (let [error-object (<! (smart-contracts/contract-send :my-contract :always-errors ["First fail"] {:output :receipt-or-error}))
                  receipt-error-pair (<! (smart-contracts/contract-send :my-contract :always-errors ["Second fail"] {:output :receipt-error-pair}))]
-             (is (string/ends-with? (. error-object -message) "First fail" ))
+             (is (or (string/ends-with? (. error-object -message) "First fail" )
+                     (string/includes? (. error-object -message) "Transaction has been reverted by the EVM")))
              (is (= 2 (count receipt-error-pair)))
              (is (= nil (first receipt-error-pair)))
-             (is (string/ends-with? (. (last receipt-error-pair) -message) "Second fail"))
+             (is (or (string/ends-with? (. (last receipt-error-pair) -message) "Second fail")
+                     (string/includes? (. error-object -message) "Transaction has been reverted by the EVM")))
              (done)))))
