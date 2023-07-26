@@ -1,6 +1,20 @@
-[{:created-at "2023-05-22T12:14:08.1815",
+[{:created-at "2023-07-26T15:41:14.924371",
+  :version "23.7.26",
+  :description "Get most recent address after selected account changed",
+  :libs
+  ["browser/district-ui-bundle"
+   "browser/district-ui-component-active-account"
+   "browser/district-ui-component-active-account-balance"
+   "browser/district-ui-component-tx-button"
+   "browser/district-ui-web3-account-balances"
+   "browser/district-ui-web3-accounts"
+   "browser/district-ui-web3-tx-id"
+   "browser/district-ui-web3-tx-log"],
+  :updated-at "2023-07-26T15:41:14.924488"}
+ {:created-at "2023-05-22T12:14:08.1815",
   :version "23.5.22",
-  :description "Implements re-try if failed to retrieve smart contract events",
+  :description
+  "Implements re-try if failed to retrieve smart contract events",
   :libs
   ["server/district-server-smart-contracts"
    "server/district-server-web3-events"
