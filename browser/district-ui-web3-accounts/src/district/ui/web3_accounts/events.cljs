@@ -88,14 +88,14 @@
  (fn [{:keys [:db]
        {:keys [:eip55?]} :opts} [accounts]]
    (let [accounts (if eip55? (map eip55/address->checksum accounts) accounts) ;; support for EIP-55, needed ONLY until UI libraries are migrated to web3 1.0 which supports it OOB
-         active-account (if (contains? (set accounts) (queries/active-account db))
-                          (queries/active-account db)
-                          (first accounts))]
+         active-account (first accounts)
+         previous-account (queries/active-account db)]
      (merge
       (when (not= accounts (queries/accounts db))
         {:db (queries/assoc-accounts db accounts)
          :dispatch [::accounts-changed {:new accounts :old (queries/accounts db)}]})
-      {:dispatch-n [[::set-active-account active-account]]}))))
+      (when (not= previous-account active-account)
+        {:dispatch-n [[::set-active-account active-account]]})))))
 
 (re-frame/reg-event-fx
  ::accounts-changed
