@@ -13,6 +13,15 @@
     (catch js/Error e
       (js/Promise.reject (str "Error when calling eth_requestAccounts" e)))))
 
+(defn get-accounts []
+  (try
+    (let [eth-send (aget js/window "ethereum" "request")]
+     (if eth-send
+       (eth-send #js {:method "eth_accounts"})
+       (js/Promise.reject "No ethereum send fn")))
+    (catch js/Error e
+      (js/Promise.reject (str "Error when calling eth_accounts" e)))))
+
 ;;
 ;; ::authorize-ethereum-provider
 ;;
@@ -41,7 +50,25 @@
 
 (reg-fx
   ::authorize-ethereum-provider
-  (fn [{:keys [:on-accept :on-reject :on-error]}]
+  (fn [{:keys [:on-accept :on-reject :on-error] :as opts}]
     (if (eth-provider/supports-ethereum-provider?)
-      (.then (authorize) #(dispatch (conj on-accept (eth-provider/full-provider))) #(dispatch (conj on-reject %1)))
+      (-> (authorize)
+          (.then
+            #(dispatch (conj on-accept (eth-provider/full-provider))))
+          (.catch
+            (fn [error]
+              (let [error (js->clj error :keywordize-keys true)]
+                (if (= 4001 (:code error))
+                  (dispatch (conj on-reject error))
+                  (dispatch (conj on-error error)))))))
+      (dispatch (conj on-error "Ethereum provider not injected")))))
+
+(reg-fx
+  ::wallet-connected?
+  (fn [{:keys [:connected :not-connected :on-error]}]
+    (if (eth-provider/supports-ethereum-provider?)
+      (.then (get-accounts)
+             #(if (empty? %)
+                 (dispatch not-connected)
+                 (dispatch (conj connected (eth-provider/full-provider)))))
       (dispatch on-error))))

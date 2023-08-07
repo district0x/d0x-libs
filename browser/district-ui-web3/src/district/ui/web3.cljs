@@ -15,7 +15,7 @@
 (s/def ::url string?)
 (s/def ::wait-for-inject-ms number?)
 (s/def ::opts (s/keys :req-un [::url]
-                      :opt-un [::wait-for-inject-ms]))
+                      :opt-un [::wait-for-inject-ms ::authorize-on-init?]))
 
 (defn start [opts]
   (s/assert ::opts opts)

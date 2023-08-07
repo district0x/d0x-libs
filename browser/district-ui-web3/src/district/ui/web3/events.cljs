@@ -11,8 +11,8 @@
 
 (def interceptors [trim-v])
 
-; opts - can have 2 keys: :wait-for-inject-ms and :url (Ethereum node URL, e.g.
-;        where Truffle is running)
+; opts - can have 3 keys: :wait-for-inject-ms, :url (Ethereum node URL, e.g.
+;        where Truffle is running) and :authorize-on-init
 (reg-event-fx
   ::start
   interceptors
@@ -25,6 +25,31 @@
 
 (reg-event-fx
   ::init-web3
+  interceptors
+  (fn [{:keys [:db]} [{:keys [:url :authorize-on-init?]
+                       :or {authorize-on-init? true} :as opts}]]
+    {::effects/wallet-connected?
+     {:connected [::wallet-connected opts]
+      :not-connected [::wallet-not-connected opts]
+      :on-error [::wallet-not-connected opts]}}))
+
+(reg-event-fx
+  ::wallet-connected
+  interceptors
+  (fn [{:keys [:db]} [opts user-permitted-provider]]
+    {:dispatch [::create-web3-with-user-permitted-provider opts user-permitted-provider]}))
+
+(reg-event-fx
+  ::wallet-not-connected
+  interceptors
+  (fn [{:keys [:db]} [{:keys [:url :authorize-on-init?]
+                       :or {authorize-on-init? true}
+                       :as opts}]]
+    (when authorize-on-init?
+      {:dispatch [::authorize-ethereum-provider opts]})))
+
+(reg-event-fx
+  ::authorize-ethereum-provider
   interceptors
   (fn [{:keys [:db]} [{:keys [:url] :as opts}]]
     {::effects/authorize-ethereum-provider
@@ -49,14 +74,20 @@
  ::create-web3-from-url
  interceptors
  (fn [{:keys [:db]} [{:keys [:url]}]]
-   (let [web3-instance (web3/create-web3 nil url)
-         result {:web3 web3-instance :url url}]
-     {:db (queries/assoc-web3 db result)
-      :dispatch [::web3-created result]})))
+   (if url
+     (let [web3-instance (web3/create-web3 nil url)
+           result {:web3 web3-instance :url url}]
+       {:db (queries/assoc-web3 db result)
+        :dispatch [::web3-created result]})
+     {:dispatch [::web3-creation-failed]})))
 
 
 (reg-event-fx
  ::web3-created
+ (constantly nil))
+
+(reg-event-fx
+ ::web3-creation-failed
  (constantly nil))
 
 
