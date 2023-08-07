@@ -1,6 +1,18 @@
-[{:created-at "2023-08-07T09:43:15.122447",
+[{:created-at "2023-08-07T16:00:11.178403",
   :version "23.8.7",
-  :description "Allow disabling wallet unlock request (eth_requestAccounts) on init",
+  :description
+  "Added missing dependencies",
+  :libs
+  ["browser/district-ui-bundle"
+   "browser/district-ui-component-active-account"
+   "browser/district-ui-component-active-account-balance"
+   "browser/district-ui-component-tx-button"
+   "browser/district-ui-smart-contracts"],
+  :updated-at "2023-08-07T16:00:11.178403"}
+{:created-at "2023-08-07T09:43:15.122447",
+  :version "23.8.7",
+  :description
+  "Allow disabling wallet unlock request (eth_requestAccounts) on init",
   :libs
   ["browser/district-ui-web3-account-balances"
    "browser/district-ui-web3-tx-costs"
