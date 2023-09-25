@@ -1,6 +1,6 @@
 [{:created-at "2023-09-25T08:23:14.679113",
   :version "23.9.25",
-  :description "Fix sendgrid api request",
+  :description "Fix and improve sendgrid api request",
   :libs ["shared/district-sendgrid"],
   :updated-at "2023-09-25T08:23:14.67936"}
  {:created-at "2023-08-07T16:00:11.178403",
