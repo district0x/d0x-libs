@@ -38,7 +38,7 @@
                                     :value content}]
                          :template_id template-id}
                         body)]
-        (async/take! (http/post sendgrid-public-api {:headers headers} {:json-params body})
+        (async/take! (http/post sendgrid-public-api {:headers headers :json-params body})
                      (fn [res] (if (= true (:success res))
                                  (on-success res)
                                  (on-error res))))
