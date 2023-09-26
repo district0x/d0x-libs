@@ -1,7 +1,11 @@
-[{:created-at "2023-08-07T16:00:11.178403",
+[{:created-at "2023-09-25T08:23:14.679113",
+  :version "23.9.25",
+  :description "Fix and improve sendgrid api request",
+  :libs ["shared/district-sendgrid"],
+  :updated-at "2023-09-25T08:23:14.67936"}
+ {:created-at "2023-08-07T16:00:11.178403",
   :version "23.8.7",
-  :description
-  "Added missing dependencies",
+  :description "Added missing dependencies",
   :libs
   ["browser/district-ui-bundle"
    "browser/district-ui-component-active-account"
@@ -9,7 +13,7 @@
    "browser/district-ui-component-tx-button"
    "browser/district-ui-smart-contracts"],
   :updated-at "2023-08-07T16:00:11.178403"}
-{:created-at "2023-08-07T09:43:15.122447",
+ {:created-at "2023-08-07T09:43:15.122447",
   :version "23.8.7",
   :description
   "Allow disabling wallet unlock request (eth_requestAccounts) on init",
