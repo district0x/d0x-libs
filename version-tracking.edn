@@ -1,4 +1,11 @@
-[{:created-at "2023-09-25T08:23:14.679113",
+[{:created-at "2023-10-02T17:04:43.090523",
+  :version "23.10.2",
+  :description "improve switch chain error handling",
+  :libs
+  ["browser/district-ui-web3-chain"
+   "browser/district-ui-bundle"],
+  :updated-at "2023-10-02T17:04:43.090903"}
+ {:created-at "2023-09-25T08:23:14.679113",
   :version "23.9.25",
   :description "Fix and improve sendgrid api request",
   :libs ["shared/district-sendgrid"],
