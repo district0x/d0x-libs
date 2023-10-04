@@ -86,24 +86,28 @@
 (re-frame/reg-event-fx
   ::request-switch-chain
   [interceptors]
-  (fn [{:keys [:db]} [chain-id {:keys [:chain-info]}]]
+  (fn [{:keys [:db]} [chain-id {:keys [:chain-info :on-error] :as data}]]
     {::effects/rpc-request {:method "wallet_switchEthereumChain"
                             :params [{:chain-id (web3/to-hex chain-id)}]
-                            :on-error [::switch-chain-error {:chain-info chain-info}]}}))
+                            :on-error [::switch-chain-error data]}}))
 
 (re-frame/reg-event-fx
   ::switch-chain-error
   [interceptors]
-  (fn [{:keys [:db]} [{:keys [:chain-info]} error]]
-    (when (and chain-info (= 4902 (:code error))) ; 4902 is the error code when chain is unrecognized. It'll try to add it first
-      {:dispatch [::request-add-chain chain-info]})))
+  (fn [{:keys [:db]} [{:keys [:chain-info :on-error]} error]]
+    (if (and chain-info (or (= 4902 (:code error))
+                            (= 4902 (-> error :data :originalError :code)))) ; 4902 is the error code when chain is unrecognized. It'll try to add it first
+      {:dispatch [::request-add-chain chain-info {:on-error on-error}]}
+      (when on-error
+        {:dispatch (conj on-error error)}))))
 
 (re-frame/reg-event-fx
   ::request-add-chain
   [interceptors]
-  (fn [{:keys [:db]} [{:keys [:chain-id] :as chain-info}]]
+  (fn [{:keys [:db]} [{:keys [:chain-id] :as chain-info} {:keys [:on-error]}]]
     {::effects/rpc-request {:method "wallet_addEthereumChain"
-                            :params [(assoc chain-info :chain-id (web3/to-hex chain-id))]}}))
+                            :params [(assoc chain-info :chain-id (web3/to-hex chain-id))]
+                            :on-error on-error}}))
 
 (re-frame/reg-event-fx
  ::chain-changed
