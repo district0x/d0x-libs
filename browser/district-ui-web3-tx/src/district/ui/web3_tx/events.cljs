@@ -125,7 +125,8 @@
   (fn [{:keys [:db]} [{:keys [:instance :fn :tx-opts :args] :as opts}]]
     {:web3/send
      {:web3 (web3-queries/web3 db)
-      :fns [(merge opts
+      :fns [(-> opts
+                (merge
                    {:instance instance
                     :fn fn
                     :args args
@@ -138,7 +139,8 @@
                     :on-tx-hash-error [::tx-hash-error opts]
                     :on-tx-receipt [::tx-receipt opts]
                     :on-tx-success [::tx-success opts]
-                    :on-tx-error [::tx-error opts]})]}}))
+                    :on-tx-error [::tx-error opts]})
+                (dissoc :on-tx-hash-n :on-tx-hash-error-n :on-tx-receipt-n :on-tx-success-n :on-tx-error-n))]}}))
 
 
 (defn- concat-callback-effects [callback callback-n args]
