@@ -1,4 +1,15 @@
-[{:created-at "2023-10-02T17:04:43.090523",
+[{:created-at "2023-10-06T11:54:02.598576",
+  :version "23.10.6",
+  :description "Avoid duplicated events",
+  :libs
+  ["browser/district-ui-web3-tx-costs"
+   "browser/district-ui-web3-tx-log"
+   "browser/district-ui-web3-tx-id"
+   "browser/district-ui-web3-tx"
+   "browser/district-ui-web3-tx-log-core"
+   "browser/district-ui-bundle"],
+  :updated-at "2023-10-06T11:54:02.598838"}
+ {:created-at "2023-10-02T17:04:43.090523",
   :version "23.10.2",
   :description "improve switch chain error handling",
   :libs
