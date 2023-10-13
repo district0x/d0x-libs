@@ -87,7 +87,7 @@
  [(re-frame/inject-cofx :opts) interceptors js->clj-v (spec-interceptors/validate-first-arg ::accounts)]
  (fn [{:keys [:db]
        {:keys [:eip55?]} :opts} [accounts]]
-   (let [accounts (if eip55? (map eip55/address->checksum accounts) accounts) ;; support for EIP-55, needed ONLY until UI libraries are migrated to web3 1.0 which supports it OOB
+   (let [accounts (map eip55/address->checksum accounts)
          active-account (first accounts)
          previous-account (queries/active-account db)]
      (merge

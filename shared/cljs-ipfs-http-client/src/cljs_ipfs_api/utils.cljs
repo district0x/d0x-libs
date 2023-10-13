@@ -104,7 +104,9 @@
                                          (if binary?
                                            (callback nil response-data)
                                            (callback nil (js->cljkk response-data)))))]
-    (-> (axios (clj->js (merge {:method "POST" :url url-with-params :data request-body} (when binary? {:responseType "arraybuffer" }))))
+    (-> (axios (clj->js (merge {:method "POST" :url url-with-params :data request-body}
+                               (when (:auth params) {:auth (:auth params)})
+                               (when binary? {:responseType "arraybuffer" }))))
         (.then update-response-run-callback)
         (.catch #(callback % nil)))))
 

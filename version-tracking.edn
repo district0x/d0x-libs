@@ -1,4 +1,15 @@
-[{:created-at "2023-10-06T11:54:02.598576",
+[{:created-at "2023-10-13T23:14:39.974538",
+  :version "23.10.13",
+  :description "Support IPFS auth, respect :forwards-to for UI smart contracts",
+  :libs
+  ["server/district-server-smart-contracts"
+   "server/district-server-bundle"
+   "browser/district-ui-bundle"
+   "browser/district-ui-smart-contracts"
+   "shared/cljs-ipfs-http-client"
+   "shared/district-shared-bundle"],
+  :updated-at "2023-10-13T23:17:33.164316"}
+ {:created-at "2023-10-06T11:54:02.598576",
   :version "23.10.6",
   :description "Avoid duplicated events",
   :libs
