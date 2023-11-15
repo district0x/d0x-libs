@@ -83,20 +83,18 @@
 
   (when (or (not err)
             (and err (:dispatch-on-error? @web3-events)))
-
     (doall
-     (for [callback (vals (get-in @(:callbacks @web3-events) [(:contract-key contract) event]))]
-       (callback err evt)))))
+      (for [callback (vals (get-in @(:callbacks @web3-events) [(:contract-key contract) event]))]
+        (callback err evt)))))
 
 (defn- start-dispatching-latest-events! [events last-block-number]
   (let [event-filters (doall (for [[contract event->callbacks] (dissoc @(:callbacks @web3-events) :callback-id->path)
-                                [event callbacks] event->callbacks]
-
-                                 (smart-contracts/subscribe-events contract
-                                                              event
-                                                              {:from-block last-block-number
-                                                               :latest-event? true}
-                                                              (map wrap-callback-checkpoint-middleware (vals callbacks)))))]
+                                   [event callbacks] event->callbacks]
+                               (smart-contracts/subscribe-events contract
+                                                                 event
+                                                                 {:from-block last-block-number
+                                                                  :latest-event? true}
+                                                                 (map wrap-callback-checkpoint-middleware (vals callbacks)))))]
   (log/info "Subscribed to future events" {:events (keys events)
                                           :from-block last-block-number})
   (swap! (:event-filters @web3-events) (fn [_ new] new) event-filters)))

@@ -36,7 +36,11 @@
   ([contract-instance method args opts]
    (contract-call contract-instance method args opts (fn [err res])))
   ([contract-instance method args opts callback]
-   (let [web3-contract-method (oapply+ (oget contract-instance "methods") (web3-helpers/camel-case (name method)) (clj->js args))]
+   (let [web3-contract-method (oapply+ (oget contract-instance "methods")
+                                       (if (string? method)
+                                         method
+                                         (web3-helpers/camel-case (name method)))
+                                       (clj->js args))]
      (ocall web3-contract-method "call" (clj->js opts) callback))))
 
 (defn contract-send [contract-instance method args opts & [callback]]

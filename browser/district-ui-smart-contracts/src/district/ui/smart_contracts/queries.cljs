@@ -23,11 +23,19 @@
   (:name (contract db contract-key)))
 
 (defn instance
-  ([db contract-key]
-   (instance db contract-key (contract-address db contract-key)))
-  ([db contract-key address]
+  ([db contract-key] ; :ethlance
+   (let [contr (contract db contract-key)
+         address (contract-address db contract-key)]
+     (if-not (:forwards-to contr)
+       (instance db contract-key address)
+       (instance db (:forwards-to contr) (contract-address db contract-key)))))
+  ([db contract-abi-key contract-address-key-or-address]
    (when-let [web3 (web3-queries/web3 db)]
-     (contract-at web3 (contract-abi db contract-key) address))))
+     (contract-at web3
+                  (contract-abi db contract-abi-key)
+                  (if (keyword? contract-address-key-or-address)
+                    (contract-address db contract-address-key-or-address)
+                    contract-address-key-or-address)))))
 
 
 (defn merge-contracts [db contracts]
