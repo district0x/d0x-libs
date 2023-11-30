@@ -1,4 +1,25 @@
-[{:created-at "2023-10-13T23:14:39.974538",
+[{:created-at "2023-11-30T14:03:28.28578",
+  :version "23.11.30",
+  :description "Allow disabling connecting wallet on init",
+  :libs
+  ["browser/district-ui-bundle"
+   "browser/district-ui-component-active-account"
+   "browser/district-ui-component-active-account-balance"
+   "browser/district-ui-component-tx-button"
+   "browser/district-ui-smart-contracts"
+   "browser/district-ui-web3-account-balances"
+   "browser/district-ui-web3-tx-costs"
+   "browser/district-ui-web3"
+   "browser/district-ui-web3-balances"
+   "browser/district-ui-web3-tx-log"
+   "browser/district-ui-web3-chain"
+   "browser/district-ui-web3-sync-now"
+   "browser/district-ui-web3-accounts"
+   "browser/district-ui-web3-tx-id"
+   "browser/district-ui-web3-tx"
+   "browser/district-ui-web3-tx-log-core"],
+  :updated-at "2023-10-11T14:03:28.285983"}
+ {:created-at "2023-10-13T23:14:39.974538",
   :version "23.10.13",
   :description "Support IPFS auth, respect :forwards-to for UI smart contracts",
   :libs
