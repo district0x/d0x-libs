@@ -29,9 +29,9 @@
   (run-test-async
     (let [accounts (subscribe [::subs/accounts])
           active-account (subscribe [::subs/active-account])
-          mock-accounts ["0x4a5c034cc587a219e5099eac1e7b92f468b77129"
-                         "0x701de50ef02bd981feccc1cc07b8938a1a8d64c2"]
-          mock-accounts2 ["0x93023b437dc89769e0088ceafb9f7cdbf149814c"]]
+          mock-accounts ["0x4a5C034Cc587A219E5099EaC1E7B92f468B77129"
+                         "0x701DE50EF02bD981FECCC1cc07B8938a1a8d64c2"]
+          mock-accounts2 ["0x93023B437dC89769E0088CEAfB9f7cdBf149814C"]]
 
       (set-response mock-accounts)
 

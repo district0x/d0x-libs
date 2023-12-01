@@ -11,16 +11,18 @@
 
 (def interceptors [trim-v])
 
-; opts - can have 3 keys: :wait-for-inject-ms, :url (Ethereum node URL, e.g.
-;        where Truffle is running) and :authorize-on-init
+; opts - can have 4 keys: :wait-for-inject-ms, :url (Ethereum node URL, e.g.
+;        where Truffle is running), :connect-on-init? and :authorize-on-init?
 (reg-event-fx
   ::start
   interceptors
-  (fn [_ [{:keys [:wait-for-inject-ms] :as opts}]]
-    (if (web3-injected?)
-      {:dispatch [::init-web3 opts]}
-      ;; Sometimes web3 gets injected with delay, so we'll give it one more chance
-      {:dispatch-later [{:ms (or wait-for-inject-ms 1500) :dispatch [::init-web3 opts]}]})))
+  (fn [_ [{:keys [:wait-for-inject-ms :connect-on-init?]
+           :or {connect-on-init? true} :as opts}]]
+    (when connect-on-init?
+      (if (web3-injected?)
+        {:dispatch [::init-web3 opts]}
+        ;; Sometimes web3 gets injected with delay, so we'll give it one more chance
+        {:dispatch-later [{:ms (or wait-for-inject-ms 1500) :dispatch [::init-web3 opts]}]}))))
 
 
 (reg-event-fx
