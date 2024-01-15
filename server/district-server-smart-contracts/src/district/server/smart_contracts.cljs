@@ -275,8 +275,7 @@
                                                                                :error error
                                                                                :wait-time wait-time})
                                   (js/setTimeout
-                                    (fn []
-                                      (get-events-with-retry contract-instance contract event from to ch-logs re-try-attempts (inc retry-count)))
+                                    (fn [] (get-events-with-retry contract-instance contract event from to ch-logs re-try-attempts (inc retry-count)))
                                     wait-time)))
                               (let [logs (->> events
                                               web3-helpers/js->cljkk
@@ -352,9 +351,11 @@
                               (callback log nil)
                               (callback nil log))
                             (catch js/Error e
-                              (when crash-on-event-fail?
-                                (log/error e "Server crash. Caused by event processing error with :crash-on-event-fail? true. Disable this flag to skip and continue.")
-                                (.exit js/process 1))))]
+                              (if crash-on-event-fail?
+                                (do
+                                  (log/error e "Server crash. Caused by event processing error with :crash-on-event-fail? true. Disable this flag to skip and continue.")
+                                  (.exit js/process 1))
+                                (log/info "district.server.smart-contracts/replay-past-events-in-order had ERROR but crash-on-event-fail? = true so continuing" e))))]
                 ;; if callback returns a promise or chan we block until it resolves
                 (cond
                   (satisfies? cljs.core.async.impl.protocols/ReadPort res)
