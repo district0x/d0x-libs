@@ -1,4 +1,17 @@
-[{:created-at "2023-11-30T14:03:28.28578",
+[{:created-at "2024-01-15T22:59:30.399074",
+  :version "24.1.15",
+  :description "cljs-web3-next connected? + some logging",
+  :libs
+  ["shared/district-shared-bundle"
+   "shared/cljs-web3-next"
+   "shared/cljs-ipfs-http-client"
+   "browser/re-frame-web3-fx"
+   "server/district-server-smart-contracts"
+   "server/district-server-web3-events"
+   "server/district-server-web3-watcher"
+   "server/district-server-web3"],
+  :updated-at "2024-01-15T23:04:49.497368"}
+ {:created-at "2023-11-30T14:03:28.28578",
   :version "23.11.30",
   :description "Allow disabling connecting wallet on init",
   :libs
