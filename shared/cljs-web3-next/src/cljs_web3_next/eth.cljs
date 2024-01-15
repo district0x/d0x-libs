@@ -6,6 +6,18 @@
 (defn is-listening? [provider & [callback]]
   (oapply+ provider "eth.net.isListening" (remove nil? [callback])))
 
+(defn get-node-info [provider & [callback]]
+  (oapply+ provider "eth.getNodeInfo" (remove nil? [callback])))
+
+(defn connected? [provider & [callback]]
+  (is-listening? provider (fn [err listening?]
+                            (if (nil? err)
+                              (callback nil listening?)
+                              (get-node-info provider (fn [err info]
+                                                        (if (nil? err)
+                                                          (callback nil true)
+                                                          (callback err nil))))))))
+
 (defn contract-at [provider abi address]
   (new (aget provider "eth" "Contract") abi address))
 
