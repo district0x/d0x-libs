@@ -30,11 +30,13 @@
 
 (defn create [{:keys [:host :port :url :client-config] :as opts}]
   (let [default-url (str (or host "http://127.0.0.1") ":" port)
-        uri (if url url default-url)]
+        uri (if url url default-url)
+        websocket-params {:client-config (merge {:max-received-frame-size 100000000
+                                                 :max-received-message-size 100000000}
+                                                client-config)}]
+    (log/info "district.server.web3/create CONNECTING" [uri websocket-params])
     (if (websocket-connection? uri)
-      (web3-core/websocket-provider uri {:client-config (merge {:max-received-frame-size 100000000
-                                                                :max-received-message-size 100000000}
-                                                               client-config)})
+      (web3-core/websocket-provider uri websocket-params)
       (throw (js/Error. "web3 component needs a websocket connection!")))))
 
 (defn- exponential-backoff

@@ -349,7 +349,8 @@
     (s/assert ::call params)
     (doseq [{:keys [:instance :fn :args :on-success :on-error]} (remove nil? fns)]
       (let [call-contract-method? (not (nil? instance))
-            call-on-contract-instance #(apply web3-eth/contract-call (concat [instance fn] [args] [{}] [(dispach-fn on-success on-error)]))
+            call-on-contract-instance #(apply web3-eth/contract-call
+                                              (concat [instance fn] [args] [{}] [(dispach-fn on-success on-error)]))
             call-on-web3-instance #(apply fn (concat [web3] (when args args) [(dispach-fn on-success on-error)]))]
         (if call-contract-method? (call-on-contract-instance) (call-on-web3-instance))))))
 

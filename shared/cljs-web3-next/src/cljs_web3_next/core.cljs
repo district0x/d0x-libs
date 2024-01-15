@@ -389,7 +389,7 @@
 
 (defn create-web3
   "Creates a web3 instance using given provider or from URL using appropriate provider
-   based on the URL (ws:// or http_://).
+   based on the URL (ws_:// or http_://).
 
   Parameters:
   url           - The URL string for which to create the provider.

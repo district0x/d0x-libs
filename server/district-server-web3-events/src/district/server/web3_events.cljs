@@ -107,33 +107,36 @@
       (callback))
     (unregister-callbacks! callback-ids)))
 
-(defn start [{:keys [:events :from-block :block-step :checkpoint-file :crash-on-event-fail? :backtrack] :as opts
+(defn start [{:keys [:events :skip-past-events-replay? :from-block :block-step :checkpoint-file :crash-on-event-fail? :backtrack] :as opts
               :or {block-step 1}}]
-  (web3-eth/is-listening? @web3 (fn [_ listening?]
+  (log/info ">>> district.server.web3-events/start OPTS" opts)
+  (web3-eth/connected? @web3 (fn [arg-1 listening?]
                                   (if-not listening?
                                     (throw (js/Error. "Can't connect to Ethereum node"))
                                     (web3-eth/get-block-number @web3 (fn [_ last-block-number]
                                       (let [{:keys [last-processed-block processed-log-indexes] :as checkpoint-info} (load-checkpoint-info checkpoint-file backtrack)]
-                                        (smart-contracts/replay-past-events-in-order
-                                         events
-                                         dispatch
-                                         {:from-block (or last-processed-block from-block 0)
-                                          :crash-on-event-fail? crash-on-event-fail?
-                                          :skip-log-indexes processed-log-indexes
-                                          :to-block last-block-number
-                                          :block-step block-step
-                                          :on-finish (fn []
-                                                       (dispatch-after-past-events-callbacks!)
-                                                       (log/info "Done replaying past events " {:block-number last-block-number})
-                                                       ;; since we are replaying all past events until current(latest)
-                                                       ;; it should be safe to set a checkpoint in current block number
-                                                       ;; in case of a restart after a full sync it should start immediately
-                                                       (when checkpoint-file
-                                                         (add-watch (:checkpoint @web3-events) :file-flusher
-                                                                   (fn [_ _ _ new-state]
-                                                                     (spit checkpoint-file new-state))))
-                                                       (reset! (:checkpoint @web3-events) {:last-processed-block last-block-number})
-                                                       (start-dispatching-latest-events! events (inc last-block-number)))})))))))
+                                        (if skip-past-events-replay?
+                                          (start-dispatching-latest-events! events (inc last-block-number))
+                                          (smart-contracts/replay-past-events-in-order
+                                            events
+                                            dispatch
+                                            {:from-block (or last-processed-block from-block 0)
+                                             :crash-on-event-fail? crash-on-event-fail?
+                                             :skip-log-indexes processed-log-indexes
+                                             :to-block last-block-number
+                                             :block-step block-step
+                                             :on-finish (fn []
+                                                          (dispatch-after-past-events-callbacks!)
+                                                          (log/info "Done replaying past events " {:block-number last-block-number})
+                                                          ;; since we are replaying all past events until current(latest)
+                                                          ;; it should be safe to set a checkpoint in current block number
+                                                          ;; in case of a restart after a full sync it should start immediately
+                                                          (when checkpoint-file
+                                                            (add-watch (:checkpoint @web3-events) :file-flusher
+                                                                       (fn [_ _ _ new-state]
+                                                                         (spit checkpoint-file new-state))))
+                                                          (reset! (:checkpoint @web3-events) {:last-processed-block last-block-number})
+                                                          (start-dispatching-latest-events! events (inc last-block-number)))}))))))))
 
   (merge opts {:callbacks (atom {})
                ;; Keeps the latest checkpoint (events processed so far).
