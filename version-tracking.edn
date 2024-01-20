@@ -1,4 +1,9 @@
-[{:created-at "2023-11-30T14:03:28.28578",
+[{:created-at "2024-01-20T15:18:31.046905",
+  :version "24.1.20",
+  :description "Just testing if the tests for cljs-web3-next pass",
+  :libs ["shared/cljs-web3-next"],
+  :updated-at "2024-01-20T15:18:31.047604"}
+ {:created-at "2023-11-30T14:03:28.28578",
   :version "23.11.30",
   :description "Allow disabling connecting wallet on init",
   :libs
