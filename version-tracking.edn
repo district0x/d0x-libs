@@ -1,6 +1,6 @@
 [{:created-at "2024-01-15T22:59:30.399074",
-  :version "24.1.15",
-  :description "cljs-web3-next connected? + some logging",
+  :version "24.1.22",
+  :description "Retrying deploy: cljs-web3-next connected? + some logging",
   :libs
   ["shared/district-shared-bundle"
    "shared/cljs-web3-next"
