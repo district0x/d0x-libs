@@ -1,4 +1,17 @@
-[{:created-at "2024-01-15T22:59:30.399074",
+[{:created-at "2024-01-24T22:59:30.399074",
+  :version "24.1.24",
+  :description "Retrying deployment (failed CI build on the previous one)",
+  :libs
+  ["shared/district-shared-bundle"
+   "shared/cljs-web3-next"
+   "shared/cljs-ipfs-http-client"
+   "browser/re-frame-web3-fx"
+   "server/district-server-smart-contracts"
+   "server/district-server-web3-events"
+   "server/district-server-web3-watcher"
+   "server/district-server-web3"],
+  :updated-at "2024-01-24T23:04:49.497368"}
+ {:created-at "2024-01-15T22:59:30.399074",
   :version "24.1.22",
   :description "Retrying deploy x3: cljs-web3-next connected? + some logging",
   :libs
