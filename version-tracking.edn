@@ -1,4 +1,9 @@
-[{:created-at "2024-01-24T22:59:30.399074",
+[{:created-at "2024-02-01T21:09:01.501055",
+  :version "24.2.1",
+  :description "Allow custom fn to store & load last-processed-block",
+  :libs ["server/district-server-web3-events"],
+  :updated-at "2024-02-01T21:09:01.501324"}
+ {:created-at "2024-01-24T22:59:30.399074",
   :version "24.1.24",
   :description "Retrying deployment (failed CI build on the previous one)",
   :libs

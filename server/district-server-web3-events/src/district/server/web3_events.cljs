@@ -18,17 +18,7 @@
                        (:web3-events (mount/args))))
   :stop (stop web3-events))
 
-(defn load-checkpoint-info [file-path & [backtrack]]
-  (if file-path
-    (try
-      (let [{:keys [last-processed-block] :as checkpoint-info} (reader/read-string (slurp file-path))]
-        (if (and (some? last-processed-block) (some? backtrack) (> backtrack 0))
-          {:last-processed-block (max 0 (- last-processed-block backtrack))}
-          checkpoint-info))
-      (catch js/Error e (log/info "Checkpoint file not loaded")))
-    (log/info "web3-events checkpoint file disabled")))
-
-(defn save-checkpoint! [block-number tx log-index]
+(defn update-checkpoint-atom! [block-number tx log-index]
   (swap! (:checkpoint @web3-events)
          (fn [{:keys [last-processed-block processed-log-indexes] :as checkpoint-info}]
            (-> checkpoint-info
@@ -37,13 +27,34 @@
                                                (conj processed-log-indexes [tx log-index])
                                                #{[tx log-index]}))))))
 
+(defn save-checkpoint-to-file [file-path new-state]
+  ; For some reason when compiling with :local-deps the new-state (although
+  ; being HashMap) causes error, claiming that
+  ; The same doesn't occur when compiling without :local-deps and
+  ; cljs-node-io.core/spit should handle clojure hashes without problems
+  ; Leaving this workaround until better solution is found
+  (spit file-path (str new-state)))
+
+(defn load-checkpoint-from-file [file-path callback]
+  (if file-path
+    (try
+      (let [{:keys [last-processed-block] :as checkpoint-info} (reader/read-string (slurp file-path))]
+        (callback
+          nil
+          (if last-processed-block
+            {:last-processed-block last-processed-block}
+            checkpoint-info)))
+      (catch js/Error e (do
+                          (log/info "Checkpoint file not loaded")
+                          (callback e nil))))
+    (log/info "web3-events checkpoint file disabled")))
 
 (defn wrap-callback-checkpoint-middleware [callback]
   (fn [err {:keys [block-number transaction-index log-index] :as ev}]
     (callback err ev)
     ;; if callback throws we don't save the checkpoint
     (when-not err
-      (save-checkpoint! block-number transaction-index log-index))))
+      (update-checkpoint-atom! block-number transaction-index log-index))))
 
 (defn register-callback! [event-key callback & [callback-id]]
   (let [[contract-key event] (if-not (= event-key ::after-past-events-dummy-key)
@@ -100,44 +111,76 @@
   (swap! (:event-filters @web3-events) (fn [_ new] new) event-filters)))
 
 (defn- dispatch-after-past-events-callbacks! []
-  (let [callbacks (get-in @(:callbacks @web3-events) [::after-past-events-dummy-contract ::after-past-events-dummy-event])
+  (let [callbacks (get-in @(:callbacks @web3-events)
+                          [::after-past-events-dummy-contract ::after-past-events-dummy-event])
         callback-fns (vals callbacks)
         callback-ids (keys callbacks)]
     (doseq [callback callback-fns]
       (callback))
     (unregister-callbacks! callback-ids)))
 
-(defn start [{:keys [:events :skip-past-events-replay? :from-block :block-step :checkpoint-file :crash-on-event-fail? :backtrack] :as opts
-              :or {block-step 1}}]
-  (log/info ">>> district.server.web3-events/start OPTS" opts)
-  (web3-eth/connected? @web3 (fn [arg-1 listening?]
-                                  (if-not listening?
-                                    (throw (js/Error. "Can't connect to Ethereum node"))
-                                    (web3-eth/get-block-number @web3 (fn [_ last-block-number]
-                                      (let [{:keys [last-processed-block processed-log-indexes] :as checkpoint-info} (load-checkpoint-info checkpoint-file backtrack)]
-                                        (if skip-past-events-replay?
-                                          (start-dispatching-latest-events! events (inc last-block-number))
-                                          (smart-contracts/replay-past-events-in-order
-                                            events
-                                            dispatch
-                                            {:from-block (or last-processed-block from-block 0)
-                                             :crash-on-event-fail? crash-on-event-fail?
-                                             :skip-log-indexes processed-log-indexes
-                                             :to-block last-block-number
-                                             :block-step block-step
-                                             :on-finish (fn []
-                                                          (dispatch-after-past-events-callbacks!)
-                                                          (log/info "Done replaying past events " {:block-number last-block-number})
-                                                          ;; since we are replaying all past events until current(latest)
-                                                          ;; it should be safe to set a checkpoint in current block number
-                                                          ;; in case of a restart after a full sync it should start immediately
-                                                          (when checkpoint-file
-                                                            (add-watch (:checkpoint @web3-events) :file-flusher
-                                                                       (fn [_ _ _ new-state]
-                                                                         (spit checkpoint-file new-state))))
-                                                          (reset! (:checkpoint @web3-events) {:last-processed-block last-block-number})
-                                                          (start-dispatching-latest-events! events (inc last-block-number)))}))))))))
+(defn start
+  "When :skip-past-events-replay? is false, will obtain the last processed block
+   via fn provided by load-checkpoint
+   When stopped will save last processed block using save-checkpoint
 
+   If :checkpoint-file is provided (and no function passed via <load/save>-checkpoint),
+   will default to writing to the file specified by :checkpoint-file
+
+   Arguments:
+     (save-checkpoint {:last-processed-block 123
+                       :processed-log-indexes [1, 2, 3]}
+                      callback-fn-when-done)
+     (load-checkpoint callback-fn-when-with-checkpoint-data)
+  "
+  [{:keys [:events
+           :skip-past-events-replay?
+           :from-block
+           :block-step
+           :checkpoint-file
+           :crash-on-event-fail?
+           :save-checkpoint ; Optional function to save checkpoint info (e.g. to the DB)
+           :load-checkpoint ; Optional function to load checkpoint info (e.g. from the DB)
+           :backtrack]
+    :as opts
+    :or {block-step 1
+         backtrack 0
+         save-checkpoint (partial save-checkpoint-to-file (:checkpoint-file opts))
+         load-checkpoint (partial load-checkpoint-from-file (:checkpoint-file opts))}}]
+  (log/info "district.server.web3-events/start OPTS" opts)
+  (web3-eth/connected?
+    @web3
+    (fn [_err-connected listening?]
+      (if-not listening?
+        (throw (js/Error. "Can't connect to Ethereum node"))
+        (load-checkpoint
+          (fn [err checkpoint]
+            (web3-eth/get-block-number
+              @web3
+              (fn [_err-block last-block-number]
+                (let [{:keys [last-processed-block processed-log-indexes]} checkpoint
+                      next-block-to-process (max 0 (- last-processed-block backtrack))]
+                  (if skip-past-events-replay?
+                    (start-dispatching-latest-events! events (inc last-block-number))
+                    (smart-contracts/replay-past-events-in-order
+                      events
+                      dispatch
+                      {:from-block (or last-processed-block from-block 0)
+                       :crash-on-event-fail? crash-on-event-fail?
+                       :skip-log-indexes processed-log-indexes
+                       :to-block last-block-number
+                       :block-step block-step
+                       :on-finish (fn []
+                                    (dispatch-after-past-events-callbacks!)
+                                    (log/info "Done replaying past events " {:block-number last-block-number})
+                                    ;; since we are replaying all past events until current(latest)
+                                    ;; it should be safe to set a checkpoint in current block number
+                                    ;; in case of a restart after a full sync it should start immediately
+                                    (add-watch (:checkpoint @web3-events) :file-flusher
+                                               (fn [_key _ref _old-state new-state]
+                                                 (save-checkpoint new-state)))
+                                    (reset! (:checkpoint @web3-events) {:last-processed-block last-block-number})
+                                    (start-dispatching-latest-events! events (inc last-block-number)))}))))))))))
   (merge opts {:callbacks (atom {})
                ;; Keeps the latest checkpoint (events processed so far).
                ;; Contains a map with
