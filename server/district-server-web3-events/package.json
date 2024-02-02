@@ -4,5 +4,8 @@
     "buffer": "6.0.3",
     "jsedn": "0.4.1",
     "web3": "1.7.3"
+  },
+  "devDependencies": {
+    "source-map-support": "^0.5.21"
   }
 }

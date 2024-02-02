@@ -30,8 +30,10 @@ You can pass following args to web3-events module:
 * `:from-block` You can explicitly configure from which block the past events will be retrieved
 * `:block-step` Size of block chunk when syncing past events (see [replay-past-events-in-order](https://github.com/district0x/district-server-smart-contracts#replay-past-events-in-order)).
 * `:crash-on-event-fail?` When set to true, will crash the server on a unhandled event exception.
-* `:checkpoint-file` The file that will be used to store checkpoints information for incremental event processing
+* `:checkpoint-file` The file that will be used to store checkpoints information for incremental event processing (use this to rely on the built-in file storage, avoiding `:load-checkpoint` and `:save-checkpoint`)
 * `:backtrack` Amount of blocks to look back before checkpointed when starting the module
+* `:load-checkpoint` Takes 1 argument - a callback `(fn [err checkpoint] ...)` checkpoint being `{:last-processed-block ... :processed-log-indexes [...]}`
+* `:save-checkpoint` Takes 2 arguments: 1) the checkpoint data (hashmap) 2) callback called when saving is done
 
 
 Let's see example of using this module:
@@ -97,6 +99,39 @@ Now all we need to do is to include our module and configure web3-events:
 
 And that's all! Now handlers in my-module will be fired in exact order as they went through the blockchain.
 
+### Examples for storing checkpoint in DB
+
+If you have multiple instances of the library running, or the filesystem gets destroyed between deploys (e.g. docker container), you can pass in functions `:load-checkpoint` and `:save-checkpoint`,
+to provide your custom implementation for tracking the state. Below are examples to save it to the DB:
+
+```clojure
+(defn load-processed-events-checkpoint [callback]
+  (db/with-async-resolver-conn
+    conn
+    (let [result-chan (db/get conn {:select [:*]
+                                    :from [:ContractEventCheckpoint]
+                                    :order-by [[:created-at :desc]]})]
+      (take! result-chan (fn [result] (callback (clojure.walk/keywordize-keys (get result :checkpoint))))))))
+
+(defn save-processed-events-checkpoint [checkpoint & [callback]]
+  (db/with-async-resolver-conn
+    conn
+    (let [result-chan (db/run! conn {:insert-into :ContractEventCheckpoint
+                                     :values [{:checkpoint (.stringify js/JSON (clj->js checkpoint))
+                                               :created-at (new js/Date)}]} )]
+      (when (fn? callback) (take! result-chan callback)))))
+```
+
+And you can pass them in as part of the configuration:
+```clojure
+(-> (mount/with-args
+      {:web3 {:port 8545}
+       :web3-events {; rest of the configuration omitted for brevity
+                     :load-checkpoint load-processed-events-checkpoint
+                     :save-checkpoint save-processed-events-checkpoint}})
+    (mount/start))
+```
+
 ## module dependencies
 
 ### [district-server-config](https://github.com/district0x/district-server-config)
@@ -129,7 +164,7 @@ Unregisters collection of callbacks by their ids.
 ## Node.js
 
 1. Compile the contracts: `npx truffle migrate --reset --network ganache`
-2. Build: `npx shadow-cljs compile test-node`
+2. Build: `clj -A:dev:shadow-cljs:test compile test-node`
 3. Tests: `node out/node-tests.js`
 
 ## Build & release with `deps.edn` and `tools.build`
