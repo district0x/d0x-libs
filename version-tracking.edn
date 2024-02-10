@@ -1,5 +1,5 @@
 [{:created-at "2024-02-07T20:49:00.319395",
-  :version "24.2.7",
+  :version "24.2.9",
   :description "Releasing all libraries with most recent code. Mainly to see if the cljs-web3-next websocket connection was caused due to out of date libray (as the evidence seems to indicate)",
   :libs
   ["server/district-server-config"
