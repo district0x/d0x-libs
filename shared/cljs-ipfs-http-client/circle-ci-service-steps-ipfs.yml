@@ -2,8 +2,8 @@
           name: Download & set up IPFS
           command: |
             cd ~
-            wget https://github.com/ipfs/kubo/releases/download/v0.14.0/kubo_v0.14.0_linux-amd64.tar.gz
-            tar zxvf kubo_v0.14.0_linux-amd64.tar.gz
+            wget https://github.com/ipfs/kubo/releases/download/v0.26.0/kubo_v0.26.0_linux-amd64.tar.gz
+            tar zxvf kubo_v0.26.0_linux-amd64.tar.gz
             mv kubo/ipfs ~/bin
             ~/bin/ipfs init
             ~/bin/ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
