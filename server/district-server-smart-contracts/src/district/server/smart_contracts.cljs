@@ -324,7 +324,7 @@
 
   (let [ch-chunks-to-process (async/to-chan! (all-chunks from-block to-block block-step))
         ch-final-logs (async/chan 1)
-        chunk->logs' (partial chunk->logs transform-fn from-block skip-log-indexes events ignore-forward? re-try-attempts)
+        chunk->logs' (partial chunk->logs transform-fn from-block (set skip-log-indexes) events ignore-forward? re-try-attempts)
         chs-await-for-workers (for [n (range chunks-parallelism)]
                                (async/chan 1))
         workers (dotimes [n chunks-parallelism]
