@@ -1,18 +1,10 @@
 (ns district.server.db.async.postgresql
   (:require
-    [district.server.db.db-client :as db-client]
     [cljs.core.async :refer [go <!]]
+    [district.server.db.db-client :as db-client]
     [district.shared.async-helpers :refer [<? safe-go]]
     [district.server.config :refer [config]]
-    [mount.core :as mount :refer [defstate]]
     ["pg" :refer [Client]]))
-
-(declare start)
-(declare stop)
-(defstate ^{:on-reload :noop} db
-          :start (start (merge (:db @config)
-                               (:db (mount/args))))
-          :stop (stop db))
 
 (defrecord PostgreSQL []
   db-client/DBClient
