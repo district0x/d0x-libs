@@ -12,31 +12,31 @@
     (first x)
     x))
 
-
-(defmethod sql-format/format-clause :insert-or-replace-into [[_ table] _]
-  (if (and (sequential? table) (sequential? (first table)))
-    (str "INSERT OR REPLACE INTO "
-         (sql-format/to-sql (ffirst table))
-         " (" (sql-format/comma-join (map sql-format/to-sql (second (first table)))) ") "
-         (sql-format/to-sql (second table)))
-    (str "INSERT OR REPLACE INTO " (to-sql table))))
-
-
-(extend-protocol sql-format/ToSql
-  boolean
-  (to-sql [x]
-    (if x 1 0)))
+(defn load-sqlite-extensions []
+  (defmethod sql-format/format-clause :insert-or-replace-into [[_ table] _]
+    (if (and (sequential? table) (sequential? (first table)))
+      (str "INSERT OR REPLACE INTO "
+           (sql-format/to-sql (ffirst table))
+           " (" (sql-format/comma-join (map sql-format/to-sql (second (first table)))) ") "
+           (sql-format/to-sql (second table)))
+      (str "INSERT OR REPLACE INTO " (to-sql table))))
 
 
-(defmethod sql-format/format-clause :create-index [[_ tablename] _]
-  (str "CREATE INDEX " (-> tablename
-                         get-first
-                         to-sql)))
+  (extend-protocol sql-format/ToSql
+    boolean
+    (to-sql [x]
+      (if x 1 0)))
 
 
-(defmethod sql-format/format-clause :on [[_ [tablename column]] _]
-  (str "ON " (get-first (to-sql tablename)) " " (paren-wrap (to-sql column))))
+  (defmethod sql-format/format-clause :create-index [[_ tablename] _]
+    (str "CREATE INDEX " (-> tablename
+                           get-first
+                           to-sql)))
 
 
-(defmethod sql-format/format-clause :cascade [[op v] _]
-  (when v (str "CASCADE" )))
+  (defmethod sql-format/format-clause :on [[_ [tablename column]] _]
+    (str "ON " (get-first (to-sql tablename)) " " (paren-wrap (to-sql column))))
+
+
+  (defmethod sql-format/format-clause :cascade [[op v] _]
+    (when v (str "CASCADE" ))))
