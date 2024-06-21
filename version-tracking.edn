@@ -1,4 +1,10 @@
-[{:created-at "2024-02-29T00:25:30.200208",
+[{:created-at "2024-06-19T16:09:00.514147",
+  :version "24.6.19",
+  :description "Extend DB lib to support async calls",
+  :libs ["server/district-server-db"
+         "server/district-server-bundle"],
+  :updated-at "2024-06-19T16:09:00.514549"}
+ {:created-at "2024-02-29T00:25:30.200208",
   :version "24.2.29",
   :description "Fix skip log indexes when loading checkpoint from DB",
   :libs ["server/district-server-smart-contracts"],
