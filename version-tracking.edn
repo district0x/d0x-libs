@@ -1,4 +1,9 @@
-[{:created-at "2024-06-19T16:09:00.514147",
+[{:created-at "2024-10-15T12:45:02.502733",
+  :version "24.10.15",
+  :description "district-server-web3-events: make callback-after-past-events configurable",
+  :libs ["server/district-server-web3-events"],
+  :updated-at "2024-10-15T12:45:02.502791"}
+ {:created-at "2024-06-19T16:09:00.514147",
   :version "24.6.19",
   :description "Extend DB lib to support async calls",
   :libs ["server/district-server-db"
