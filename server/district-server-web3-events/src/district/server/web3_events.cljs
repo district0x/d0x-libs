@@ -141,12 +141,14 @@
            :crash-on-event-fail?
            :save-checkpoint ; Optional function to save checkpoint info (e.g. to the DB)
            :load-checkpoint ; Optional function to load checkpoint info (e.g. from the DB)
+           :callback-after-past-events
            :backtrack]
     :as opts
     :or {block-step 1
          backtrack 0
          save-checkpoint (partial save-checkpoint-to-file (:checkpoint-file opts))
-         load-checkpoint (partial load-checkpoint-from-file (:checkpoint-file opts))}}]
+         load-checkpoint (partial load-checkpoint-from-file (:checkpoint-file opts))
+         callback-after-past-events start-dispatching-latest-events!}}]
   (log/info "district.server.web3-events/start OPTS" opts)
   (web3-eth/connected?
     @web3
@@ -159,13 +161,16 @@
               @web3
               (fn [_err-block last-block-number]
                 (let [{:keys [last-processed-block processed-log-indexes]} checkpoint
+                      ; Current backtrack parameter is not considered (and therefore next-block-to-process neither)
+                      ; If want to use it, it needs to be made sure that event handlers are idempotent (i.e. can be run twice without the DB changing)
+                      ; This is not the case for FundsIn/FundsOut and some other messages in Ethlance for example
                       next-block-to-process (max 0 (- last-processed-block backtrack))]
                   (if skip-past-events-replay?
                     (start-dispatching-latest-events! events (inc last-block-number))
                     (smart-contracts/replay-past-events-in-order
                       events
                       dispatch
-                      {:from-block (or last-processed-block from-block 0)
+                      {:from-block (max last-processed-block from-block 0)
                        :crash-on-event-fail? crash-on-event-fail?
                        :skip-log-indexes processed-log-indexes
                        :to-block last-block-number
@@ -180,7 +185,7 @@
                                                (fn [_key _ref _old-state new-state]
                                                  (save-checkpoint new-state)))
                                     (reset! (:checkpoint @web3-events) {:last-processed-block last-block-number})
-                                    (start-dispatching-latest-events! events (inc last-block-number)))}))))))))))
+                                    (callback-after-past-events events (inc last-block-number)))}))))))))))
   (merge opts {:callbacks (atom {})
                ;; Keeps the latest checkpoint (events processed so far).
                ;; Contains a map with
