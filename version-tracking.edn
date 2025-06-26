@@ -1,4 +1,10 @@
-[{:created-at "2024-10-15T12:45:02.502733",
+[{:created-at "2025-06-26T10:54:13.635646",
+  :version "25.6.26",
+  :description "Re-enable backtrack and throw error if cannot get block number",
+  :libs ["server/district-server-web3-events",
+         "server/district-server-bundle"],
+  :updated-at "2025-06-26T10:54:13.635728"}
+ {:created-at "2024-10-15T12:45:02.502733",
   :version "24.10.15",
   :description "district-server-web3-events: make callback-after-past-events configurable",
   :libs ["server/district-server-web3-events"],
@@ -75,7 +81,8 @@
   :updated-at "2024-01-24T23:04:49.497368"}
  {:created-at "2024-01-15T22:59:30.399074",
   :version "24.1.22",
-  :description "Retrying deploy x3: cljs-web3-next connected? + some logging",
+  :description
+  "Retrying deploy x3: cljs-web3-next connected? + some logging",
   :libs
   ["shared/district-shared-bundle"
    "shared/cljs-web3-next"
@@ -109,7 +116,8 @@
   :updated-at "2023-10-11T14:03:28.285983"}
  {:created-at "2023-10-13T23:14:39.974538",
   :version "23.10.13",
-  :description "Support IPFS auth, respect :forwards-to for UI smart contracts",
+  :description
+  "Support IPFS auth, respect :forwards-to for UI smart contracts",
   :libs
   ["server/district-server-smart-contracts"
    "server/district-server-bundle"
@@ -133,8 +141,7 @@
   :version "23.10.2",
   :description "improve switch chain error handling",
   :libs
-  ["browser/district-ui-web3-chain"
-   "browser/district-ui-bundle"],
+  ["browser/district-ui-web3-chain" "browser/district-ui-bundle"],
   :updated-at "2023-10-02T17:04:43.090903"}
  {:created-at "2023-09-25T08:23:14.679113",
   :version "23.9.25",
