@@ -5,6 +5,7 @@
             [district.server.config :refer [config]]
             [district.server.smart-contracts :as smart-contracts]
             [district.server.web3 :refer [web3]]
+            [district.shared.async-helpers :refer [safe-go <?]]
             [medley.core :as medley]
             [mount.core :as mount :refer [defstate]]
             [taoensso.timbre :as log]
@@ -51,10 +52,12 @@
 
 (defn wrap-callback-checkpoint-middleware [callback]
   (fn [err {:keys [block-number transaction-index log-index] :as ev}]
-    (callback err ev)
-    ;; if callback throws we don't save the checkpoint
-    (when-not err
-      (update-checkpoint-atom! block-number transaction-index log-index))))
+    (safe-go
+      (let [res (<? (callback err ev))]
+      ;; if callback throws or event is an error, we don't save the checkpoint
+        (when-not err
+          (update-checkpoint-atom! block-number transaction-index log-index))
+      res))))
 
 (defn register-callback! [event-key callback & [callback-id]]
   (let [[contract-key event] (if-not (= event-key ::after-past-events-dummy-key)

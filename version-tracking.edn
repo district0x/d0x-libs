@@ -1,4 +1,11 @@
-[{:created-at "2025-06-26T10:54:13.635646",
+[{:created-at "2025-10-30T12:38:12.558873",
+  :version "25.10.30",
+  :description "Ensure web3 events are dispatched sequentially",
+  :libs ["server/district-server-web3-events"
+         "server/district-server-smart-contracts"
+         "server/district-server-bundle"],
+  :updated-at "2025-10-30T12:38:12.558985"}
+ {:created-at "2025-06-26T10:54:13.635646",
   :version "25.6.26",
   :description "Re-enable backtrack and throw error if cannot get block number",
   :libs ["server/district-server-web3-events",
