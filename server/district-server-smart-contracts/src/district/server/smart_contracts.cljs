@@ -2,8 +2,8 @@
   (:require [cljs-web3-next.core :as web3-core]
             [cljs-web3-next.eth :as web3-eth]
             [cljs-web3-next.helpers :as web3-helpers]
-            [cljs.core.async :refer [<! >! timeout] :as async]
-            [cljs.core.async.impl.protocols]
+            [cljs.core.async :refer [<! >! timeout chan go put! alt!] :as async]
+            [cljs.core.async.impl.protocols :refer [ReadPort]]
             [cljs.nodejs :as nodejs]
             [clojure.set :as clojure-set]
             [clojure.string :as string]
@@ -19,10 +19,14 @@
 (def process (nodejs/require "process"))
 
 (declare start)
+(declare stop)
 
 (defstate smart-contracts :start (start (merge (:smart-contracts @config)
                                                (:smart-contracts (mount/args))))
-  :stop ::stopped)
+  :stop (stop smart-contracts))
+
+(defonce event-ch-atom (atom nil))
+(defonce processor-started? (atom false))
 
 (defn contract [contract-key]
   (get @(:contracts @smart-contracts) contract-key))
@@ -178,8 +182,41 @@
   ([contract method]
    (contract-send contract method [] {})))
 
+(defn start-event-processor! []
+  (when-not @processor-started?
+    (reset! processor-started? true)
+    (when-not @event-ch-atom
+      (reset! event-ch-atom (chan 100)))
+    (let [ch @event-ch-atom]
+      (go
+        (log/info "Starting global event processor loop...")
+        (loop []
+          (when-let [{:keys [error event callbacks]} (<! ch)]
+            (try
+              (when error
+                (log/error "Event error:" error))
+              (doseq [callback callbacks]
+                (let [result (callback error event)]
+                  (when (satisfies? ReadPort result)
+                    ;; block until callback finished to prevent processing multiple events in parallel
+                    (<! result))))
+              (catch js/Error e
+                (log/error "Error processing event callback:" e)))
+            (recur))))
+      (log/info "Global event processor started."))))
+
+(defn stop-event-processor! []
+  (when @processor-started?
+    (reset! processor-started? false)
+    (when-let [ch @event-ch-atom]
+      (async/close! ch))
+    (reset! event-ch-atom nil)
+    (log/info "Global event processor stopped (channel closed).")))
+
 (defn subscribe-events [contract event {:keys [:from-block :address :topics :ignore-forward? :latest-event?] :as opts} callbacks]
   (let [contract-instance (instance-from-arg contract {:ignore-forward? ignore-forward?})]
+    (start-event-processor!)
+
     (web3-eth/subscribe-events contract-instance
                                event
                                opts
@@ -191,8 +228,9 @@
                                                            (#(assoc % :latest-event? latest-event?))
                                                            (enrich-event-log contract contract-instance))
                                                         evt)]
-                                     (doseq [callback callbacks]
-                                       (callback error enriched-evt)))
+                                     (if @event-ch-atom
+                                       (put! @event-ch-atom {:error error :event enriched-evt :callbacks callbacks}))
+                                       (log/warn (str "Event will not be processed because dispatcher channel is closed. " evt)))
 
                                    (log/warn (str "No callback specified for event " evt)))))))
 
@@ -374,3 +412,7 @@
                                      [k (load-contract-files v opts)])
                                    @contracts-var)))}
    opts))
+
+(defn stop [smart-contracts]
+  (log/info "Stopping web3-smart-contracts")
+  (stop-event-processor!))
