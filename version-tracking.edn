@@ -4,7 +4,7 @@
   :libs ["server/district-server-web3-events"
          "server/district-server-smart-contracts"
          "server/district-server-bundle"],
-  :updated-at "2025-10-30T12:38:12.558985"}
+  :updated-at "2025-10-30T16:28:34.858302"}
  {:created-at "2025-06-26T10:54:13.635646",
   :version "25.6.26",
   :description "Re-enable backtrack and throw error if cannot get block number",
