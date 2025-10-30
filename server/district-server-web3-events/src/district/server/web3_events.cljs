@@ -1,15 +1,17 @@
 (ns district.server.web3-events
   (:require [cljs-web3-next.eth :as web3-eth]
             [cljs-web3-next.core :as web3-core]
+            [cljs.core.async :refer [<!]]
+            [cljs.core.async.impl.protocols :refer [ReadPort]]
             [cljs.reader :as reader]
             [district.server.config :refer [config]]
             [district.server.smart-contracts :as smart-contracts]
             [district.server.web3 :refer [web3]]
-            [district.shared.async-helpers :refer [safe-go <?]]
             [medley.core :as medley]
             [mount.core :as mount :refer [defstate]]
             [taoensso.timbre :as log]
-            [cljs-node-io.core :as io :refer [slurp spit]]))
+            [cljs-node-io.core :as io :refer [slurp spit]])
+  (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (declare start)
 (declare stop)
@@ -52,8 +54,10 @@
 
 (defn wrap-callback-checkpoint-middleware [callback]
   (fn [err {:keys [block-number transaction-index log-index] :as ev}]
-    (safe-go
-      (let [res (<? (callback err ev))]
+    (go
+      (let [res (callback err ev)]
+        (when (satisfies? ReadPort res)
+          (<! res))
       ;; if callback throws or event is an error, we don't save the checkpoint
         (when-not err
           (update-checkpoint-atom! block-number transaction-index log-index))
