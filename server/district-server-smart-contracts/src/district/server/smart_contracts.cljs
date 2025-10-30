@@ -25,8 +25,7 @@
                                                (:smart-contracts (mount/args))))
   :stop (stop smart-contracts))
 
-(defonce event-ch (chan 100))
-(defonce stop-ch (chan))
+(defonce event-ch-atom (atom nil))
 (defonce processor-started? (atom false))
 
 (defn contract [contract-key]
@@ -186,25 +185,33 @@
 (defn start-event-processor! []
   (when-not @processor-started?
     (reset! processor-started? true)
-    (go
-      (log/info "Starting global event processor loop...")
-      (loop []
-        (alt!
-          event-ch ([{:keys [error event callbacks]}]
-                    (when error
-                      (log/error "Event error:" error))
-                    (doseq [callback callbacks]
-                      (let [result (callback error event)]
-                        (when (satisfies? ReadPort result)
-                          ;; block until callback finished to prevent processing multiple events in parallel
-                          (<! result))))
-                    (recur))
-          stop-ch ([_]
-                   (log/info "Stopping global event processor loop.")
-                   (reset! processor-started? false)))))))
+    (when-not @event-ch-atom
+      (reset! event-ch-atom (chan 100)))
+    (let [ch @event-ch-atom]
+      (go
+        (log/info "Starting global event processor loop...")
+        (loop []
+          (when-let [{:keys [error event callbacks]} (<! ch)]
+            (try
+              (when error
+                (log/error "Event error:" error))
+              (doseq [callback callbacks]
+                (let [result (callback error event)]
+                  (when (satisfies? ReadPort result)
+                    ;; block until callback finished to prevent processing multiple events in parallel
+                    (<! result))))
+              (catch js/Error e
+                (log/error "Error processing event callback:" e)))
+            (recur))))
+      (log/info "Global event processor started."))))
 
 (defn stop-event-processor! []
-  (put! stop-ch :stop))
+  (when @processor-started?
+    (reset! processor-started? false)
+    (when-let [ch @event-ch-atom]
+      (async/close! ch))
+    (reset! event-ch-atom nil)
+    (log/info "Global event processor stopped (channel closed).")))
 
 (defn subscribe-events [contract event {:keys [:from-block :address :topics :ignore-forward? :latest-event?] :as opts} callbacks]
   (let [contract-instance (instance-from-arg contract {:ignore-forward? ignore-forward?})]
@@ -221,7 +228,9 @@
                                                            (#(assoc % :latest-event? latest-event?))
                                                            (enrich-event-log contract contract-instance))
                                                         evt)]
-                                     (put! event-ch {:error error :event enriched-evt :callbacks callbacks}))
+                                     (if @event-ch-atom
+                                       (put! @event-ch-atom {:error error :event enriched-evt :callbacks callbacks}))
+                                       (log/warn (str "Event will not be processed because dispatcher channel is closed. " evt)))
 
                                    (log/warn (str "No callback specified for event " evt)))))))
 
